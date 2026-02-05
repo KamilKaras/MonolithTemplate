@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+   <ItemGroup>
+     <Folder Include="Endpoints\" />
+     <Folder Include="Requests\" />
+     <Folder Include="Responses\" />
+   </ItemGroup>
+
+   <ItemGroup>
+     <ProjectReference Include="..\MonolithTemplate.Identity.Infrastructure\MonolithTemplate.Identity.Infrastructure.csproj" />
+   </ItemGroup>
+
 </Project>
