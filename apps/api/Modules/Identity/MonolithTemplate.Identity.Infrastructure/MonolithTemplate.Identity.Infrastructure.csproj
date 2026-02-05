@@ -18,4 +18,8 @@
     <Folder Include="IdentityModels\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\MonolithTemplate.Shared\MonolithTemplate.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

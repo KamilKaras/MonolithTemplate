@@ -1,3 +1,4 @@
+using MonolithTemplate.Identity.Api.Endpoints;
 using MonolithTemplate.Identity.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ IConfiguration configuration = builder.Configuration;
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
 //AddModules
-builder.Services.AddIdentityModule();
+builder.Services.AddIdentityModule(configuration);
 //AddModules
 
 builder.Services.AddOpenApi();
@@ -24,6 +25,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
+//AddEndpoints
+app.MapIdentityEndpoints();
+//AddEndpoints
 
 app.Run();
 
