@@ -1,0 +1,50 @@
+# === Git / system ===
+.git
+.gitignore
+.gitattributes
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === IDE ===
+.vs
+.vscode
+.idea
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# === .NET build artifacts ===
+**/bin
+**/obj
+*.dll
+*.exe
+*.pdb
+*.log
+
+# === Testy / Coverage ===
+**/TestResults
+*.trx
+*.coverage
+*.coveragexml
+
+# === Node / Frontend artifacts ===
+front/node_modules
+front/npm-debug.log*
+front/yarn-debug.log*
+front/yarn-error.log*
+front/.pnp
+front/.pnp.js
+front/.next
+front/out
+front/dist
+front/build
+front/.cache
+front/.expo
+front/.expo-shared
+
+# === Docker lokalne dane (nie kopiujemy do obrazu) ===
+docker/db_data
+docker/pgadmin_data
+docker/.env
