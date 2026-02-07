@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Modules\Identity\MonolithTemplate.Identity.Infrastructure\MonolithTemplate.Identity.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\Migrations\" />
+  </ItemGroup>
+
 </Project>
