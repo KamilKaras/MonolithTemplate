@@ -11,7 +11,7 @@ public static class Module
 {
     public static IServiceCollection AddIdentityModule(this IServiceCollection services, IConfiguration configuration)
     {
-        var conn = configuration["default"] ?? throw new ApplicationException("Connection string not found");
+        var conn = configuration.GetConnectionString("default") ?? throw new ApplicationException("Connection string not found");
 
         services.AddAppDbContext<IdentityDbContext>(opt => opt.UseNpgsql(conn));
         services.AddIdentityCore();
