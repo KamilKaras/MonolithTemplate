@@ -18,7 +18,6 @@ public static class Module
         return services;
     }
 
-
     public static IServiceCollection AddIdentityCore(this IServiceCollection services)
     {
         services.AddIdentityCore<User>(opt =>
