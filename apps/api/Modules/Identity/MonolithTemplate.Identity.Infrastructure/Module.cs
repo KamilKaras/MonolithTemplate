@@ -15,6 +15,10 @@ public static class Module
 
         services.AddAppDbContext<IdentityDbContext>(opt => opt.UseNpgsql(conn));
         services.AddIdentityCore();
+
+        services.AddCqrs(typeof(Module).Assembly);
+        services.AddScoped<IUnitOfWork, UnitOfWork<IdentityDbContext>>();
+
         return services;
     }
 

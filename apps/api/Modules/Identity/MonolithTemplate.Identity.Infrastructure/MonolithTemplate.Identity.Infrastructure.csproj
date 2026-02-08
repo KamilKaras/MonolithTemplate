@@ -15,11 +15,11 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
-    <Folder Include="IdentityModels\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\MonolithTemplate.Shared\MonolithTemplate.Shared.csproj" />
+    <ProjectReference Include="..\MonolithTemplate.Identity.Domain\MonolithTemplate.Identity.Domain.csproj" />
   </ItemGroup>
 
 </Project>
