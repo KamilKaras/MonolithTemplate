@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -18,7 +17,7 @@ public static class IdentityEndpoints
             [FromBody] RegisterRequest req,
             UserManager<User> userManager) =>
         {
-            var user = new User { Email = req.Email, UserName = req.UserName, };
+            var user = new User { Email = req.Email, UserName = req.UserName };
             var result = await userManager.CreateAsync(user, req.Password);
             return result.Succeeded
                ? Results.Ok()
