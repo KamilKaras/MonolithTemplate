@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MonolithTemplate.Identity.Application;
 using MonolithTemplate.Identity.Infrastructure.Database;
 using MonolithTemplate.Identity.Infrastructure.IdentityModels;
 using MonolithTemplate.Shared.Database;
@@ -15,6 +16,10 @@ public static class Module
 
         services.AddAppDbContext<IdentityDbContext>(opt => opt.UseNpgsql(conn));
         services.AddIdentityCore();
+
+        services.AddMessaging([IdentityApplicationAssembly.GetAssembly]);
+        services.AddScoped<IUnitOfWork, UnitOfWork<IdentityDbContext>>();
+
         return services;
     }
 

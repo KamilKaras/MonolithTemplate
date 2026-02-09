@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using MonolithTemplate.Identity.Application.Features.UserRegistration;
 using MonolithTemplate.Identity.Infrastructure.IdentityModels;
+using MonolithTemplate.Shared.CQRS.Abstractions;
 
 namespace MonolithTemplate.Identity.Api.Endpoints;
 
@@ -15,13 +17,13 @@ public static class IdentityEndpoints
 
         group.MapPost("/register", async (
             [FromBody] RegisterRequest req,
-            UserManager<User> userManager) =>
+            IDispatcher dispatcher) =>
         {
-            var user = new User { Email = req.Email, UserName = req.UserName };
-            var result = await userManager.CreateAsync(user, req.Password);
-            return result.Succeeded
-               ? Results.Ok()
-               : Results.BadRequest(result.Errors);
+            var result = await dispatcher.Send(
+                new UserRegistrationCommand(req.UserName, req.Email, req.Password, req.ConfirmPassword)
+                );
+
+            Results.Ok(result);
         });
 
         return app;

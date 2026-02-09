@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+ <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Features\" />
+    <Folder Include="Features\UserRegistration\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\MonolithTemplate.Shared\MonolithTemplate.Shared.csproj" />
+    <ProjectReference Include="..\MonolithTemplate.Identity.Domain\MonolithTemplate.Identity.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
