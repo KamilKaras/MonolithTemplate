@@ -1,6 +1,5 @@
-using System;
 
-namespace MonolithTemplate.Shared.CQRS.Abstractions;
+namespace MonolithTemplate.Shared.Messaging;
 
 public delegate Task<TResponse> RequestHandlerDelegate<TResponse>();
 public interface IPipelineBehavior<TRequest, TResponse>

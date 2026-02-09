@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MonolithTemplate.Identity.Application;
 using MonolithTemplate.Identity.Infrastructure.Database;
-using MonolithTemplate.Identity.Infrastructure.IdentityModels;
+using MonolithTemplate.Identity.Domain.IdentityModels;
 using MonolithTemplate.Shared.Database;
 
 namespace MonolithTemplate.Identity.Infrastructure;

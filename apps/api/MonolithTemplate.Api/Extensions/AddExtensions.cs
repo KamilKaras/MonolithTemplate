@@ -1,4 +1,5 @@
 
+using MonolithTemplate.Api.Extensions.Exceptions;
 using MonolithTemplate.Api.Extensions.Migrations;
 
 namespace MonolithTemplate.Api.Extensions;

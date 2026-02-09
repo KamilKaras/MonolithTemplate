@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Identity;
-using MonolithTemplate.Identity.Infrastructure.IdentityModels;
-using MonolithTemplate.Shared.CQRS.Abstractions;
+using MonolithTemplate.Identity.Domain.IdentityModels;
+using MonolithTemplate.Shared.Messaging;
 
 namespace MonolithTemplate.Identity.Application.Features.UserRegistration;
 
