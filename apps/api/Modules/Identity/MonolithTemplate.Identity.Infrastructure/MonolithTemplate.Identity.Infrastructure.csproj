@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\MonolithTemplate.Shared\MonolithTemplate.Shared.csproj" />
+    <ProjectReference Include="..\MonolithTemplate.Identity.Application\MonolithTemplate.Identity.Application.csproj" />
     <ProjectReference Include="..\MonolithTemplate.Identity.Domain\MonolithTemplate.Identity.Domain.csproj" />
   </ItemGroup>
 
