@@ -5,5 +5,5 @@ namespace MonolithTemplate.Identity.Application;
 
 public static class IdentityApplicationAssembly
 {
-    public static Assembly GetAssembly() => typeof(IdentityApplicationAssembly).Assembly;
+    public static readonly Assembly GetAssembly = typeof(IdentityApplicationAssembly).Assembly;
 }

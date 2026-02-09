@@ -2,7 +2,7 @@ using MonolithTemplate.Shared.CQRS.Abstractions;
 
 namespace MonolithTemplate.Identity.Application.Features.UserRegistration;
 
-public sealed class UserRegistrationCommand : IRequest<Guid>
+public sealed class UserRegistrationCommand : IRequest<Guid?>
 {
     public UserRegistrationCommand(
         string userName,

@@ -5,7 +5,7 @@ using MonolithTemplate.Shared.CQRS.Abstractions;
 
 namespace MonolithTemplate.Identity.Application.Features.UserRegistration;
 
-public class UserRegistrationCommandHandler : IRequestHandler<UserRegistrationCommand, Guid>
+public class UserRegistrationCommandHandler : IRequestHandler<UserRegistrationCommand, Guid?>
 {
     private readonly UserManager<User> _userManager;
 
@@ -13,10 +13,10 @@ public class UserRegistrationCommandHandler : IRequestHandler<UserRegistrationCo
     {
         _userManager = userManager;
     }
-    public async Task<Guid> Handle(UserRegistrationCommand request, CancellationToken ct)
+    public async Task<Guid?> Handle(UserRegistrationCommand request, CancellationToken ct)
     {
         var user = new User();
         var result = await _userManager.CreateAsync(user);
-        return result.Succeeded ? Guid.NewGuid() : Guid.NewGuid();
+        return result.Succeeded ? user.Id : null;
     }
 }
