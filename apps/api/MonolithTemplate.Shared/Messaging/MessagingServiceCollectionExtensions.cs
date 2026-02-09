@@ -2,9 +2,9 @@ using Microsoft.Extensions.DependencyInjection;
 using MonolithTemplate.Shared.CQRS.Abstractions;
 using MonolithTemplate.Shared.Database.UnitOfWork;
 
-public static class CqrsRegistration
+public static class MessagingServiceCollectionExtensions
 {
-    public static IServiceCollection AddCqrs(this IServiceCollection services, params System.Reflection.Assembly[] assemblies)
+    public static IServiceCollection AddMessaging(this IServiceCollection services, params System.Reflection.Assembly[] assemblies)
     {
         services.AddScoped<IDispatcher, Dispatcher>();
 
