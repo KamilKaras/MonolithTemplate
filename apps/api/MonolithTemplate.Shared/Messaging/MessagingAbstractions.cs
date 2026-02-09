@@ -1,6 +1,5 @@
-using System;
 
-namespace MonolithTemplate.Shared.CQRS.Abstractions;
+namespace MonolithTemplate.Shared.Messaging;
 
 public interface IRequest<out TResponse> { }
 

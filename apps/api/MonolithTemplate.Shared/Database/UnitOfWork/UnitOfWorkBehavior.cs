@@ -1,6 +1,5 @@
-using System;
 using Microsoft.Extensions.Logging;
-using MonolithTemplate.Shared.CQRS.Abstractions;
+using MonolithTemplate.Shared.Messaging;
 
 namespace MonolithTemplate.Shared.Database.UnitOfWork;
 

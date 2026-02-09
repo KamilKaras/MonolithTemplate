@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using MonolithTemplate.Identity.Api.Requests;
 using MonolithTemplate.Identity.Application.Features.UserRegistration;
-using MonolithTemplate.Identity.Infrastructure.IdentityModels;
-using MonolithTemplate.Shared.CQRS.Abstractions;
+using MonolithTemplate.Shared.Messaging;
 
 namespace MonolithTemplate.Identity.Api.Endpoints;
 

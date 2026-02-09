@@ -2,7 +2,7 @@ using System;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MonolithTemplate.Api.Extensions;
+namespace MonolithTemplate.Api.Extensions.Exceptions;
 
 internal sealed class GlobalExceptionHandler : IExceptionHandler
 {

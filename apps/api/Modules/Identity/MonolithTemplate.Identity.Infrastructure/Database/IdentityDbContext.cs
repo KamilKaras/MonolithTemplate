@@ -2,7 +2,7 @@ using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design.Internal;
-using MonolithTemplate.Identity.Infrastructure.IdentityModels;
+using MonolithTemplate.Identity.Domain.IdentityModels;
 
 namespace MonolithTemplate.Identity.Infrastructure.Database;
 
