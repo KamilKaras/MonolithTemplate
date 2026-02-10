@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using MonolithTemplate.Identity.Api.Requests;
 using MonolithTemplate.Identity.Application.Features.UserRegistration;
 using MonolithTemplate.Shared.Messaging;
+using MonolithTemplate.Shared.Results;
 
 namespace MonolithTemplate.Identity.Api.Endpoints;
 
