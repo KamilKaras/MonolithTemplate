@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using MonolithTemplate.Identity.Api.Requests;
 using MonolithTemplate.Identity.Application.Features.UserRegistration;
 using MonolithTemplate.Shared.Messaging;
+using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Identity.Api.Endpoints;
 
@@ -16,13 +17,18 @@ public static class IdentityEndpoints
 
         group.MapPost("/register", async (
             [FromBody] RegisterRequest req,
+            HttpContext ctx,
             IDispatcher dispatcher) =>
         {
             var result = await dispatcher.Send(
                 new UserRegistrationCommand(req.UserName, req.Email, req.Password, req.ConfirmPassword)
                 );
 
-            Results.Ok(result);
+            return result.Match(
+                httpContext: ctx,
+                onSuccess: Results.Ok
+            );
+
         });
 
         return app;

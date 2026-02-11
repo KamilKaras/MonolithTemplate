@@ -21,8 +21,12 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
         var problemDetails = new ProblemDetails
         {
             Status = StatusCodes.Status500InternalServerError,
-            Title = "Wystąpił niespodziewany błąd serwera!"
+            Title = "Global.Exception",
+            Detail = "Wystąpił niespodziewany błąd serwera!",
+            Instance = httpContext.Request.Path
         };
+
+        problemDetails.Extensions["traceId"] = httpContext.TraceIdentifier;
 
         httpContext.Response.StatusCode = problemDetails.Status.Value;
 

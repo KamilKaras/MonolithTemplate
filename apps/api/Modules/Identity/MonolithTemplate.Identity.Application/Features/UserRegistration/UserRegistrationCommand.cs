@@ -1,8 +1,9 @@
 using MonolithTemplate.Shared.Messaging;
+using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Identity.Application.Features.UserRegistration;
 
-public sealed class UserRegistrationCommand : IRequest<Guid?>
+public sealed class UserRegistrationCommand : IRequest<Result<Guid>>
 {
     public UserRegistrationCommand(
         string userName,
