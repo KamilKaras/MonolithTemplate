@@ -1,4 +1,4 @@
-namespace MonolithTemplate.Shared.Results;
+namespace MonolithTemplate.Shared.ResultPattern;
 
 public class Error
 {
@@ -13,17 +13,20 @@ public class Error
     public string Description { get; }
     public ErrorType Type { get; }
 
+    public static Error BadRequest(string code, string description) =>
+        new(code, description, ErrorType.BadRequest);
+
     public static Error Failure(string code, string description) =>
-        new(code, description, ErrorType.Failure);
+    new(code, description, ErrorType.BadRequest);
     public static Error NotFound(string code, string description) =>
         new(code, description, ErrorType.NotFound);
     public static Error Validation(string code, string description) =>
         new(code, description, ErrorType.Validation);
     public static Error Conflict(string code, string description) =>
         new(code, description, ErrorType.Conflict);
-    public static Error AccessUnAuthorized(string code, string description) =>
-        new(code, description, ErrorType.AccessUnAuthorized);
-    public static Error AccessForbidden(string code, string description) =>
-        new(code, description, ErrorType.AccessForbidden);
+    public static Error Unauthorized(string code, string description) =>
+        new(code, description, ErrorType.Unauthorized);
+    public static Error Forbidden(string code, string description) =>
+        new(code, description, ErrorType.Forbidden);
 
 }

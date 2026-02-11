@@ -1,5 +1,5 @@
 using MonolithTemplate.Shared.Messaging;
-using MonolithTemplate.Shared.Results;
+using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Identity.Application.Features.UserRegistration;
 

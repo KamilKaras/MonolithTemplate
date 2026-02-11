@@ -1,4 +1,4 @@
-namespace MonolithTemplate.Shared.Results;
+namespace MonolithTemplate.Shared.ResultPattern;
 
 public class Result
 {
