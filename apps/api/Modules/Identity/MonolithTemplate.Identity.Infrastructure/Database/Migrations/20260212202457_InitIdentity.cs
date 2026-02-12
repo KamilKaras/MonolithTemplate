@@ -57,6 +57,24 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OutboxMessages",
+                schema: "Identity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OccurredOnUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    Payload = table.Column<string>(type: "text", nullable: false),
+                    ProcessedOnUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    AttemptCount = table.Column<int>(type: "integer", nullable: false),
+                    Error = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OutboxMessages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 schema: "Identity",
                 columns: table => new
@@ -216,6 +234,12 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OutboxMessages_ProcessedOnUtc",
+                schema: "Identity",
+                table: "OutboxMessages",
+                column: "ProcessedOnUtc");
         }
 
         /// <inheritdoc />
@@ -239,6 +263,10 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens",
+                schema: "Identity");
+
+            migrationBuilder.DropTable(
+                name: "OutboxMessages",
                 schema: "Identity");
 
             migrationBuilder.DropTable(
