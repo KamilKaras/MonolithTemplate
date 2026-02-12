@@ -2,14 +2,14 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MonolithTemplate.Identity.Infrastructure.Database;
+using MonolithTemplate.Identity.Application.UnitOfWork;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 {
-    [DbContext(typeof(IdentityDbContext))]
+    [DbContext(typeof(MyIdentityDbContext))]
     partial class IdentityDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -1,10 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MonolithTemplate.Identity.Application;
-using MonolithTemplate.Identity.Infrastructure.Database;
+using Microsoft.Extensions.Logging;
+using MonolithTemplate.Identity.Application.UnitOfWork;
 using MonolithTemplate.Identity.Domain.IdentityModels;
+using MonolithTemplate.Identity.Infrastructure.Database.Tools;
+using MonolithTemplate.Shared.Database.UnitOfWork;
 using MonolithTemplate.Shared.Database;
+using MonolithTemplate.Shared.Messaging;
+using MonolithTemplate.Shared.OutboxPattern;
+using MonolithTemplate.Identity.Infrastructure.Database;
 
 namespace MonolithTemplate.Identity.Infrastructure;
 
@@ -14,11 +20,12 @@ public static class Module
     {
         var conn = configuration.GetConnectionString("default") ?? throw new ApplicationException("Connection string not found");
 
-        services.AddAppDbContext<IdentityDbContext>(opt => opt.UseNpgsql(conn));
+        services.AddAppDbContext<MyIdentityDbContext>(opt => opt.UseNpgsql(conn));
+        services.AddIdentityDbTools();
+
         services.AddIdentityCore();
 
         services.AddMessaging([IdentityApplicationAssembly.GetAssembly]);
-        services.AddScoped<IUnitOfWork, UnitOfWork<IdentityDbContext>>();
 
         return services;
     }
@@ -32,10 +39,21 @@ public static class Module
             opt.User.RequireUniqueEmail = true;
         })
         .AddRoles<AppRole>()
-        .AddEntityFrameworkStores<IdentityDbContext>();
+        .AddEntityFrameworkStores<MyIdentityDbContext>();
 
         return services;
     }
 
+    private static IServiceCollection AddIdentityDbTools(this IServiceCollection services)
+    {
+        services.AddScoped<IIdentityUnitOfWork, IdentityUnitOfWork>();
 
+        services.AddScoped<IOutbox, Outbox>();
+
+        services.AddScoped<IIdentityOutboxWriter, IdentityOutboxWriter>();
+
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(IdentityUnitOfWorkBehavior<,>));
+
+        return services;
+    }
 }

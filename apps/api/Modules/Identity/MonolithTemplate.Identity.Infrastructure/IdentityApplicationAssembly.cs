@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace MonolithTemplate.Identity.Application;
+namespace MonolithTemplate.Identity.Infrastructure;
 
 public static class IdentityApplicationAssembly
 {
