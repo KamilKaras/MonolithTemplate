@@ -27,6 +27,7 @@ public static class Module
     {
         services.AddIdentityCore<User>(opt =>
         {
+            opt.SignIn.RequireConfirmedEmail = true;
             opt.Password.RequireNonAlphanumeric = false;
             opt.User.RequireUniqueEmail = true;
         })

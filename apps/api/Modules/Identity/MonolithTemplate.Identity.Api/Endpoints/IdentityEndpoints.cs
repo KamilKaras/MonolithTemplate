@@ -31,6 +31,26 @@ public static class IdentityEndpoints
 
         });
 
+        group.MapPost("/login", async (
+            [FromBody] LoginRequest req,
+            HttpContext ctx,
+            IDispatcher dispatcher) =>
+        {
+
+
+            return Results.Ok();
+        });
+
+        group.MapPost("/forget-password", async (
+           [FromBody] ForgetPasswordRequest req,
+           HttpContext ctx,
+           IDispatcher dispatcher) =>
+       {
+
+
+           return Results.Ok();
+       });
+
         return app;
     }
 }
