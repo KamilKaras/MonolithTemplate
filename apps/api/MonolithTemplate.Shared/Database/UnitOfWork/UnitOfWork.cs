@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-public sealed class UnitOfWork<TDbContext>(TDbContext db) : IUnitOfWork
+public class UnitOfWork<TDbContext>(TDbContext db) : IUnitOfWork
     where TDbContext : DbContext
 {
     private IDbContextTransaction? _tx;

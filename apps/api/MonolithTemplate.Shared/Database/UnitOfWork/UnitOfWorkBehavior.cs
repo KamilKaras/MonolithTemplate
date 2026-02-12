@@ -1,10 +1,16 @@
 using Microsoft.Extensions.Logging;
 using MonolithTemplate.Shared.Messaging;
+using MonolithTemplate.Shared.OutboxPattern;
 
 namespace MonolithTemplate.Shared.Database.UnitOfWork;
 
-public sealed class UnitOfWorkBehavior<TRequest, TResponse>(IUnitOfWork uw, ILogger<UnitOfWorkBehavior<TRequest, TResponse>> logger) : IPipelineBehavior<TRequest, TResponse>
+public class UnitOfWorkBehavior<TRequest, TResponse, TUow>(
+    TUow uw,
+    IOutbox outbox,
+    IOutboxWriter outboxWriter,
+    ILogger<UnitOfWorkBehavior<TRequest, TResponse, TUow>> logger) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
+    where TUow : IUnitOfWork
 {
     public async Task<TResponse> Handle(TRequest request, CancellationToken ct, RequestHandlerDelegate<TResponse> next)
     {
@@ -18,6 +24,10 @@ public sealed class UnitOfWorkBehavior<TRequest, TResponse>(IUnitOfWork uw, ILog
         try
         {
             var result = await next();
+            var events = outbox.DequeueAll();
+            if (events.Count > 0)
+                await outboxWriter.WriteAsync(events, ct);
+
             await uw.Commit(ct);
             logger.LogInformation($"Request handler finished, {request.GetType().Name}");
 

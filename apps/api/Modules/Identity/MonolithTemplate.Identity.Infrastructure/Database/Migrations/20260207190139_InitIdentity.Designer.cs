@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MonolithTemplate.Identity.Infrastructure.Database;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 {
-    [DbContext(typeof(IdentityDbContext))]
+    [DbContext(typeof(MyIdentityDbContext))]
     [Migration("20260207190139_InitIdentity")]
     partial class InitIdentity
     {

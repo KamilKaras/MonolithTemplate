@@ -8,8 +8,6 @@ public static class MessagingServiceCollectionExtensions
     {
         services.AddScoped<IDispatcher, Dispatcher>();
 
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehavior<,>));
-
         services.Scan(scan => scan
             .FromAssemblies(assemblies)
             .AddClasses(c => c.AssignableTo(typeof(IRequestHandler<,>)))
