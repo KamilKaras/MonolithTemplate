@@ -1,10 +1,12 @@
+using MonolithTemplate.Identity.Application.Abstractions.OutboxPattern;
 using MonolithTemplate.Identity.Infrastructure.Database;
 using MonolithTemplate.Shared.OutboxPattern;
-public interface IIdentityOutboxWriter : IOutboxWriter;
+using Humanizer;
+using MonolithTemplate.Shared.Events;
 
 internal sealed class IdentityOutboxWriter(MyIdentityDbContext db) : IIdentityOutboxWriter
 {
-    public Task WriteAsync(IEnumerable<object> events, CancellationToken ct)
+    public Task WriteAsync(IEnumerable<IntegrationEvent> events, CancellationToken ct)
     {
         foreach (var evt in events)
         {

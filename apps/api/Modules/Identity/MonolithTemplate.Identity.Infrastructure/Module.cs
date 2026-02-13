@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using MonolithTemplate.Identity.Application.UnitOfWork;
+using MonolithTemplate.Identity.Application.Abstractions.OutboxPattern;
 using MonolithTemplate.Identity.Domain.IdentityModels;
 using MonolithTemplate.Identity.Infrastructure.Database.Tools;
-using MonolithTemplate.Shared.Database.UnitOfWork;
 using MonolithTemplate.Shared.Database;
-using MonolithTemplate.Shared.Messaging;
-using MonolithTemplate.Shared.OutboxPattern;
+using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Identity.Infrastructure.Database;
+using MonolithTemplate.Identity.Application.Abstractions.UnitOfWork;
+using MonolithTemplate.Shared.OutboxPattern;
 
 namespace MonolithTemplate.Identity.Infrastructure;
 

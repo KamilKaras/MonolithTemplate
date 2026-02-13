@@ -1,4 +1,4 @@
-using MonolithTemplate.Shared.Messaging;
+using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Identity.Application.Features.UserRegistration;

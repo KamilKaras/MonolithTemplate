@@ -1,7 +1,9 @@
-using MonolithTemplate.Identity.Application.UnitOfWork;
 using MonolithTemplate.Shared.Database.UnitOfWork;
-using MonolithTemplate.Shared.Messaging;
+using MonolithTemplate.Shared.Cqrs;
 using Microsoft.Extensions.Logging;
+using MonolithTemplate.Shared.Events;
+using MonolithTemplate.Identity.Application.Abstractions.UnitOfWork;
+using MonolithTemplate.Identity.Application.Abstractions.OutboxPattern;
 using MonolithTemplate.Shared.OutboxPattern;
 
 namespace MonolithTemplate.Identity.Infrastructure.Database.Tools;
