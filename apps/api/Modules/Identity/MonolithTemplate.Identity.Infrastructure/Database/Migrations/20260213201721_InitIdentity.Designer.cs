@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using MonolithTemplate.Identity.Infrastructure.Database;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -11,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(MyIdentityDbContext))]
-    [Migration("20260207190139_InitIdentity")]
+    [Migration("20260213201721_InitIdentity")]
     partial class InitIdentity
     {
         /// <inheritdoc />
@@ -128,7 +129,7 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
                     b.ToTable("AspNetUserTokens", "Identity");
                 });
 
-            modelBuilder.Entity("MonolithTemplate.Identity.Infrastructure.IdentityModels.AppRole", b =>
+            modelBuilder.Entity("MonolithTemplate.Identity.Domain.IdentityModels.AppRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -155,7 +156,7 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
                     b.ToTable("AspNetRoles", "Identity");
                 });
 
-            modelBuilder.Entity("MonolithTemplate.Identity.Infrastructure.IdentityModels.User", b =>
+            modelBuilder.Entity("MonolithTemplate.Identity.Domain.IdentityModels.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -220,9 +221,42 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
                     b.ToTable("AspNetUsers", "Identity");
                 });
 
+            modelBuilder.Entity("MonolithTemplate.Shared.OutboxPattern.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("AttemptCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("OccurredOnUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ProcessedOnUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProcessedOnUtc");
+
+                    b.ToTable("OutboxMessages", "Identity");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("MonolithTemplate.Identity.Infrastructure.IdentityModels.AppRole", null)
+                    b.HasOne("MonolithTemplate.Identity.Domain.IdentityModels.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -231,7 +265,7 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("MonolithTemplate.Identity.Infrastructure.IdentityModels.User", null)
+                    b.HasOne("MonolithTemplate.Identity.Domain.IdentityModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -240,7 +274,7 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("MonolithTemplate.Identity.Infrastructure.IdentityModels.User", null)
+                    b.HasOne("MonolithTemplate.Identity.Domain.IdentityModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -249,13 +283,13 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("MonolithTemplate.Identity.Infrastructure.IdentityModels.AppRole", null)
+                    b.HasOne("MonolithTemplate.Identity.Domain.IdentityModels.AppRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MonolithTemplate.Identity.Infrastructure.IdentityModels.User", null)
+                    b.HasOne("MonolithTemplate.Identity.Domain.IdentityModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -264,7 +298,7 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("MonolithTemplate.Identity.Infrastructure.IdentityModels.User", null)
+                    b.HasOne("MonolithTemplate.Identity.Domain.IdentityModels.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

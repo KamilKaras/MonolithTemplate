@@ -1,4 +1,6 @@
+using MonolithTemplate.Shared.Events;
+
 public interface IOutboxWriter
 {
-    Task WriteAsync(IEnumerable<object> events, CancellationToken ct);
+    Task WriteAsync(IEnumerable<IntegrationEvent> events, CancellationToken ct);
 }

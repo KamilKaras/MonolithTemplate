@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Logging;
-using MonolithTemplate.Shared.Messaging;
+using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.OutboxPattern;
 
 namespace MonolithTemplate.Shared.Database.UnitOfWork;

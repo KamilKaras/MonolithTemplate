@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using MonolithTemplate.Shared.Messaging;
+using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.Database.UnitOfWork;
 
 public static class MessagingServiceCollectionExtensions

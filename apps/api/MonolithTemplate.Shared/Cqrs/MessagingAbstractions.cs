@@ -1,5 +1,5 @@
 
-namespace MonolithTemplate.Shared.Messaging;
+namespace MonolithTemplate.Shared.Cqrs;
 
 public interface IRequest<out TResponse> { }
 

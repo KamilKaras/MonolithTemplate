@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using MonolithTemplate.Identity.Domain.IdentityModels;
-using MonolithTemplate.Shared.Messaging;
+using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Identity.Application.Features.UserLogin;

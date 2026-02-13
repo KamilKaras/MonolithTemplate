@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MonolithTemplate.Shared.Events;
 using MonolithTemplate.Shared.OutboxPattern;
 
 namespace MonolithTemplate.Identity.Infrastructure.Database.Configurations;
@@ -20,6 +21,13 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
 
         b.Property(x => x.OccurredOnUtc)
             .IsRequired();
+
+        b.Property(x => x.AttemptCount)
+            .IsRequired();
+
+        b.Property(x => x.Error);
+
+        b.Property(x => x.ProcessedOnUtc);
 
         b.HasIndex(x => x.ProcessedOnUtc);
     }

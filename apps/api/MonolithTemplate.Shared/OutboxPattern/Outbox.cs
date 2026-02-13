@@ -1,12 +1,13 @@
+using MonolithTemplate.Shared.Events;
 using MonolithTemplate.Shared.OutboxPattern;
 
 public sealed class Outbox : IOutbox
 {
-    private readonly List<object> _events = new();
+    private readonly List<IntegrationEvent> _events = new();
 
-    public void Enqueue<T>(T @event) where T : notnull, IIntegrationEvent => _events.Add(@event);
+    public void Enqueue<T>(T @event) where T : notnull, IntegrationEvent => _events.Add(@event);
 
-    public IReadOnlyCollection<object> DequeueAll()
+    public IReadOnlyCollection<IntegrationEvent> DequeueAll()
     {
         var copy = _events.ToArray();
         _events.Clear();

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MonolithTemplate.Shared.Messaging;
+namespace MonolithTemplate.Shared.Cqrs;
 
 public sealed class Dispatcher(IServiceProvider sp) : IDispatcher
 {

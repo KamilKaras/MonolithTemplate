@@ -1,4 +1,4 @@
-namespace MonolithTemplate.Shared.Messaging;
+namespace MonolithTemplate.Shared.Cqrs;
 
 public interface IDispatcher
 {

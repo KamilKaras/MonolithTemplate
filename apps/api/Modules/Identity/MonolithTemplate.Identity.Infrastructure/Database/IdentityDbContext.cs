@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MonolithTemplate.Identity.Domain.IdentityModels;
+using MonolithTemplate.Shared.Events;
 using MonolithTemplate.Shared.OutboxPattern;
 
 namespace MonolithTemplate.Identity.Infrastructure.Database;
