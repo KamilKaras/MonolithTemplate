@@ -1,15 +1,19 @@
 using MonolithTemplate.Api.Extensions;
 using MonolithTemplate.Identity.Api.Endpoints;
 using MonolithTemplate.Identity.Infrastructure;
+using MonolithTemplate.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
+var assemblies = new[] { IdentityAssembly.GetAssembly };
 
 IConfiguration configuration = builder.Configuration;
 
-
-builder.Services.AddIdentityModule(configuration);
-
 builder.Services.AddGlobalExceptions();
+
+//AddModules
+builder.Services.AddShared(assemblies);
+builder.Services.AddIdentityModule(configuration);
+//AddModules
 
 builder.Services.AddOpenApi();
 
@@ -23,6 +27,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 await app.RunMigrations();
+
 app.UseExceptionHandler();
 
 app.MapIdentityEndpoints();

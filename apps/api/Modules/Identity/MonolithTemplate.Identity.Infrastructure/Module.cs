@@ -23,9 +23,6 @@ public static class Module
 
         services.AddIdentityCore();
 
-        services.AddCqrs([IdentityApplicationAssembly.GetAssembly]);
-        services.AddEvents([IdentityApplicationAssembly.GetAssembly]);
-
         return services;
     }
 
@@ -46,8 +43,6 @@ public static class Module
     private static IServiceCollection AddIdentityDbTools(this IServiceCollection services)
     {
         services.AddScoped<IIdentityUnitOfWork, IdentityUnitOfWork>();
-
-        services.AddScoped<IOutbox, Outbox>();
 
         services.AddScoped<IIdentityOutboxWriter, IdentityOutboxWriter>();
 
