@@ -3,11 +3,11 @@ using MonolithTemplate.Shared.OutboxPattern;
 
 public sealed class Outbox : IOutbox
 {
-    private readonly List<IntegrationEvent> _events = new();
+    private readonly List<IIntegrationEvent> _events = new();
 
-    public void Enqueue<T>(T @event) where T : notnull, IntegrationEvent => _events.Add(@event);
+    public void Enqueue<T>(T @event) where T : notnull, IIntegrationEvent => _events.Add(@event);
 
-    public IReadOnlyCollection<IntegrationEvent> DequeueAll()
+    public IReadOnlyCollection<IIntegrationEvent> DequeueAll()
     {
         var copy = _events.ToArray();
         _events.Clear();

@@ -24,11 +24,13 @@ public class UnitOfWorkBehavior<TRequest, TResponse, TUow>(
         try
         {
             var result = await next();
+
             var events = outbox.DequeueAll();
             if (events.Count > 0)
                 await outboxWriter.WriteAsync(events, ct);
 
             await uw.Commit(ct);
+
             logger.LogInformation($"Request handler finished, {request.GetType().Name}");
 
             return result;

@@ -6,7 +6,7 @@ using MonolithTemplate.Shared.Events;
 
 internal sealed class IdentityOutboxWriter(MyIdentityDbContext db) : IIdentityOutboxWriter
 {
-    public Task WriteAsync(IEnumerable<IntegrationEvent> events, CancellationToken ct)
+    public Task WriteAsync(IEnumerable<IIntegrationEvent> events, CancellationToken ct)
     {
         foreach (var evt in events)
         {
