@@ -12,6 +12,7 @@ public static class Module
         services.AddScoped<IOutbox, Outbox>();
         services.AddEvents(assemblies);
         services.AddCqrs(assemblies);
+        services.AddHostedService<OutboxProcessor>();
         return services;
     }
 

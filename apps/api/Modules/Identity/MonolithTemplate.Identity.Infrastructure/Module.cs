@@ -9,6 +9,7 @@ using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Identity.Infrastructure.Database;
 using MonolithTemplate.Identity.Application.Abstractions.UnitOfWork;
 using MonolithTemplate.Shared.OutboxPattern;
+using MonolithTemplate.Shared.Events;
 
 namespace MonolithTemplate.Identity.Infrastructure;
 
@@ -47,6 +48,14 @@ public static class Module
         services.AddScoped<IIdentityOutboxWriter, IdentityOutboxWriter>();
 
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(IdentityUnitOfWorkBehavior<,>));
+
+        services.AddScoped<IOutboxModule>(sp =>
+        {
+            return new OutboxModule<MyIdentityDbContext>(
+                sp.GetRequiredService<MyIdentityDbContext>(),
+                sp.GetRequiredService<IEventBus>()
+            );
+        });
 
         return services;
     }
