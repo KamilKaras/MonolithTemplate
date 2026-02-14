@@ -15,7 +15,7 @@ public sealed class MyIdentityDbContext : IdentityDbContext<User, AppRole, Guid>
     {
         base.OnModelCreating(builder);
 
-        builder.ApplyConfigurationsFromAssembly(IdentityApplicationAssembly.GetAssembly);
+        builder.ApplyConfigurationsFromAssembly(IdentityAssembly.GetAssembly);
 
         builder.HasDefaultSchema("Identity");
     }

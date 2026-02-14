@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MonolithTemplate.Api.Extensions.Migrations;
 
-public static class DatabaseMigrationExtensions
+public static class MigrationExtensions
 {
     public static async Task MigrateAllDbContextsAsync(this IHost app)
     {

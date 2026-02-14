@@ -9,7 +9,6 @@ public sealed class EventBus : IEventBus
     public EventBus(IServiceProvider sp)
     {
         _sp = sp;
-
     }
     public async Task Publish<TEvent>(TEvent @event, CancellationToken ct = default) where TEvent : IIntegrationEvent
     {
