@@ -23,7 +23,8 @@ public static class Module
 
         services.AddIdentityCore();
 
-        services.AddMessaging([IdentityApplicationAssembly.GetAssembly]);
+        services.AddCqrs([IdentityApplicationAssembly.GetAssembly]);
+        services.AddEvents([IdentityApplicationAssembly.GetAssembly]);
 
         return services;
     }

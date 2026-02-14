@@ -4,7 +4,7 @@ using MonolithTemplate.Shared.Database.UnitOfWork;
 
 public static class MessagingServiceCollectionExtensions
 {
-    public static IServiceCollection AddMessaging(this IServiceCollection services, params System.Reflection.Assembly[] assemblies)
+    public static IServiceCollection AddCqrs(this IServiceCollection services, params System.Reflection.Assembly[] assemblies)
     {
         services.AddScoped<IDispatcher, Dispatcher>();
 

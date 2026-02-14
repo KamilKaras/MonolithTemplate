@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MonolithTemplate.Shared.Events;
 using MonolithTemplate.Shared.OutboxPattern;
 
 namespace MonolithTemplate.Identity.Infrastructure.Database.Configurations;

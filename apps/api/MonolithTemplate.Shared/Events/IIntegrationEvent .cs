@@ -1,6 +1,6 @@
 namespace MonolithTemplate.Shared.Events;
 
-public interface IntegrationEvent
+public interface IIntegrationEvent
 {
 
 }
