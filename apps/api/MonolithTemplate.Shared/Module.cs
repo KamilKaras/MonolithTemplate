@@ -7,12 +7,16 @@ namespace MonolithTemplate.Shared;
 
 public static class Module
 {
-    public static IServiceCollection AddShared(this IServiceCollection services, params System.Reflection.Assembly[] assemblies)
+    public static IServiceCollection AddShared(this IServiceCollection services)
     {
         services.AddScoped<IOutbox, Outbox>();
+        services.AddHostedService<OutboxProcessor>();
+        return services;
+    }
+    public static IServiceCollection AddModuleShared(this IServiceCollection services, params System.Reflection.Assembly[] assemblies)
+    {
         services.AddEvents(assemblies);
         services.AddCqrs(assemblies);
-        services.AddHostedService<OutboxProcessor>();
         return services;
     }
 

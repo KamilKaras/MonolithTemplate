@@ -11,12 +11,15 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Folder Include="Abstractions\Auth\" />
     <Folder Include="Features\" />
+    <Folder Include="Features\UserConfirmEmailSend\" />
     <Folder Include="Features\UserRegistration\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\MonolithTemplate.Shared\MonolithTemplate.Shared.csproj" />
+    <ProjectReference Include="..\MonolithTemplate.Identity.Contracts\MonolithTemplate.Identity.Contracts.csproj" />
     <ProjectReference Include="..\MonolithTemplate.Identity.Domain\MonolithTemplate.Identity.Domain.csproj" />
   </ItemGroup>
 

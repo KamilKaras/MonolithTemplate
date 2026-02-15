@@ -1,20 +1,50 @@
 using Microsoft.AspNetCore.Identity;
+using MonolithTemplate.Identity.Application.Abstractions.AccessToken;
 using MonolithTemplate.Identity.Domain.IdentityModels;
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Identity.Application.Features.UserLogin;
 
-public class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Result<Guid>>
+public class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Result<UserLoginResponse>>
 {
     private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
+    private readonly ITokenGenerator _tokenGenerator;
 
-    public UserLoginCommandHandler(UserManager<User> userManager)
+    public UserLoginCommandHandler(
+        UserManager<User> userManager,
+        SignInManager<User> signInManager,
+        ITokenGenerator tokenGenerator)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
+        _tokenGenerator = tokenGenerator;
     }
-    public async Task<Result<Guid>> Handle(UserLoginCommand request, CancellationToken ct)
+    public async Task<Result<UserLoginResponse>> Handle(UserLoginCommand request, CancellationToken ct)
     {
-        return Result<Guid>.Success(Guid.NewGuid());
+        var user = await _userManager.FindByEmailAsync(request.Email);
+
+        if (user is null)
+            return Result<UserLoginResponse>.Failure(Error.Failure("Auth.InvalidCredentials", "Nieprawidłowy email lub hasło!"));
+
+        var signIn = await _signInManager.CheckPasswordSignInAsync(
+            user, request.Password, lockoutOnFailure: true);
+
+        if (signIn.IsLockedOut)
+            return Result<UserLoginResponse>.Failure(
+                Error.Forbidden("Auth.LockedOut", "Konto jest chwilowo zablokowane. Spróbuj później."));
+
+        if (!signIn.Succeeded)
+            return Result<UserLoginResponse>.Failure(
+                Error.Unauthorized("Auth.InvalidCredentials", "Nieprawidłowy email lub hasło"));
+
+        //if (!await _userManager.IsEmailConfirmedAsync(user))
+        //   return Result<UserLoginResponse>.Failure(
+        //     Error.Forbidden("Auth.EmailNotConfirmed", "Potwierdź email, aby się zalogować."));
+
+        var accessToken = _tokenGenerator.Generate(user);
+
+        return Result<UserLoginResponse>.Success(new UserLoginResponse(accessToken));
     }
 }
