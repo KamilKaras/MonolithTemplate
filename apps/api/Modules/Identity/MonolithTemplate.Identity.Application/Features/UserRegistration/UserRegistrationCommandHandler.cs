@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
+using MonolithTemplate.Identity.Contracts;
 using MonolithTemplate.Identity.Domain.IdentityModels;
 using MonolithTemplate.Shared.Cqrs;
+using MonolithTemplate.Shared.Events;
+using MonolithTemplate.Shared.OutboxPattern;
 using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Identity.Application.Features.UserRegistration;
@@ -8,14 +11,14 @@ namespace MonolithTemplate.Identity.Application.Features.UserRegistration;
 public class UserRegistrationCommandHandler : IRequestHandler<UserRegistrationCommand, Result<Guid>>
 {
     private readonly UserManager<User> _userManager;
-    private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IOutbox _outbox;
 
     public UserRegistrationCommandHandler(
         UserManager<User> userManager,
-        IPasswordHasher<User> passwordHasher)
+        IOutbox outbox)
     {
         _userManager = userManager;
-        _passwordHasher = passwordHasher;
+        _outbox = outbox;
     }
     public async Task<Result<Guid>> Handle(UserRegistrationCommand request, CancellationToken ct)
     {
@@ -29,6 +32,9 @@ public class UserRegistrationCommandHandler : IRequestHandler<UserRegistrationCo
         };
 
         var result = await _userManager.CreateAsync(user, request.Password);
+
+        _outbox.Enqueue(new UserRegisteredIntegrationEvent(user.Id));
+
         return result.Succeeded ?
             Result<Guid>.Success(user.Id)
             :

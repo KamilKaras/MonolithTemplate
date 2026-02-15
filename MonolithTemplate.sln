@@ -1,3 +1,4 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
@@ -21,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonolithTemplate.Identity.Domain", "apps\api\Modules\Identity\MonolithTemplate.Identity.Domain\MonolithTemplate.Identity.Domain.csproj", "{F04192F8-77F8-D4C0-B202-DFC9BC48C9C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonolithTemplate.Identity.Infrastructure", "apps\api\Modules\Identity\MonolithTemplate.Identity.Infrastructure\MonolithTemplate.Identity.Infrastructure.csproj", "{FD4F83BD-5480-5F32-4B66-222A5BC8B799}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonolithTemplate.Identity.Contracts", "apps\api\Modules\Identity\MonolithTemplate.Identity.Contracts\MonolithTemplate.Identity.Contracts.csproj", "{ED9D5BAF-BC08-46DB-B1B5-97E66AD0A6E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,7 +55,11 @@ Global
 		{FD4F83BD-5480-5F32-4B66-222A5BC8B799}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD4F83BD-5480-5F32-4B66-222A5BC8B799}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD4F83BD-5480-5F32-4B66-222A5BC8B799}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
+	
+		{ED9D5BAF-BC08-46DB-B1B5-97E66AD0A6E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED9D5BAF-BC08-46DB-B1B5-97E66AD0A6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED9D5BAF-BC08-46DB-B1B5-97E66AD0A6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED9D5BAF-BC08-46DB-B1B5-97E66AD0A6E4}.Release|Any CPU.Build.0 = Release|Any CPUEndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
@@ -66,7 +73,8 @@ Global
 		{49BE2451-D26B-A39C-8BB2-7E8C6E0685D0} = {D1590D33-90D0-6366-6F1F-F80E0A308417}
 		{F04192F8-77F8-D4C0-B202-DFC9BC48C9C2} = {D1590D33-90D0-6366-6F1F-F80E0A308417}
 		{FD4F83BD-5480-5F32-4B66-222A5BC8B799} = {D1590D33-90D0-6366-6F1F-F80E0A308417}
-	EndGlobalSection
+			{ED9D5BAF-BC08-46DB-B1B5-97E66AD0A6E4} = {D1590D33-90D0-6366-6F1F-F80E0A308417}
+EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D02FFC9D-532B-46E6-BEF0-9102885294A5}
 	EndGlobalSection

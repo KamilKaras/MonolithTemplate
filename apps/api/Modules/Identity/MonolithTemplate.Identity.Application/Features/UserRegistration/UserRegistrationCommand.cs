@@ -3,7 +3,7 @@ using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Identity.Application.Features.UserRegistration;
 
-public sealed class UserRegistrationCommand : IRequest<Result<Guid>>
+public sealed class UserRegistrationCommand : ICommand<Result<Guid>>
 {
     public UserRegistrationCommand(
         string userName,
