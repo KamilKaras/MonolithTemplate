@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using MonolithTemplate.Identity.Api.Requests;
+using MonolithTemplate.Identity.Application.Features.UserForgetPassword;
+using MonolithTemplate.Identity.Application.Features.UserLogin;
 using MonolithTemplate.Identity.Application.Features.UserRegistration;
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
@@ -32,13 +34,18 @@ public static class IdentityEndpoints
         });
 
         group.MapPost("/login", async (
-            [FromBody] LoginRequest req,
-            HttpContext ctx,
-            IDispatcher dispatcher) =>
+                   [FromBody] LoginRequest req,
+                   HttpContext ctx,
+                   IDispatcher dispatcher) =>
         {
+            var result = await dispatcher.Send(
+                new UserLoginCommand(req.Email, req.Password)
+            );
 
-
-            return Results.Ok();
+            return result.Match(
+                httpContext: ctx,
+                onSuccess: Results.Ok
+            );
         });
 
         group.MapPost("/forget-password", async (
@@ -46,9 +53,14 @@ public static class IdentityEndpoints
            HttpContext ctx,
            IDispatcher dispatcher) =>
        {
+           var result = await dispatcher.Send(
+               new UserForgetPasswordCommand(req.Email)
+               );
 
-
-           return Results.Ok();
+           return result.Match(
+                httpContext: ctx,
+                onSuccess: Results.Ok
+            );
        });
 
         return app;

@@ -33,11 +33,11 @@ public class UserRegistrationCommandHandler : IRequestHandler<UserRegistrationCo
 
         var result = await _userManager.CreateAsync(user, request.Password);
 
+        if (!result.Succeeded)
+            return Result<Guid>.Failure(Error.Failure("Identity.RegistrationFailed", "Wystąpił błąd podczas rejestracji"));
+
         _outbox.Enqueue(new UserRegisteredIntegrationEvent(user.Id));
 
-        return result.Succeeded ?
-            Result<Guid>.Success(user.Id)
-            :
-            Result<Guid>.Failure(Error.Failure("Identity.RegistrationFailed", "Wystąpił błąd podczas rejestracji"));
+        return Result<Guid>.Success(user.Id);
     }
 }

@@ -3,7 +3,7 @@ using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Identity.Application.Features.UserForgetPassword;
 
-public sealed class UserForgetPasswordCommand : IRequest<Result<Guid>>
+public sealed class UserForgetPasswordCommand : ICommand<Result<Guid>>
 {
     public UserForgetPasswordCommand(string email)
     {
