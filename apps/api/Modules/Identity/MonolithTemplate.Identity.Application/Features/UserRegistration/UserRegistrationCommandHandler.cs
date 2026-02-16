@@ -36,7 +36,9 @@ public class UserRegistrationCommandHandler : IRequestHandler<UserRegistrationCo
         if (!result.Succeeded)
             return Result<Guid>.Failure(Error.Failure("Identity.RegistrationFailed", "Wystąpił błąd podczas rejestracji"));
 
-        _outbox.Enqueue(new UserRegisteredIntegrationEvent(user.Id));
+        var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+        _outbox.Enqueue(new UserRegisteredIntegrationEvent(user.Id, user.Email, confirmationToken));
 
         return Result<Guid>.Success(user.Id);
     }

@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Modules\Identity\MonolithTemplate.Identity.Api\MonolithTemplate.Identity.Api.csproj" />
     <ProjectReference Include="..\Modules\Identity\MonolithTemplate.Identity.Infrastructure\MonolithTemplate.Identity.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Notifications\MonolithTemplate.Notifications.Infrastructure\MonolithTemplate.Notifications.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

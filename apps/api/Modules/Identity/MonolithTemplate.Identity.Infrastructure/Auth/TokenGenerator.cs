@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using MonolithTemplate.Identity.Application.Abstractions.AccessToken;
+using MonolithTemplate.Identity.Application.Abstractions.Auth;
 using MonolithTemplate.Identity.Domain.IdentityModels;
 using Microsoft.Extensions.Configuration;
 namespace MonolithTemplate.Identity.Infrastructure.Auth;

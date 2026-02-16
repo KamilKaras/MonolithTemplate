@@ -1,7 +1,7 @@
 using MonolithTemplate.Api.Extensions;
 using MonolithTemplate.Identity.Api.Endpoints;
-using MonolithTemplate.Identity.Application;
 using MonolithTemplate.Identity.Infrastructure;
+using MonolithTemplate.Notifications.Infrastructure;
 using MonolithTemplate.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +15,7 @@ builder.Services.AddGlobalExceptions();
 //AddModules
 builder.Services.AddShared();
 builder.Services.AddIdentityModule(configuration);
+builder.Services.AddNotificationsModule(configuration);
 //AddModules
 
 builder.Services.AddOpenApi();
