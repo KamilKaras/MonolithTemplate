@@ -1,7 +1,7 @@
 using System;
 using MonolithTemplate.Identity.Domain.IdentityModels;
 
-namespace MonolithTemplate.Identity.Application.Abstractions.AccessToken;
+namespace MonolithTemplate.Identity.Application.Abstractions.Auth;
 
 public interface ITokenGenerator
 {

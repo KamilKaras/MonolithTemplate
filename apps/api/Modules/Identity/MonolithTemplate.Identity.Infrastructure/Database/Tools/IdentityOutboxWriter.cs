@@ -1,7 +1,7 @@
 using MonolithTemplate.Shared.OutboxPattern;
 using MonolithTemplate.Shared.Events;
-using MonolithTemplate.Identity.Infrastructure.Database;
 using MonolithTemplate.Identity.Application.Abstractions.OutboxPattern;
+using MonolithTemplate.Identity.Infrastructure.Database;
 
 internal sealed class IdentityOutboxWriter(MyIdentityDbContext db) : IIdentityOutboxWriter
 {

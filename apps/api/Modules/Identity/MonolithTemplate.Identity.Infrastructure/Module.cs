@@ -4,18 +4,17 @@ using Microsoft.Extensions.DependencyInjection;
 using MonolithTemplate.Identity.Application.Abstractions.OutboxPattern;
 using MonolithTemplate.Identity.Application;
 using MonolithTemplate.Identity.Domain.IdentityModels;
+using MonolithTemplate.Identity.Infrastructure.Auth;
 using MonolithTemplate.Identity.Infrastructure.Database.Tools;
 using MonolithTemplate.Shared.Database;
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.OutboxPattern;
 using MonolithTemplate.Shared.Events;
-using MonolithTemplate.Identity.Infrastructure.Database;
 using MonolithTemplate.Identity.Application.Abstractions.UnitOfWork;
 using MonolithTemplate.Shared;
-using MonolithTemplate.Identity.Application.Abstractions.AccessToken;
-using Humanizer;
-using MonolithTemplate.Identity.Infrastructure.Auth;
+using MonolithTemplate.Identity.Application.Abstractions.Auth;
 using Microsoft.AspNetCore.Identity;
+using MonolithTemplate.Identity.Infrastructure.Database;
 
 namespace MonolithTemplate.Identity.Infrastructure;
 

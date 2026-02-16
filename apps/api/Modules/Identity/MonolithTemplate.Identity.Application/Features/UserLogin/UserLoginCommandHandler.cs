@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
-using MonolithTemplate.Identity.Application.Abstractions.AccessToken;
+using MonolithTemplate.Identity.Application.Abstractions.Auth;
 using MonolithTemplate.Identity.Domain.IdentityModels;
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
