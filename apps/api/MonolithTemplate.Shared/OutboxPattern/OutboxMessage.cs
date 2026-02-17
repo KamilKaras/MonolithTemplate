@@ -11,6 +11,7 @@ public sealed class OutboxMessage
     public string Payload { get; init; } = default!;
 
     public DateTime? ProcessedOnUtc { get; set; }
+    public DateTime? NextTryOnUtc { get; set; }
 
     public int AttemptCount { get; set; }
 

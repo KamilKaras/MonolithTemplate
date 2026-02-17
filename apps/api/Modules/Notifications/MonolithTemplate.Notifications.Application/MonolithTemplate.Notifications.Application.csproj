@@ -5,6 +5,10 @@
     <ProjectReference Include="..\..\Identity\MonolithTemplate.Identity.Contracts\MonolithTemplate.Identity.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EmailSender\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
