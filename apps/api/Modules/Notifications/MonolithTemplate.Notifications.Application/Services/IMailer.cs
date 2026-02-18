@@ -3,7 +3,7 @@ using MonolithTemplate.Notifications.Domain.Emails;
 
 namespace MonolithTemplate.Notifications.Application.EmailSender;
 
-public interface IEmailSender
+public interface IMailer
 {
     Task SendAsync(EmailMessage message);
 }
