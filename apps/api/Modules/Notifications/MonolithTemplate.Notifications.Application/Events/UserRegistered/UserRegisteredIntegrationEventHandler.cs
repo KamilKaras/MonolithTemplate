@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Identity;
 using MonolithTemplate.Identity.Contracts;
-using MonolithTemplate.Notifications.Application.EmailSender;
+using MonolithTemplate.Notifications.Application.Services;
 using MonolithTemplate.Shared.Events;
 
 namespace MonolithTemplate.Notifications.Application.Events.UserRegistered;
 
 public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<UserRegisteredIntegrationEvent>
 {
-    private readonly IEmailSender _emailSender;
+    private readonly IMailer _emailSender;
 
-    public UserRegisteredIntegrationEventHandler(IEmailSender emailSender)
+    public UserRegisteredIntegrationEventHandler(IMailer emailSender)
     {
         _emailSender = emailSender;
 
