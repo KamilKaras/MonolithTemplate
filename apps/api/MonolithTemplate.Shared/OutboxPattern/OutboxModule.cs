@@ -45,7 +45,7 @@ public sealed class OutboxModule<TDbContext> : IOutboxModule
                 message.AttemptCount++;
                 message.Error = ex.ToString();
 
-                var delayMinutes = Math.Min(5, message.AttemptCount * 5);
+                var delayMinutes = Math.Min(10, message.AttemptCount * 2);
                 message.NextTryOnUtc = DateTime.UtcNow.AddMinutes(delayMinutes);
             }
         }
