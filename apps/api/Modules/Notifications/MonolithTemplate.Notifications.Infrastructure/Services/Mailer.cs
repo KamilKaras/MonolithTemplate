@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Options;
-using MonolithTemplate.Notifications.Application.EmailSender;
+using MonolithTemplate.Notifications.Application.Services;
 using MonolithTemplate.Notifications.Domain.Emails;
 using Microsoft.Extensions.Logging;
 using MimeKit;

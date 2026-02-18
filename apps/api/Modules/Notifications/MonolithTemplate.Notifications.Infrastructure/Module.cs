@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MonolithTemplate.Notifications.Application;
-using MonolithTemplate.Notifications.Application.EmailSender;
+using MonolithTemplate.Notifications.Application.Services;
 using MonolithTemplate.Notifications.Domain.Emails;
 using MonolithTemplate.Notifications.Infrastructure.Services;
 using MonolithTemplate.Shared;
