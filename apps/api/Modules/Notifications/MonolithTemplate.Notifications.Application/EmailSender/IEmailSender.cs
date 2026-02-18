@@ -1,4 +1,5 @@
 using System;
+using MonolithTemplate.Notifications.Domain.Emails;
 
 namespace MonolithTemplate.Notifications.Application.EmailSender;
 

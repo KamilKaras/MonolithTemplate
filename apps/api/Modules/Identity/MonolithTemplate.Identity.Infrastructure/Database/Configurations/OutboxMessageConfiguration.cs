@@ -28,6 +28,8 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
 
         b.Property(x => x.ProcessedOnUtc);
 
+        b.Property(x => x.NextTryOnUtc);
+
         b.HasIndex(x => x.ProcessedOnUtc);
     }
 }

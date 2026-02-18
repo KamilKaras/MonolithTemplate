@@ -1,14 +1,15 @@
 using System;
+using MonolithTemplate.Notifications.Domain.ValueObjects;
 
-namespace MonolithTemplate.Notifications.Application.EmailSender;
+namespace MonolithTemplate.Notifications.Domain.Emails;
 
-public sealed class EmailMessage
+public sealed record EmailMessage
 {
     public EmailMessage(
         Email[] to,
-        string subject,
-        string htmlBody,
-        string textBody,
+        EmailSubject subject,
+        EmailHtmlBody htmlBody,
+        EmailTextBody textBody,
         Email[]? bcc = null,
         Email[]? cc = null
 
@@ -23,9 +24,9 @@ public sealed class EmailMessage
     }
 
     public Email[] To { get; }
-    public string Subject { get; }
-    public string HtmlBody { get; }
-    public string TextBody { get; }
+    public EmailSubject Subject { get; }
+    public EmailHtmlBody HtmlBody { get; }
+    public EmailTextBody TextBody { get; }
     public Email[]? Bcc { get; }
     public Email[]? Cc { get; }
 }
