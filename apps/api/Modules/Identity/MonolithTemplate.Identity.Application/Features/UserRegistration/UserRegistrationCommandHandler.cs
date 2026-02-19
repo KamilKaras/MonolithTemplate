@@ -23,7 +23,7 @@ public class UserRegistrationCommandHandler : IRequestHandler<UserRegistrationCo
     public async Task<Result<Guid>> Handle(UserRegistrationCommand request, CancellationToken ct)
     {
         if (request.Password != request.ConfirmPassword)
-            return Result<Guid>.Failure(Error.BadRequest("Identity.PasswordNotMatch", "Podane hasła nie są takie same!"));
+            return Error.BadRequest("Identity.PasswordNotMatch", "Podane hasła nie są takie same!");
 
         var user = new User
         {
@@ -34,12 +34,12 @@ public class UserRegistrationCommandHandler : IRequestHandler<UserRegistrationCo
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)
-            return Result<Guid>.Failure(Error.Failure("Identity.RegistrationFailed", "Wystąpił błąd podczas rejestracji"));
+            return Error.Failure("Identity.RegistrationFailed", "Wystąpił błąd podczas rejestracji");
 
         var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
         _outbox.Enqueue(new UserRegisteredIntegrationEvent(user.Id, user.Email, confirmationToken));
 
-        return Result<Guid>.Success(user.Id);
+        return user.Id;
     }
 }

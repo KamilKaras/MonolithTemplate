@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using MonolithTemplate.Identity.Contracts;
 using MonolithTemplate.Notifications.Application.Services;
+using MonolithTemplate.Notifications.Domain.Emails;
+using MonolithTemplate.Notifications.Domain.ValueObjects;
 using MonolithTemplate.Shared.Events;
+using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Notifications.Application.Events.UserRegistered;
 
@@ -23,17 +26,26 @@ public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<Us
             var confirmationUrl =
                 $"https://twojfrontend/confirm?userId={@event.Id}&token={@event.ConfirmationToken}";
 
-            var body = $"""
+
+            var email = Email.Create(@event.Email);
+            if (!email.IsSuccess)
+                throw new ApplicationException("Błąd przy tworzeniu email");
+
+            var subject = EmailSubject.Create("Potwierdź rejestrację w VisitMe");
+            if (!email.IsSuccess)
+                throw new ApplicationException("Błąd przy tworzeniu email");
+
+            var htmlBody = EmailHtmlBody.Create($"""
                 Kliknij aby potwierdzić konto:
                 {confirmationUrl}
-                """;
-            var result = Email.Create(@event.Email);
+                """);
+            if (!htmlBody.IsSuccess)
+                throw new ApplicationException("Błąd przy tworzeniu email");
 
             var message = new EmailMessage(
-                [result.Value],
-                "Potwierdzenie logowania VisitMe",
-                body,
-                "");
+                [email.Value],
+                subject.Value,
+                htmlBody.Value);
 
             await _emailSender.SendAsync(message);
         }
