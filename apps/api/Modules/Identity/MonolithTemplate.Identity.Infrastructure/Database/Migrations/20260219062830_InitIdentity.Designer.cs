@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(MyIdentityDbContext))]
-    [Migration("20260215152941_InitIdentity")]
+    [Migration("20260219062830_InitIdentity")]
     partial class InitIdentity
     {
         /// <inheritdoc />
@@ -232,6 +232,9 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 
                     b.Property<string>("Error")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("NextTryOnUtc")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("OccurredOnUtc")
                         .HasColumnType("timestamp with time zone");

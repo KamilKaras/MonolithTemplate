@@ -66,6 +66,7 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
                     Type = table.Column<string>(type: "text", nullable: false),
                     Payload = table.Column<string>(type: "text", nullable: false),
                     ProcessedOnUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    NextTryOnUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     AttemptCount = table.Column<int>(type: "integer", nullable: false),
                     Error = table.Column<string>(type: "text", nullable: true)
                 },
