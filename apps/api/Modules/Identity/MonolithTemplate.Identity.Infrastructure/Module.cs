@@ -47,6 +47,7 @@ public static class Module
         })
         .AddRoles<AppRole>()
         .AddEntityFrameworkStores<MyIdentityDbContext>()
+        .AddDefaultTokenProviders()
         .AddSignInManager();
 
         services.AddScoped<ITokenGenerator, TokenGenerator>();
