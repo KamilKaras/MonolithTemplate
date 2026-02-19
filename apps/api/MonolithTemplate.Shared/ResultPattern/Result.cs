@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 namespace MonolithTemplate.Shared.ResultPattern;
 
 public class Result
@@ -13,11 +14,13 @@ public class Result
         Error = error;
     }
 
+
     public Error? Error { get; }
     public bool IsSuccess { get; }
 
-    public static Result Success() =>
-        new();
+
+    public static implicit operator Result(Error error) =>
+        new(error);
 
     public static Result Failure(Error error) =>
         new(error);
@@ -37,6 +40,12 @@ public sealed class Result<T> : Result
 
     public T Value =>
         IsSuccess ? _value! : throw new InvalidOperationException("Brak dostępu do wartości jeżeli!");
+
+    public static implicit operator Result<T>(Error error) =>
+        new(error);
+
+    public static implicit operator Result<T>(T value) =>
+        new(value);
 
     public static Result<T> Success(T value) =>
         new(value);

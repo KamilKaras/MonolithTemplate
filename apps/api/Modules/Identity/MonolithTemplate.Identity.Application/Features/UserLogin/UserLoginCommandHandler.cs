@@ -26,18 +26,16 @@ public class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Result<
         var user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user is null)
-            return Result<UserLoginResponse>.Failure(Error.Failure("Auth.InvalidCredentials", "Nieprawidłowy email lub hasło!"));
+            return Error.Failure("Auth.InvalidCredentials", "Nieprawidłowy email lub hasło!");
 
         var signIn = await _signInManager.CheckPasswordSignInAsync(
             user, request.Password, lockoutOnFailure: true);
 
         if (signIn.IsLockedOut)
-            return Result<UserLoginResponse>.Failure(
-                Error.Forbidden("Auth.LockedOut", "Konto jest chwilowo zablokowane. Spróbuj później."));
+            return Error.Forbidden("Auth.LockedOut", "Konto jest chwilowo zablokowane. Spróbuj później.");
 
         if (!signIn.Succeeded)
-            return Result<UserLoginResponse>.Failure(
-                Error.Unauthorized("Auth.InvalidCredentials", "Nieprawidłowy email lub hasło"));
+            return Error.Unauthorized("Auth.InvalidCredentials", "Nieprawidłowy email lub hasło");
 
         //if (!await _userManager.IsEmailConfirmedAsync(user))
         //   return Result<UserLoginResponse>.Failure(
@@ -45,6 +43,6 @@ public class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Result<
 
         var accessToken = _tokenGenerator.Generate(user);
 
-        return Result<UserLoginResponse>.Success(new UserLoginResponse(accessToken));
+        return new UserLoginResponse(accessToken);
     }
 }

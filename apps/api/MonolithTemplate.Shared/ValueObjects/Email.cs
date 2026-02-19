@@ -11,13 +11,14 @@ public sealed record Email
 
     public static Result<Email> Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-            return Result<Email>.Failure(Error.Validation("Email.EmptyException", "Email nie może być pusty!"));
+        var trimmed = value.Trim();
+        if (string.IsNullOrWhiteSpace(trimmed))
+            return Error.Validation("Email.EmptyException", "Email nie może być pusty!");
 
-        if (!value.Contains("@"))
-            return Result<Email>.Failure(Error.Validation("Email.InvalidFormat", "Email musi zawierać @!"));
+        if (!trimmed.Contains("@"))
+            return Error.Validation("Email.InvalidFormat", "Email musi zawierać @!");
 
-        return Result<Email>.Success(new(value));
+        return new Email(trimmed);
     }
 
     public override string ToString() => Value;
