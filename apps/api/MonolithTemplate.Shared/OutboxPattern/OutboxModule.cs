@@ -20,6 +20,7 @@ public sealed class OutboxModule<TDbContext> : IOutboxModule
     {
         var messages = await _db.Set<OutboxMessage>()
             .Where(w => w.ProcessedOnUtc == null
+                && !w.Poisoned
                 && w.AttemptCount < 4
                 && (w.NextTryOnUtc == null || w.NextTryOnUtc <= DateTime.UtcNow))
             .OrderBy(o => o.OccurredOnUtc)

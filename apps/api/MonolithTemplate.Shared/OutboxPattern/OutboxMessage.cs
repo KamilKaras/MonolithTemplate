@@ -16,4 +16,5 @@ public sealed class OutboxMessage
     public int AttemptCount { get; set; }
 
     public string? Error { get; set; }
+    public bool Poisoned { get; init; } = default;
 }
