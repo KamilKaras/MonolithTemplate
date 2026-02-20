@@ -1,10 +1,8 @@
-using Microsoft.AspNetCore.Identity;
 using MonolithTemplate.Identity.Contracts;
 using MonolithTemplate.Notifications.Application.Services;
 using MonolithTemplate.Notifications.Domain.Emails;
 using MonolithTemplate.Notifications.Domain.ValueObjects;
 using MonolithTemplate.Shared.Events;
-using MonolithTemplate.Shared.ResultPattern;
 
 namespace MonolithTemplate.Notifications.Application.Events.UserRegistered;
 

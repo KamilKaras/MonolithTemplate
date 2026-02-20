@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using MonolithTemplate.Shared.OutboxPattern;
 using MonolithTemplate.Shared.Events;
 using MonolithTemplate.Shared.Cqrs;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace MonolithTemplate.Shared;
 
@@ -23,7 +22,7 @@ public static class Module
 
     private static IServiceCollection AddEvents(this IServiceCollection services, params System.Reflection.Assembly[] assemblies)
     {
-        services.TryAddSingleton<IEventBus, EventBus>();
+        services.AddScoped<IEventBus, EventBus>();
 
         services.Scan(scan => scan
             .FromAssemblies(assemblies)

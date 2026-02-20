@@ -240,6 +240,9 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("Poisoned")
+                        .HasColumnType("boolean");
+
                     b.Property<DateTime?>("ProcessedOnUtc")
                         .HasColumnType("timestamp with time zone");
 
