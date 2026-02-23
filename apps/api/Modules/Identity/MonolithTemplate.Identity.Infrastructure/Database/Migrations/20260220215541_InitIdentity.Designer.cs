@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(MyIdentityDbContext))]
-    [Migration("20260219062830_InitIdentity")]
+    [Migration("20260220215541_InitIdentity")]
     partial class InitIdentity
     {
         /// <inheritdoc />
@@ -242,6 +242,9 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
                     b.Property<string>("Payload")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("Poisoned")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("ProcessedOnUtc")
                         .HasColumnType("timestamp with time zone");

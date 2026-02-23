@@ -68,7 +68,8 @@ namespace MonolithTemplate.Identity.Infrastructure.Database.Migrations
                     ProcessedOnUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     NextTryOnUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     AttemptCount = table.Column<int>(type: "integer", nullable: false),
-                    Error = table.Column<string>(type: "text", nullable: true)
+                    Error = table.Column<string>(type: "text", nullable: true),
+                    Poisoned = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
