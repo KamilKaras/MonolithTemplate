@@ -22,28 +22,45 @@ desktop.ini
 # =========================
 # .NET build artifacts
 # =========================
-**/bin
-**/obj
-**/TestResults
+**/bin/
+**/obj/
+**/TestResults/
+**/artifacts/
 
 # =========================
 # Node / Frontend artifacts
 # =========================
-**/node_modules
-**/dist
-**/build
-**/.next
-**/.cache
-**/.expo
-**/.expo-shared
+**/node_modules/
+**/dist/
+**/build/
+**/.next/
+**/.cache/
+**/.vite/
+**/.expo/
+**/.expo-shared/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # =========================
-# Docker / env / local data
+# Env files (security!)
 # =========================
+**/.env
+**/.env.*
+!**/.env.example
+
+# =========================
+# Docker local data
+# =========================
+docker/db_data/
+docker/pgadmin_data/
 infra/.env
 infra/.env.*
-docker/db_data
-docker/pgadmin_data
+
+# =========================
+# Local databases
+# =========================
+*.mdf
+*.ldf
