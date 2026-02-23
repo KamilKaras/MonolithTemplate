@@ -1,8 +1,8 @@
 # =========================
 # .NET / C#
 # =========================
-bin/
-obj/
+**/bin/
+**/obj/
 .vs/
 *.user
 *.suo
@@ -14,7 +14,7 @@ obj/
 *.iml
 
 # User secrets
-secrets.json
+**/secrets.json
 
 # =========================
 # Build / Test / Logs
@@ -28,19 +28,26 @@ Logs/
 *.log
 
 # =========================
-# Node / Frontend
+# React / Vite (apps/web)
 # =========================
-node_modules/
-dist/
-build/
-.cache/
-.next/
-out/
-.pnp/
-.pnp.js
+apps/web/node_modules/
+apps/web/dist/
+apps/web/build/
+apps/web/.cache/
+
+# Vite
+apps/web/.vite/
+
+# Env files (frontend)
+apps/web/.env
+apps/web/.env.*
+!apps/web/.env.example
+
+# Lock debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # =========================
 # Docker / Environment
