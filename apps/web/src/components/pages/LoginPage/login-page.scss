@@ -1,0 +1,13 @@
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .login-card {
+        .p-card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+    }
+}
