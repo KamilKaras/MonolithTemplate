@@ -7,7 +7,13 @@
         .p-card-content {
             display: flex;
             flex-direction: column;
+            min-height: 300px;
+
             gap: 8px;
+        }
+        .p-card-title {
+            display: flex;
+            justify-content: center;
         }
     }
 }
