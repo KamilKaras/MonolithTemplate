@@ -5,8 +5,12 @@ const AppTabViewer = (props: AppTabViewerProps) => {
   const { tabs } = props;
   return (
     <TabView>
-      {tabs.map((el) => {
-        return <TabPanel header={el.header}>{el.content}</TabPanel>;
+      {tabs.map((el, index) => {
+        return (
+          <TabPanel key={index} header={el.header}>
+            {el.content}
+          </TabPanel>
+        );
       })}
     </TabView>
   );
