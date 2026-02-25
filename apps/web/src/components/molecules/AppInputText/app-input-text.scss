@@ -1,0 +1,8 @@
+.app-input-text {
+    &.label {
+        font-size: 12px;
+        &.error {
+            color: #e24c4c;
+        }
+    }
+}

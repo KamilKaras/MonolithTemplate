@@ -1,12 +1,17 @@
 import { Button } from "primereact/button";
-import "./custom-btn.scss";
+import "./app-button.scss";
 import type { AppButtonProps } from "./types";
 
-const CustomBtn = (props: AppButtonProps) => {
+const AppButton = (props: AppButtonProps) => {
   const { label, onClick } = props;
   return (
-    <Button className="app-button" label={label} onClick={onClick}></Button>
+    <Button
+      type="submit"
+      className="app-button"
+      label={label}
+      onClick={onClick}
+    ></Button>
   );
 };
 
-export default CustomBtn;
+export default AppButton;

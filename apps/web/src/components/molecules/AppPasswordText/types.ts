@@ -1,7 +1,8 @@
 export interface AppPasswordTextProps {
-  value: string;
-  onChange: (value: string) => void;
+  value: string | null;
+  onChange: (value: string | null) => void;
 
-  label?: string;
+  error?: string;
+  hint?: string;
   placeholder?: string;
 }
