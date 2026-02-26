@@ -4,3 +4,11 @@
 .p-unselectable-text {
     width: 100%;
 }
+
+.p-tabview,
+.p-tabview-panels,
+.p-tabview-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
