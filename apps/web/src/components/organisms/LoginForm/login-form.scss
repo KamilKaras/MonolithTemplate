@@ -1,5 +1,12 @@
 .login-form {
     display: flex;
     flex-direction: column;
+    flex: 1;
     gap: 8px;
+    min-height: 100%;
+    &.save-button {
+        display: flex;
+        flex: 1;
+        justify-content: flex-end;
+    }
 }

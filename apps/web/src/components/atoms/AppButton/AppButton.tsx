@@ -3,11 +3,14 @@ import "./app-button.scss";
 import type { AppButtonProps } from "./types";
 
 const AppButton = (props: AppButtonProps) => {
-  const { label, onClick } = props;
+  const { label, onClick, className = "" } = props;
+
+  const appButtonClass = className + " " + "app-button";
+
   return (
     <Button
       type="submit"
-      className="app-button"
+      className={appButtonClass}
       label={label}
       onClick={onClick}
     ></Button>

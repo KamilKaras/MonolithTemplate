@@ -23,22 +23,23 @@ const LoginForm = () => {
       console.log(values);
     },
   });
+
   return (
     <FormikProvider value={formik}>
-      <Form noValidate>
-        <div className="login-form">
-          <AppInputText
-            placeholder="Email"
-            value={formik.values.email}
-            onChange={(v) => formik.setFieldValue("email", v)}
-            error={formik.errors.email}
-          />
-          <AppPasswordText
-            placeholder="Hasło"
-            value={formik.values.password}
-            onChange={(v) => formik.setFieldValue("password", v)}
-            error={formik.errors.password}
-          />
+      <Form className="login-form" noValidate>
+        <AppInputText
+          placeholder="Email"
+          value={formik.values.email}
+          onChange={(v) => formik.setFieldValue("email", v)}
+          error={formik.errors.email}
+        />
+        <AppPasswordText
+          placeholder="Hasło"
+          value={formik.values.password}
+          onChange={(v) => formik.setFieldValue("password", v)}
+          error={formik.errors.password}
+        />
+        <div className="login-form save-button">
           <AppButton label="Zapisz" onClick={() => undefined} />
         </div>
       </Form>

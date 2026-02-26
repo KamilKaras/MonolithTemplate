@@ -3,6 +3,7 @@ import AppTabViewer from "../../molecules/AppTabViewer/AppTabViewer";
 import LoginForm from "../../organisms/LoginForm/LoginForm";
 import RegistrationForm from "../../organisms/RegistrationForm/RegistrationForm";
 import "./login-page.scss";
+
 const LoginPage = () => {
   return (
     <div className="login-page">
