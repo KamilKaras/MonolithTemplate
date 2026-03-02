@@ -39,8 +39,8 @@ const LoginForm = () => {
           onChange={(v) => formik.setFieldValue("password", v)}
           error={formik.errors.password}
         />
-        <div className="login-form save-button">
-          <AppButton label="Zapisz" onClick={() => undefined} />
+        <div className="login-form buttons-container">
+          <AppButton label="Zaloguj się" onClick={() => undefined} />
         </div>
       </Form>
     </FormikProvider>
