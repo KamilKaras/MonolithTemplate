@@ -12,3 +12,11 @@
     flex-direction: column;
     flex: 1;
 }
+.p-card .p-card-content {
+    padding: 0;
+}
+.buttons-container {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+}

@@ -8,8 +8,8 @@ const LoginPage = () => {
   return (
     <div className="login-page">
       <Card
-        title="Witamy ponownie"
-        subTitle="Przetestuj naszą aplikację przez miesiąc za darmo"
+        // title="Witamy ponownie"
+        // subTitle="Przetestuj naszą aplikację przez miesiąc za darmo"
         className="login-card"
       >
         <AppTabViewer
