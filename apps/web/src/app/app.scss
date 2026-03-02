@@ -20,3 +20,25 @@
     flex: 1;
     justify-content: flex-end;
 }
+
+.p-button {
+    background: var(--vm-primary);
+    border-color: var(--vm-primary);
+}
+.p-button:not(:disabled):hover {
+    background: var(--vm-primary-hover);
+    border-color: var(--vm-primary-hover);
+}
+
+.p-inputtext:enabled:focus,
+.p-password input:enabled:focus {
+    border-color: var(--vm-primary);
+    box-shadow: var(--focus-ring);
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    color: var(--vm-text);
+}
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link::after {
+    background: var(--vm-primary);
+}

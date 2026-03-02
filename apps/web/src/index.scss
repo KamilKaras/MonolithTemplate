@@ -18,3 +18,33 @@ body {
 
   color: #1f2937;
 }
+
+:root {
+  --vm-primary: #2563eb;
+  --vm-primary-hover: #1e4ed8;
+  --vm-primary-soft: rgba(37, 99, 235, 0.14);
+
+  --vm-bg: #f8fafc;
+  --vm-card: #ffffff;
+
+  --vm-text: #0f172a;
+  --vm-text-muted: #64748b;
+
+  --vm-border: #e2e8f0;
+
+  --vm-success: #16a34a;
+  --vm-error: #dc2626;
+
+  --vm-radius: 16px;
+  --vm-radius-input: 12px;
+  --vm-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+
+  --primary-color: var(--vm-primary);
+  --primary-color-text: #ffffff;
+  --focus-ring: 0 0 0 3px var(--vm-primary-soft);
+  --surface-ground: var(--vm-bg);
+  --surface-card: var(--vm-card);
+  --surface-border: var(--vm-border);
+  --text-color: var(--vm-text);
+  --text-color-secondary: var(--vm-text-muted);
+}
