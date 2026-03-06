@@ -3,4 +3,5 @@ export interface AppButtonProps {
   onClick: () => void;
 
   className?: string;
+  type?: "submit" | "reset" | "button" | undefined;
 }

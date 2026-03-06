@@ -17,48 +17,48 @@ services:
       timeout: 3s
       retries: 20
 
-  api:
-    build:
-      context: ..
-      dockerfile: apps/api/Dockerfile
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
-      ConnectionStrings__Default: ${ConnectionStrings__Default}
-    ports:
-      - "8080:8080"
+  # api:
+  #   build:
+  #     context: ..
+  #     dockerfile: apps/api/Dockerfile
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   environment:
+  #     ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+  #     ConnectionStrings__Default: ${ConnectionStrings__Default}
+  #   ports:
+  #     - "8080:8080"
 
-  web:
-    build:
-      context: ../apps/web
-      dockerfile: Dockerfile
-    depends_on:
-      - api
-    ports:
-      - "3000:3000"
-    environment:
-      VITE_API_URL: http://localhost:8080
-      CHOKIDAR_USEPOLLING: "true"
-      WATCHPACK_POLLING: "true"
-    volumes:
-      - ../apps/web/src:/app/src
-      - ../apps/web/public:/app/public
+  # web:
+  #   build:
+  #     context: ../apps/web
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - api
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     VITE_API_URL: http://localhost:8080
+  #     CHOKIDAR_USEPOLLING: "true"
+  #     WATCHPACK_POLLING: "true"
+  #   volumes:
+  #     - ../apps/web/src:/app/src
+  #     - ../apps/web/public:/app/public
 
-      - ../apps/web/index.html:/app/index.html
-      - ../apps/web/vite.config.ts:/app/vite.config.ts
-      - ../apps/web/package.json:/app/package.json
-      - ../apps/web/package-lock.json:/app/package-lock.json
-      - ../apps/web/tsconfig.json:/app/tsconfig.json
-      - ../apps/web/tsconfig.app.json:/app/tsconfig.app.json
-      - ../apps/web/tsconfig.node.json:/app/tsconfig.node.json
+  #     - ../apps/web/index.html:/app/index.html
+  #     - ../apps/web/vite.config.ts:/app/vite.config.ts
+  #     - ../apps/web/package.json:/app/package.json
+  #     - ../apps/web/package-lock.json:/app/package-lock.json
+  #     - ../apps/web/tsconfig.json:/app/tsconfig.json
+  #     - ../apps/web/tsconfig.app.json:/app/tsconfig.app.json
+  #     - ../apps/web/tsconfig.node.json:/app/tsconfig.node.json
 
-      - ../apps/web/eslint.config.js:/app/eslint.config.js
-      - ../apps/web/.env.dev:/app/.env.dev
-      - ../apps/web/.env.prod:/app/.env.prod
+  #     - ../apps/web/eslint.config.js:/app/eslint.config.js
+  #     - ../apps/web/.env.dev:/app/.env.dev
+  #     - ../apps/web/.env.prod:/app/.env.prod
 
-    command: npm run dev -- --host 0.0.0.0 --port 3000
+  #   command: npm run dev -- --host 0.0.0.0 --port 3000
 
 volumes:
   data:
