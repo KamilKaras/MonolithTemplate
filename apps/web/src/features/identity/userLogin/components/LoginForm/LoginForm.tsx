@@ -1,10 +1,10 @@
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-import AppButton from "../../atoms/AppButton/AppButton";
-import AppInputText from "../../molecules/AppInputText/AppInputText";
-import AppPasswordText from "../../molecules/AppPasswordText/AppPasswordText";
+import AppButton from "../../../../../components/atoms/AppButton/AppButton";
+import AppInputText from "../../../../../components/molecules/AppInputText/AppInputText";
+import AppPasswordText from "../../../../../components/molecules/AppPasswordText/AppPasswordText";
+import { loginInitialFormValues, type LoginFormValues } from "../../types";
 import "./login-form.scss";
-import { loginInitialFormValues, type LoginFormValues } from "./types";
 
 const LoginForm = () => {
   const loginSchema = Yup.object({

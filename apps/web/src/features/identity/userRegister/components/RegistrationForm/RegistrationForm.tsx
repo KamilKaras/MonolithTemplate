@@ -1,20 +1,23 @@
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-import AppButton from "../../atoms/AppButton/AppButton";
-import AppInputText from "../../molecules/AppInputText/AppInputText";
-import AppPasswordText from "../../molecules/AppPasswordText/AppPasswordText";
-import "./registration-form.scss";
+import AppButton from "../../../../../components/atoms/AppButton/AppButton";
+import AppInputText from "../../../../../components/molecules/AppInputText/AppInputText";
+import AppPasswordText from "../../../../../components/molecules/AppPasswordText/AppPasswordText";
 import {
   registrationInitialFormValues,
   type RegistrationFormValues,
-} from "./types";
+} from "../../types";
+import "./registration-form.scss";
 
 const RegistrationForm = () => {
   const registrationSchema = Yup.object({
-    userName: Yup.string().email("Niepoprawny email").required("Pole wymagane"),
+    userName: Yup.string()
+      .min(2, "Pole wymaga minimum 2 znaków")
+      .required("Pole wymagane"),
     email: Yup.string().email("Niepoprawny email").required("Pole wymagane"),
     password: Yup.string().min(8, "Min 8 znaków").required("Pole wymagane"),
     confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "Hasła muszą być takie same")
       .min(8, "Min 8 znaków")
       .required("Pole wymagane"),
   });
@@ -55,7 +58,11 @@ const RegistrationForm = () => {
           error={formik.errors.confirmPassword}
         />
         <div className="registration-form buttons-container">
-          <AppButton label="Utwórz konto" onClick={() => undefined} />
+          <AppButton
+            type="submit"
+            label="Utwórz konto"
+            onClick={() => undefined}
+          />
         </div>
       </Form>
     </FormikProvider>

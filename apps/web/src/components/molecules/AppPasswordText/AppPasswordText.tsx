@@ -11,7 +11,7 @@ const AppPasswordText = (props: AppPasswordTextProps) => {
         invalid={Boolean(error)}
         required
         placeholder={placeholder}
-        value={value ?? undefined}
+        value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
         feedback={false}
       />

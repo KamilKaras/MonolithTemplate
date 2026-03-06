@@ -11,7 +11,7 @@ const AppInputText = (props: AppInputTextProps) => {
       <InputText
         required={required}
         invalid={Boolean(error)}
-        value={value}
+        value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
       />
