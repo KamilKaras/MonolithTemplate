@@ -40,7 +40,11 @@ const LoginForm = () => {
           error={formik.errors.password}
         />
         <div className="login-form buttons-container">
-          <AppButton label="Zaloguj się" onClick={() => undefined} />
+          <AppButton
+            type="submit"
+            label="Zaloguj się"
+            onClick={() => undefined}
+          />
         </div>
       </Form>
     </FormikProvider>

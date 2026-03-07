@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import AppInputText from "../../../../../components/molecules/AppInputText/AppInputText";
 import AppPasswordText from "../../../../../components/molecules/AppPasswordText/AppPasswordText";
+import { useUserRegister } from "../../hooks/useUserRegister";
 import {
   registrationInitialFormValues,
   type RegistrationFormValues,
@@ -25,10 +26,17 @@ const RegistrationForm = () => {
   const formik = useFormik<RegistrationFormValues>({
     initialValues: registrationInitialFormValues,
     validationSchema: registrationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      await mutateAsync({
+        userName: values.userName!,
+        confirmPassword: values.confirmPassword!,
+        password: values.password!,
+        email: values.email!,
+      });
     },
   });
+
+  const { isPending, mutateAsync } = useUserRegister(() => formik.resetForm());
 
   return (
     <FormikProvider value={formik}>
@@ -59,6 +67,7 @@ const RegistrationForm = () => {
         />
         <div className="registration-form buttons-container">
           <AppButton
+            loading={isPending}
             type="submit"
             label="Utwórz konto"
             onClick={() => undefined}

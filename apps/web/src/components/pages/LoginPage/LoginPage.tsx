@@ -1,7 +1,7 @@
 import { Card } from "primereact/card";
+import LoginForm from "../../../features/identity/userLogin/components/LoginForm/LoginForm";
+import RegistrationForm from "../../../features/identity/userRegister/components/RegistrationForm/RegistrationForm";
 import AppTabViewer from "../../molecules/AppTabViewer/AppTabViewer";
-import LoginForm from "../../organisms/LoginForm/LoginForm";
-import RegistrationForm from "../../organisms/RegistrationForm/RegistrationForm";
 import "./login-page.scss";
 
 const LoginPage = () => {
