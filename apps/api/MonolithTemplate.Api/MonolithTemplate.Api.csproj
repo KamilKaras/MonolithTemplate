@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Modules\Notifications\MonolithTemplate.Notifications.Infrastructure\MonolithTemplate.Notifications.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\CORS\" />
+  </ItemGroup>
+
 </Project>
