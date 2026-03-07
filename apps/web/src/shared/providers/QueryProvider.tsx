@@ -8,7 +8,12 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
     },
 
-    mutations: {},
+    mutations: {
+      retry: 0,
+      onError: (error) => {
+        console.log(error);
+      },
+    },
   },
 });
 
