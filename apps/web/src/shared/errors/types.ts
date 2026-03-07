@@ -1,6 +1,6 @@
 export type ApiError = {
   status?: number;
-  title: string;
+  title?: string;
   detail?: string;
   errors?: Record<string, string[]>;
 };
