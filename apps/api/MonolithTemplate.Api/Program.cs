@@ -1,4 +1,5 @@
 using MonolithTemplate.Api.Extensions;
+using MonolithTemplate.Api.Extensions.CORS;
 using MonolithTemplate.Identity.Api.Endpoints;
 using MonolithTemplate.Identity.Infrastructure;
 using MonolithTemplate.Notifications.Infrastructure;
@@ -11,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
 
 builder.Services.AddGlobalExceptions();
+builder.Services.AddAppCors();
+builder.Services.AddAuthorization();
 
 //AddModules
 builder.Services.AddShared();
@@ -27,6 +30,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseCors("Frontend");
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseHttpsRedirection();
 
 await app.RunMigrations();
