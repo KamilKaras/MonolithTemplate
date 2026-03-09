@@ -1,6 +1,6 @@
 export interface AppButtonProps {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
 
   loading?: boolean;
   className?: string;
