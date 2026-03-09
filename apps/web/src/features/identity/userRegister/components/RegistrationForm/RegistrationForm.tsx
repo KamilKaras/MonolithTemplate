@@ -66,12 +66,7 @@ const RegistrationForm = () => {
           error={formik.errors.confirmPassword}
         />
         <div className="registration-form buttons-container">
-          <AppButton
-            loading={isPending}
-            type="submit"
-            label="Utwórz konto"
-            onClick={() => undefined}
-          />
+          <AppButton loading={isPending} type="submit" label="Utwórz konto" />
         </div>
       </Form>
     </FormikProvider>
