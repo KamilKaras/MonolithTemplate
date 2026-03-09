@@ -20,8 +20,7 @@ function App() {
       FallbackComponent={ErrorFallback}
       onReset={() => window.location.reload()}
     >
-      <PageLoader visible />
-      <Suspense fallback={<PageLoader />}>
+      <Suspense fallback={<PageLoader visible />}>
         <Toast ref={toastRef} position="bottom-right" />
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
