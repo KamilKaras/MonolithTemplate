@@ -7,11 +7,7 @@ import "./login-page.scss";
 const LoginPage = () => {
   return (
     <div className="login-page">
-      <Card
-        // title="Witamy ponownie"
-        // subTitle="Przetestuj naszą aplikację przez miesiąc za darmo"
-        className="login-card"
-      >
+      <Card className="login-card">
         <AppTabViewer
           tabs={[
             {
