@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import AppInputText from "../../../../../components/molecules/AppInputText/AppInputText";
 import AppPasswordText from "../../../../../components/molecules/AppPasswordText/AppPasswordText";
+import { useUserLogin } from "../../hooks/useUserLogin";
 import { loginInitialFormValues, type LoginFormValues } from "../../types";
 import "./login-form.scss";
 
@@ -20,9 +21,14 @@ const LoginForm = () => {
     initialValues: loginInitialFormValues,
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      console.log(values);
+      mutateAsync({
+        email: values.email!,
+        password: values.password!,
+      });
     },
   });
+
+  const { isPending, mutateAsync } = useUserLogin(() => formik.resetForm());
 
   return (
     <FormikProvider value={formik}>
@@ -40,7 +46,7 @@ const LoginForm = () => {
           error={formik.errors.password}
         />
         <div className="login-form buttons-container">
-          <AppButton type="submit" label="Zaloguj się" />
+          <AppButton loading={isPending} type="submit" label="Zaloguj się" />
         </div>
       </Form>
     </FormikProvider>
