@@ -1,5 +1,7 @@
+import { PrimeReactProvider } from "primereact/api";
 import { type ReactNode } from "react";
 import { BrowserRouter } from "react-router-dom";
+import { DialogProvider } from "../../components/templates/Dialog/DialogProvider";
 import { SidebarProvider } from "../../components/templates/Sidebar/SidebarProvider";
 import QueryProvider from "./QueryProvider";
 
@@ -12,7 +14,11 @@ const AppProviders = ({ children }: AppProvidersProps) => {
     <>
       <QueryProvider>
         <BrowserRouter>
-          <SidebarProvider>{children}</SidebarProvider>
+          <PrimeReactProvider>
+            <DialogProvider>
+              <SidebarProvider>{children}</SidebarProvider>
+            </DialogProvider>
+          </PrimeReactProvider>
         </BrowserRouter>
       </QueryProvider>
     </>
