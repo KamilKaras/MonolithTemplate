@@ -1,4 +1,5 @@
 import { Form, FormikProvider, useFormik } from "formik";
+import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import AppInputText from "../../../../../components/molecules/AppInputText/AppInputText";
@@ -45,6 +46,9 @@ const LoginForm = () => {
           onChange={(v) => formik.setFieldValue("password", v)}
           error={formik.errors.password}
         />
+        <Link to={"/forgot-password"} className="login-form__forgot-password">
+          Zapomniałeś hasła?
+        </Link>
         <div className="login-form buttons-container">
           <AppButton loading={isPending} type="submit" label="Zaloguj się" />
         </div>
