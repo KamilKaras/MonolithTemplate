@@ -1,8 +1,10 @@
 import { Form, FormikProvider, useFormik } from "formik";
+import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import AppInputText from "../../../../../components/molecules/AppInputText/AppInputText";
 import AppPasswordText from "../../../../../components/molecules/AppPasswordText/AppPasswordText";
+import { useUserLogin } from "../../hooks/useUserLogin";
 import { loginInitialFormValues, type LoginFormValues } from "../../types";
 import "./login-form.scss";
 
@@ -20,9 +22,14 @@ const LoginForm = () => {
     initialValues: loginInitialFormValues,
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      console.log(values);
+      mutateAsync({
+        email: values.email!,
+        password: values.password!,
+      });
     },
   });
+
+  const { isPending, mutateAsync } = useUserLogin(() => formik.resetForm());
 
   return (
     <FormikProvider value={formik}>
@@ -39,8 +46,11 @@ const LoginForm = () => {
           onChange={(v) => formik.setFieldValue("password", v)}
           error={formik.errors.password}
         />
+        <Link to={"/forgot-password"} className="login-form__forgot-password">
+          Zapomniałeś hasła?
+        </Link>
         <div className="login-form buttons-container">
-          <AppButton type="submit" label="Zaloguj się" />
+          <AppButton loading={isPending} type="submit" label="Zaloguj się" />
         </div>
       </Form>
     </FormikProvider>

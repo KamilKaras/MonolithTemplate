@@ -26,6 +26,7 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/confirmation" element={<div></div>} />
+          <Route path="/forgot-password" element={<div>Test</div>} />
         </Routes>
       </Suspense>
     </ErrorBoundary>

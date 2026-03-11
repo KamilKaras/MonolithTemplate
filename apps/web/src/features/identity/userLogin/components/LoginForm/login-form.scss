@@ -4,4 +4,14 @@
     flex: 1;
     gap: 8px;
     min-height: 100%;
+    &__forgot-password {
+        font-size: 0.9rem;
+        color: #4a76a8;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
