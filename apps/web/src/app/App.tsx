@@ -2,6 +2,7 @@ import { Toast } from "primereact/toast";
 import { Suspense, useEffect, useRef } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Navigate, Route, Routes } from "react-router-dom";
+import ForgetPasswordPage from "../components/pages/ForgetPasswordPage/ForgetPasswordPage";
 import LoginPage from "../components/pages/LoginPage/LoginPage";
 import PageLoader from "../components/pages/PageLoader/PageLoader";
 import ErrorFallback from "../shared/errors/ErrorFallback/ErrorFallback";
@@ -26,7 +27,7 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/confirmation" element={<div></div>} />
-          <Route path="/forgot-password" element={<div>Test</div>} />
+          <Route path="/forgot-password" element={<ForgetPasswordPage />} />
         </Routes>
       </Suspense>
     </ErrorBoundary>
