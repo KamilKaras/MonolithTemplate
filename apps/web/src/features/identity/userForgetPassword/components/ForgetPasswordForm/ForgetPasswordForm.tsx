@@ -7,7 +7,7 @@ import {
   forgetPasswordInitialFormValues,
   type ForgerPasswordFormValues,
 } from "../../types";
-import "./login-form.scss";
+import "./forget-password-form.scss";
 
 const ForgetPasswordForm = () => {
   const loginSchema = Yup.object({
