@@ -59,7 +59,11 @@ public sealed class Mailer : IMailer
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Wystąpił błąd podczas wysyłki maila do:{string.Join(',', message.To.Select(s => s.Value))}, tytuł: {message.Subject}");
+            _logger.LogError(ex,
+                "Wystąpił błąd podczas wysyłki maila do: {Recipients}, tytuł: {Subject}",
+                string.Join(',', message.To.Select(s => s.Value)),
+                message.Subject.Value);
+            throw;
         }
 
     }

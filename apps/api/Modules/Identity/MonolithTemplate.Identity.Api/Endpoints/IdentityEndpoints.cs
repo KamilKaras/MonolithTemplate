@@ -6,6 +6,7 @@ using MonolithTemplate.Identity.Api.Requests;
 using MonolithTemplate.Identity.Application.Features.UserForgetPassword;
 using MonolithTemplate.Identity.Application.Features.UserLogin;
 using MonolithTemplate.Identity.Application.Features.UserRegistration;
+using MonolithTemplate.Identity.Domain.IdentityModels;
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 
@@ -62,6 +63,21 @@ public static class IdentityEndpoints
                 onSuccess: Results.Ok
             );
        });
+
+        group.MapPost("/confirm-email", async (
+            [FromBody] ConfirmEmailRequest req,
+            HttpContext ctx,
+            IDispatcher dispatcher) =>
+        {
+            var result = await dispatcher.Send(
+                new UserConfirmEmailCommand(req.UserId, req.Token)
+                );
+
+            return result.Match(
+                 httpContext: ctx,
+                 onSuccess: Results.Ok
+             );
+        });
 
         return app;
     }

@@ -22,7 +22,7 @@ public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<Us
         try
         {
             var confirmationUrl =
-                $"https://twojfrontend/confirm?userId={@event.Id}&token={@event.ConfirmationToken}";
+                $"https://localhost:3000/confirm?userId={Uri.EscapeDataString(@event.Id.ToString())}&token={Uri.EscapeDataString(@event.ConfirmationToken)}";
 
 
             var email = Email.Create(@event.Email);
@@ -37,6 +37,7 @@ public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<Us
                 Kliknij aby potwierdzić konto:
                 {confirmationUrl}
                 """);
+
             if (!htmlBody.IsSuccess)
                 throw new ApplicationException("Błąd przy tworzeniu email");
 
@@ -47,9 +48,9 @@ public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<Us
 
             await _emailSender.SendAsync(message);
         }
-        catch
+        catch (Exception ex)
         {
-            throw new NotImplementedException();
+            throw new ApplicationException("Błąd podczas wysyłki maila rejestracyjnego.", ex);
 
         }
 

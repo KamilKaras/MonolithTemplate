@@ -3,3 +3,6 @@ export type LoginResponse = { accessToken: string; refreshToken: string };
 export type ForgetPasswordResponse = {
   refreshPasswordSuccess: boolean;
 };
+export type ConfirmEmailResponse = {
+  confirmed: boolean;
+};
