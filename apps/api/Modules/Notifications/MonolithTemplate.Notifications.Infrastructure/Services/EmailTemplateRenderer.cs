@@ -1,11 +1,11 @@
 
 namespace MonolithTemplate.Notifications.Infrastructure.Services;
 
-public sealed class FileEmailTemplateRenderer : IEmailTemplateRenderer
+public sealed class EmailTemplateRenderer : IEmailTemplateRenderer
 {
     private readonly string _templatesPath;
 
-    public FileEmailTemplateRenderer()
+    public EmailTemplateRenderer()
     {
         _templatesPath = Path.Combine(AppContext.BaseDirectory, "Templates");
     }
