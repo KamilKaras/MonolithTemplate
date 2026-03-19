@@ -3,7 +3,7 @@ using MonolithTemplate.Identity.Domain.IdentityModels;
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 
-namespace MonolithTemplate.Identity.Application.Features.UserForgetPassword;
+namespace MonolithTemplate.Identity.Application.Features.UserConfirmEmail;
 
 public class UserConfirmEmailCommandHandler : IRequestHandler<UserConfirmEmailCommand, Result<Guid>>
 {

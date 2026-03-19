@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <title>Potwierdzenie rejestracji</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f6f8;font-family:Arial,sans-serif;color:#1f2937;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f6f8;padding:32px 0;">
+    <tr>
+      <td style="display:flex; align-items:center" >
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:12px;overflow:hidden;">
+          <tr>
+            <td style="padding:32px 40px;">
+              <h1 style="margin:0 0 16px;font-size:24px;color:#111827;">
+                Witaj {{UserName}}!
+              </h1>
+
+              <p style="margin:0 0 16px;font-size:16px;line-height:24px;color:#374151;">
+                Dziękujemy za rejestrację w <strong>VisitMe</strong>.
+              </p>
+
+              <p style="margin:0 0 24px;font-size:16px;line-height:24px;color:#374151;">
+                Aby aktywować konto, kliknij poniższy przycisk:
+              </p>
+
+              <p style="margin:0 0 32px;">
+                <a href="{{ConfirmationUrl}}"
+                   style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;
+                          padding:14px 24px;border-radius:8px;font-size:16px;font-weight:bold;">
+                  Potwierdź konto
+                </a>
+              </p>
+
+              <p style="margin:0 0 12px;font-size:14px;line-height:22px;color:#6b7280;">
+                Jeśli przycisk nie działa, skopiuj i wklej poniższy link do przeglądarki:
+              </p>
+
+              <p style="margin:0 0 24px;font-size:14px;line-height:22px;word-break:break-all;color:#2563eb;">
+                <a href="{{ConfirmationUrl}}" style="color:#2563eb;text-decoration:none;">
+                  {{ConfirmationUrl}}
+                </a>
+              </p>
+
+              <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
+
+              <p style="margin:0;font-size:12px;line-height:20px;color:#9ca3af;">
+                Jeśli to nie Ty zakładałeś konto, zignoruj tę wiadomość.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

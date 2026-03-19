@@ -16,4 +16,14 @@
     <ProjectReference Include="..\MonolithTemplate.Notifications.Application\MonolithTemplate.Notifications.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Templates\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EmailTemplates\" />
+  </ItemGroup>
+
 </Project>
