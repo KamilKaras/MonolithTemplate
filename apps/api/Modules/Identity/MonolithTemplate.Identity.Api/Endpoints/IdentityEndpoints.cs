@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using MonolithTemplate.Identity.Api.Requests;
+using MonolithTemplate.Identity.Application.Features.UserConfirmEmail;
 using MonolithTemplate.Identity.Application.Features.UserForgetPassword;
 using MonolithTemplate.Identity.Application.Features.UserLogin;
 using MonolithTemplate.Identity.Application.Features.UserRegistration;
-using MonolithTemplate.Identity.Domain.IdentityModels;
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 

@@ -9,11 +9,12 @@ namespace MonolithTemplate.Notifications.Application.Events.UserRegistered;
 public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<UserRegisteredIntegrationEvent>
 {
     private readonly IMailer _emailSender;
+    private readonly IEmailTemplateRenderer _emailTemplateRenderer;
 
-    public UserRegisteredIntegrationEventHandler(IMailer emailSender)
+    public UserRegisteredIntegrationEventHandler(IMailer emailSender, IEmailTemplateRenderer emailTemplateRenderer)
     {
         _emailSender = emailSender;
-
+        _emailTemplateRenderer = emailTemplateRenderer;
     }
     public async Task Handle(UserRegisteredIntegrationEvent @event, CancellationToken ct = default)
     {
@@ -33,10 +34,16 @@ public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<Us
             if (!email.IsSuccess)
                 throw new ApplicationException("Błąd przy tworzeniu email");
 
-            var htmlBody = EmailHtmlBody.Create($"""
-                Kliknij aby potwierdzić konto:
-                {confirmationUrl}
-                """);
+            var html = await _emailTemplateRenderer.RenderAsync(
+                    "confirm-email",
+                    new Dictionary<string, string>
+                    {
+                        ["UserName"] = "Użytkowniku",
+                        ["ConfirmationUrl"] = confirmationUrl
+                    },
+                ct);
+
+            var htmlBody = EmailHtmlBody.Create(html);
 
             if (!htmlBody.IsSuccess)
                 throw new ApplicationException("Błąd przy tworzeniu email");
