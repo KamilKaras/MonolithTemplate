@@ -29,6 +29,7 @@ public static class Module
     {
         services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
         services.AddScoped<IMailer, Mailer>();
+        services.AddScoped<IEmailTemplateRenderer, EmailTemplateRenderer>();
         return services;
     }
 }
