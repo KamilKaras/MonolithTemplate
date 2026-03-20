@@ -7,12 +7,12 @@ export const setToastRef = (ref: Toast | null) => {
 };
 
 export const toastService = {
-  success(message: string) {
+  success(message: string, life?: number) {
     toastRef?.show({
       severity: "success",
       summary: "Sukces",
       detail: message,
-      life: 3000,
+      life: life ?? 3000,
     });
   },
 
