@@ -7,7 +7,10 @@ export const useUserRegister = (onSuccess?: () => void) => {
   return useMutation({
     mutationFn: (dto: RegisterRequest) => identityApi.register(dto),
     onSuccess: () => {
-      toastService.success("Konto zostało poprawnie utworzone");
+      toastService.success(
+        "Konto zostało poprawnie utworzone, sprawdź skrzynkę email",
+        5000,
+      );
       onSuccess?.();
     },
   });

@@ -23,7 +23,7 @@ public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<Us
         try
         {
             var confirmationUrl =
-                $"https://localhost:3000/confirm?userId={Uri.EscapeDataString(@event.Id.ToString())}&token={Uri.EscapeDataString(@event.ConfirmationToken)}";
+                $"http://localhost:3000/confirm?userId={Uri.EscapeDataString(@event.Id.ToString())}&token={Uri.EscapeDataString(@event.ConfirmationToken)}";
 
 
             var email = Email.Create(@event.Email);

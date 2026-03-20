@@ -1,13 +1,16 @@
+using System.Reflection;
+using System.Text;
+using MonolithTemplate.Notifications.Application.Services;
 
 namespace MonolithTemplate.Notifications.Infrastructure.Services;
 
 public sealed class EmailTemplateRenderer : IEmailTemplateRenderer
 {
-    private readonly string _templatesPath;
+    private readonly Assembly _assembly;
 
     public EmailTemplateRenderer()
     {
-        _templatesPath = Path.Combine(AppContext.BaseDirectory, "Templates");
+        _assembly = typeof(EmailTemplateRenderer).Assembly;
     }
 
     public async Task<string> RenderAsync(
@@ -15,12 +18,26 @@ public sealed class EmailTemplateRenderer : IEmailTemplateRenderer
         Dictionary<string, string> variables,
         CancellationToken ct = default)
     {
-        var filePath = Path.Combine(_templatesPath, $"{templateName}.html");
+        var expectedSuffix = $"EmailTemplates.{templateName}.html";
 
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException($"Nie znaleziono template maila: {filePath}");
+        var resourceName = _assembly
+            .GetManifestResourceNames()
+            .FirstOrDefault(x => x.EndsWith(expectedSuffix, StringComparison.OrdinalIgnoreCase));
 
-        var html = await File.ReadAllTextAsync(filePath, ct);
+        if (resourceName is null)
+        {
+            throw new FileNotFoundException(
+                $"Nie znaleziono template maila: {expectedSuffix}. " +
+                $"Dostępne zasoby: {string.Join(", ", _assembly.GetManifestResourceNames())}");
+        }
+
+        await using var stream = _assembly.GetManifestResourceStream(resourceName);
+
+        if (stream is null)
+            throw new InvalidOperationException($"Nie udało się otworzyć zasobu: {resourceName}");
+
+        using var reader = new StreamReader(stream, Encoding.UTF8);
+        var html = await reader.ReadToEndAsync(ct);
 
         foreach (var variable in variables)
         {
