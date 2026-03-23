@@ -1,7 +1,7 @@
 import { Toast } from "primereact/toast";
 import { Suspense, useEffect, useRef } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import PageLoader from "../components/pages/PageLoader/PageLoader";
+import PageLoader from "../components/molecules/PageLoader/PageLoader";
 import ErrorFallback from "../shared/errors/ErrorFallback/ErrorFallback";
 import { setToastRef } from "../shared/toast/ToastService";
 import "./App.scss";
