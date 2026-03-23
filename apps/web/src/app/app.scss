@@ -14,9 +14,14 @@
 }
 .p-card .p-card-content {
     padding: 0;
+    display: flex;
+    justify-content: center;
 }
 .buttons-container {
     display: flex;
     flex: 1;
     justify-content: flex-end;
+}
+.p-toast-detail {
+    white-space-collapse: break-spaces;
 }
