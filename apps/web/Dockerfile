@@ -1,4 +1,4 @@
-FROM node:22-bookworm-slim
+FROM node:22-bookworm-slim AS build
 
 WORKDIR /app
 
@@ -6,7 +6,12 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
+RUN npm run build
 
-EXPOSE 3000
+FROM nginx:1.27-alpine AS final
+WORKDIR /usr/share/nginx/html
 
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3000"]
+COPY --from=build /app/dist ./
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

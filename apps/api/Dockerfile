@@ -11,6 +11,7 @@ RUN dotnet restore apps/api/MonolithTemplate.Api/MonolithTemplate.Api.csproj
 RUN dotnet publish apps/api/MonolithTemplate.Api/MonolithTemplate.Api.csproj \
     -c $BUILD_CONFIGURATION \
     -o /app/publish \
+    --no-restore \
     /p:UseAppHost=false
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
