@@ -5,7 +5,7 @@ import PageLoader from "../components/molecules/PageLoader/PageLoader";
 import MainPage from "../components/templates/MainPage/MainPage";
 import ErrorFallback from "../shared/errors/ErrorFallback/ErrorFallback";
 import { setToastRef } from "../shared/toast/ToastService";
-import "./App.scss";
+import "./app.scss";
 import AppRouter from "./routes/router";
 
 function App() {
