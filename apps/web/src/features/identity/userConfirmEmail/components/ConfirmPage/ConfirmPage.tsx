@@ -1,5 +1,5 @@
 import { Card } from "primereact/card";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import PageLoader from "../../../../../components/molecules/PageLoader/PageLoader";
@@ -14,13 +14,11 @@ const ConfirmPage = () => {
   const userId = searchParams.get("userId");
   const token = searchParams.get("token");
 
-  const { isPending, isSuccess, isError, mutateAsync } = useUserConfirmEmail(
-    () => {
-      toastService.success(
-        "Email został poprawnie potwierdzony, przejdź do logowania!",
-      );
-    },
-  );
+  const { isPending, isSuccess, mutateAsync } = useUserConfirmEmail(() => {
+    toastService.success(
+      "Email został poprawnie potwierdzony, przejdź do logowania!",
+    );
+  });
 
   useEffect(() => {
     if (!token || !userId) {
@@ -29,11 +27,13 @@ const ConfirmPage = () => {
       );
       return;
     }
-    mutateAsync({ token, userId });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, userId]);
+    async function Test(token: string, userId: string) {
+      await mutateAsync({ token, userId });
+    }
+    Test(token, userId);
+  }, [mutateAsync, token, userId]);
 
-  const renderContent = () => {
+  const renderContent = useMemo(() => {
     if (isSuccess) {
       return (
         <Card title="Rejestracja potwierdzona">
@@ -44,20 +44,19 @@ const ConfirmPage = () => {
         </Card>
       );
     }
-    if (isError) {
-      return (
-        <Card
-          title="Nie udało się potwierdzić rejestracji"
-          subTitle="Skontaktuj się z helpdesk!"
-        ></Card>
-      );
-    }
-  };
+
+    return (
+      <Card
+        title="Nie udało się potwierdzić rejestracji"
+        subTitle="Skontaktuj się z helpdesk!"
+      ></Card>
+    );
+  }, [isSuccess, navigate]);
 
   return (
     <div className="confirm-page">
       <PageLoader visible={isPending} />
-      {renderContent()}
+      {renderContent}
     </div>
   );
 };

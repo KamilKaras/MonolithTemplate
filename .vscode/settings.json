@@ -37,5 +37,10 @@
       "source.organizeImports": "always",
       "source.fixAll.eslint": "always"
     }
-  }
+  },
+  "editor.fontSize": 13,
+  "editor.lineHeight": 22,
+  "editor.fontFamily": "JetBrains Mono",
+  "editor.bracketPairColorization.enabled": false,
+  "editor.rulers": [120],
 }
