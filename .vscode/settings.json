@@ -1,7 +1,15 @@
 {
-  
   "cSpell.language": "en,pl",
-  
+  "cSpell.enabled": true,
+  "cSpell.enabledLanguageIds": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "markdown"
+  ],
+
   "editor.formatOnSave": true,
 
   "editor.codeActionsOnSave": {
@@ -38,9 +46,10 @@
       "source.fixAll.eslint": "always"
     }
   },
+
   "editor.fontSize": 13,
   "editor.lineHeight": 22,
   "editor.fontFamily": "JetBrains Mono",
   "editor.bracketPairColorization.enabled": false,
-  "editor.rulers": [120],
+  "editor.rulers": [120]
 }

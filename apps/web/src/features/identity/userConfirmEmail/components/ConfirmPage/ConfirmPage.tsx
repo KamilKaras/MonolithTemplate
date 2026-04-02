@@ -1,5 +1,5 @@
 import { Card } from "primereact/card";
-import { useEffect, useMemo } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import PageLoader from "../../../../../components/molecules/PageLoader/PageLoader";
@@ -10,53 +10,58 @@ import "./confirm-page.scss";
 const ConfirmPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const calledRef = useRef(false);
 
   const userId = searchParams.get("userId");
   const token = searchParams.get("token");
 
-  const { isPending, isSuccess, mutateAsync } = useUserConfirmEmail(() => {
-    toastService.success(
-      "Email został poprawnie potwierdzony, przejdź do logowania!",
-    );
-  });
+  const { isPending, isSuccess, mutateAsync } = useUserConfirmEmail();
 
   useEffect(() => {
     if (!token || !userId) {
       toastService.info(
-        "Nie udało się pobrać parametrów do potwierdzenia rejestracji\nProsimy o kontakt!",
+        "Nie udało się pobrać parametrów do potwierdzenia rejestracji.\nProsimy o kontakt z helpdeskiem!",
       );
       return;
     }
-    async function Test(token: string, userId: string) {
+    if (calledRef.current) return;
+    calledRef.current = true;
+
+    const confirmEmail = async () => {
       await mutateAsync({ token, userId });
-    }
-    Test(token, userId);
+    };
+
+    void confirmEmail();
   }, [mutateAsync, token, userId]);
 
-  const renderContent = useMemo(() => {
-    if (isSuccess) {
-      return (
+  if (isPending) {
+    return (
+      <div className="confirm-page">
+        <PageLoader visible />
+        <Card title="Trwa weryfikacja..." />
+      </div>
+    );
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="confirm-page">
         <Card title="Rejestracja potwierdzona">
           <AppButton
             label="Przejdź do logowania"
             onClick={() => navigate("/login")}
-          ></AppButton>
+          />
         </Card>
-      );
-    }
-
-    return (
-      <Card
-        title="Nie udało się potwierdzić rejestracji"
-        subTitle="Skontaktuj się z helpdesk!"
-      ></Card>
+      </div>
     );
-  }, [isSuccess, navigate]);
+  }
 
   return (
     <div className="confirm-page">
-      <PageLoader visible={isPending} />
-      {renderContent}
+      <Card
+        title="Nie udało się potwierdzić rejestracji"
+        subTitle="Skontaktuj się z helpdeskiem!"
+      />
     </div>
   );
 };
