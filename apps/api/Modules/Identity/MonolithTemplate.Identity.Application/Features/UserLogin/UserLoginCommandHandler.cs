@@ -35,11 +35,11 @@ public class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Result<
             return Error.Forbidden("Auth.LockedOut", "Konto jest chwilowo zablokowane. Spróbuj później.");
 
         if (!signIn.Succeeded)
-            return Error.Unauthorized("Auth.InvalidCredentials", "Nieprawidłowy email lub hasło");
+            return Error.BadRequest("Auth.InvalidCredentials", "Nieprawidłowy email lub hasło");
 
-        //if (!await _userManager.IsEmailConfirmedAsync(user))
-        //   return Result<UserLoginResponse>.Failure(
-        //     Error.Forbidden("Auth.EmailNotConfirmed", "Potwierdź email, aby się zalogować."));
+        if (!await _userManager.IsEmailConfirmedAsync(user))
+            return Result<UserLoginResponse>.Failure(
+              Error.Forbidden("Auth.EmailNotConfirmed", "Potwierdź email, aby się zalogować."));
 
         var accessToken = _tokenGenerator.Generate(user);
 
