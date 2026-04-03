@@ -3,5 +3,5 @@ export const getErrorMessage = (error: unknown) => {
     return (error as { detail: string }).detail;
   }
 
-  return "Wystąpił nieoczekiwany błąd.";
+  return "Wystąpił nieoczekiwany błąd serwera!.";
 };
