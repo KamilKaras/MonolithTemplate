@@ -20,13 +20,21 @@ public class UserConfirmEmailCommandHandler : IRequestHandler<UserConfirmEmailCo
             return Error.NotFound("UserConfirmEmail.NotFound", "Użytkownik nie istnieje!");
 
         if (user.EmailConfirmed)
-            return Error.Validation("UserConfirmEmail.EmailConfirmed", "Email został już potwierdzony!");
+            return Result<Guid>.Success(user.Id);
 
         var result = await _userManager.ConfirmEmailAsync(user, request.Token);
 
-        if (!result.Succeeded)
-            return Error.Failure("UserConfirmEmail.NotSucceeded", "Wystąpił problem podczas potwierdzania email!");
+        if (result.Succeeded)
+            return Result<Guid>.Success(user.Id);
 
-        return Result<Guid>.Success(user.Id);
+        user = await _userManager.FindByIdAsync(request.UserId);
+
+        if (user is not null && user.EmailConfirmed)
+            return Result<Guid>.Success(user.Id);
+
+        return Error.Failure(
+            "UserConfirmEmail.NotSucceeded",
+            "Wystąpił problem podczas potwierdzania email!"
+        );
     }
 }
