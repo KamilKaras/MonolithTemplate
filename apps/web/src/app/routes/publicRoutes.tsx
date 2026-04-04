@@ -1,5 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 import ForgetPasswordPage from "../../components/pages/ForgetPasswordPage/ForgetPasswordPage";
+import HomeTailsPage from "../../components/pages/HomeTailsPage/HomeTailsPage";
 import LoginPage from "../../components/pages/LoginPage/LoginPage";
 import ConfirmPage from "../../features/identity/userConfirmEmail/components/ConfirmPage/ConfirmPage";
 
@@ -15,5 +16,9 @@ export const publicRoutes: RouteObject[] = [
   {
     path: "/forgot-password",
     element: <ForgetPasswordPage />,
+  },
+  {
+    path: "/home",
+    element: <HomeTailsPage />,
   },
 ];

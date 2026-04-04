@@ -1,24 +1,20 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-
-export interface AuthState {
-  token: string | undefined;
-}
-
-const initialState: AuthState = {
-  token: undefined,
-};
+import { initialAuthState, type SessionProps } from "./types";
 
 export const authSlice = createSlice({
-  name: "counter",
-  initialState,
+  name: "auth",
+  initialState: initialAuthState,
   reducers: {
-    setToken: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
+    setSession: (state, action: PayloadAction<SessionProps>) => {
+      state.session = action.payload;
+    },
+    clearSession: (state) => {
+      state.session = undefined;
     },
   },
 });
 
-export const { setToken } = authSlice.actions;
+export const { setSession, clearSession } = authSlice.actions;
 
 export default authSlice;
