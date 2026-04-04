@@ -2,6 +2,7 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import axios from "axios";
 import qs from "qs";
 import type { ApiError, ProblemDetails } from "../shared/errors/types";
+import { getToken } from "../store/store";
 import type { RequestParams } from "./types";
 
 class ApiClient {
@@ -17,7 +18,7 @@ class ApiClient {
     });
 
     this.api.interceptors.request.use((config) => {
-      const token = localStorage.getItem("access_token");
+      const token = getToken();
       if (token) {
         config.headers = config.headers ?? {};
         config.headers.Authorization = `Bearer ${token}`;

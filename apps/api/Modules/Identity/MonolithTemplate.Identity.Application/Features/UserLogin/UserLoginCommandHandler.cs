@@ -43,6 +43,6 @@ public class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Result<
 
         var accessToken = _tokenGenerator.Generate(user);
 
-        return new UserLoginResponse(accessToken);
+        return new UserLoginResponse(accessToken,user.Id);
     }
 }

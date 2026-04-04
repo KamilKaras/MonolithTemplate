@@ -79,6 +79,21 @@ public static class IdentityEndpoints
              );
         });
 
+         group.MapGet("/me", async (
+            [FromQuery] string UserId,
+            HttpContext ctx,
+            IDispatcher dispatcher) =>
+        {
+            var result = await dispatcher.Send(
+                new GetUserCredentialsQuery(UserId)
+                );
+
+            return result.Match(
+                 httpContext: ctx,
+                 onSuccess: Results.Ok
+             );
+        });
+
         return app;
     }
 }
