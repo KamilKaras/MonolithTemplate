@@ -51,8 +51,7 @@ public static class Module
         .AddSignInManager();
 
         services.AddScoped<ITokenGenerator, TokenGenerator>();
-
-        services.AddAuthentication();
+        services.AddScoped<ICurrentUser, CurrentUser>();
 
         return services;
     }
