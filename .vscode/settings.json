@@ -51,5 +51,10 @@
   "editor.lineHeight": 22,
   "editor.fontFamily": "JetBrains Mono",
   "editor.bracketPairColorization.enabled": false,
-  "editor.rulers": [120]
+  "editor.rulers": [
+    120
+  ],
+  "csharp-dev-tools.roslyn.projectOrSolutionFiles": [
+    "c:\\Kamil\\Projekty\\MonolithTemplate\\MonolithTemplate.sln"
+  ]
 }

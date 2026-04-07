@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using MonolithTemplate.Identity.Api.Requests;
+using MonolithTemplate.Identity.Application.Features.GetUserCredentials;
 using MonolithTemplate.Identity.Application.Features.UserConfirmEmail;
 using MonolithTemplate.Identity.Application.Features.UserForgetPassword;
 using MonolithTemplate.Identity.Application.Features.UserLogin;
@@ -79,20 +81,20 @@ public static class IdentityEndpoints
              );
         });
 
-         group.MapGet("/me", async (
-            [FromQuery] string UserId,
+         group.MapGet("/me", [Authorize] async (
             HttpContext ctx,
             IDispatcher dispatcher) =>
         {
             var result = await dispatcher.Send(
-                new GetUserCredentialsQuery(UserId)
+                new GetUserCredentialsQuery()
                 );
 
             return result.Match(
                  httpContext: ctx,
                  onSuccess: Results.Ok
              );
-        });
+        })
+        .RequireAuthorization();
 
         return app;
     }
