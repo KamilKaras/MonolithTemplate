@@ -22,5 +22,5 @@ export const identityApi = {
     apiClient.post<ForgetPasswordResponse>("/identity/forget-password", dto),
   confirmEmail: (dto: ConfirmEmailRequest) =>
     apiClient.post<ConfirmEmailResponse>("/identity/confirm-email", dto),
-  me: (userId: string) => apiClient.get<MeResponse>("/identity/me", { userId }),
+  me: () => apiClient.get<MeResponse>("/identity/me", undefined),
 };

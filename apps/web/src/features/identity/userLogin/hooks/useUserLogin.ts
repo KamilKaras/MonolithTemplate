@@ -16,7 +16,7 @@ export const useUserLogin = (onSuccess?: () => void) => {
     onSuccess: async (data) => {
       onSuccess?.();
       dispatch(setSession(data));
-      await client.fetchQuery({
+      await client.invalidateQueries({
         queryKey: [USER_CREDENTIALS_QUERY_KEY],
       });
       onSuccess?.();

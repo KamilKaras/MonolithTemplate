@@ -7,6 +7,5 @@ export const initialAuthState: AuthState = {
 };
 
 export type SessionProps = {
-  userId: string;
   token: string;
 };

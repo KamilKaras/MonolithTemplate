@@ -3,7 +3,7 @@ using MonolithTemplate.Identity.Domain.IdentityModels;
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 
-namespace MonolithTemplate.Identity.Application.Features.UserConfirmEmail;
+namespace MonolithTemplate.Identity.Application.Features.GetUserCredentials;
 
 public class GetUserCredentialsQueryHandler : IRequestHandler<GetUserCredentialsQuery, Result<Guid>>
 {

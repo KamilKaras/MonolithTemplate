@@ -1,14 +1,12 @@
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 
-namespace MonolithTemplate.Identity.Application.Features.UserConfirmEmail;
+namespace MonolithTemplate.Identity.Application.Features.GetUserCredentials;
 
 public sealed class GetUserCredentialsQuery : IQuery<Result<Guid>>
 {
-    public GetUserCredentialsQuery(string userId)
+    public GetUserCredentialsQuery()
     {
-        UserId = userId;
     }
 
-    public string UserId { get; }
 }
