@@ -1,60 +1,54 @@
 {
-  "cSpell.language": "en,pl",
-  "cSpell.enabled": true,
-  "cSpell.enabledLanguageIds": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "html",
-    "markdown"
-  ],
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 800,
 
   "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.tabSize": 2,
+  "editor.rulers": [100],
+  "editor.renderWhitespace": "selection",
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+ 
+  "cSpell.language": "en,pl",
 
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "always"
+  "explorer.compactFolders": false,
+  "workbench.editor.enablePreview": false,
+
+  "workbench.colorTheme": "Dark Modern",
+
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+
+  "editor.unicodeHighlight.allowedLocales": {
+    "pl": true
   },
 
-  "[csharp]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "always"
-    }
-  },
-
-  "[typescript]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "always",
-      "source.fixAll.eslint": "always"
-    }
-  },
-  "[typescriptreact]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "always",
-      "source.fixAll.eslint": "always"
-    }
-  },
   "[javascript]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "always",
-      "source.fixAll.eslint": "always"
-    }
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascriptreact]": {
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "always",
-      "source.fixAll.eslint": "always"
-    }
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-
-  "editor.fontSize": 13,
-  "editor.lineHeight": 22,
-  "editor.fontFamily": "JetBrains Mono",
-  "editor.bracketPairColorization.enabled": false,
-  "editor.rulers": [
-    120
-  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[csharp]": {
+    "editor.formatOnSave": true
+  },
   "csharp-dev-tools.roslyn.projectOrSolutionFiles": [
     "c:\\Kamil\\Projekty\\MonolithTemplate\\MonolithTemplate.sln"
-  ]
+  ],
+
 }
