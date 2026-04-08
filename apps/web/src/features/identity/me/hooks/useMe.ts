@@ -1,15 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { identityApi } from "../../../../api/modules/Identity/IdentityApi";
-import { useAppSelector } from "../../../../store/store";
 import { USER_CREDENTIALS_QUERY_KEY } from "./types";
 
-export const useUserCredentials = () => {
-  const token = useAppSelector((state) => state.auth.session);
-
+export const useMe = () => {
   return useQuery({
     queryKey: [USER_CREDENTIALS_QUERY_KEY],
     queryFn: () => identityApi.me(),
-    enabled: !!token,
     retry: false,
   });
 };

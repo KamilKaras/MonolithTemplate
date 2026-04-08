@@ -39,11 +39,21 @@ public static class IdentityEndpoints
         group.MapPost("/login", async (
                    [FromBody] LoginRequest req,
                    HttpContext ctx,
+                   HttpResponse response,
                    IDispatcher dispatcher) =>
         {
             var result = await dispatcher.Send(
                 new UserLoginCommand(req.Email, req.Password)
             );
+            
+            response.Cookies.Append("access_token", result.Value.Token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTimeOffset.UtcNow.AddMinutes(30),
+                Path = "/"
+            });
 
             return result.Match(
                 httpContext: ctx,

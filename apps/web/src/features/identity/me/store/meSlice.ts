@@ -10,8 +10,8 @@ const initialState: CredentialsState = {
   user: undefined,
 };
 
-export const credentialsSlice = createSlice({
-  name: "credentials",
+export const meSlice = createSlice({
+  name: "me",
   initialState,
   reducers: {
     setCredentials: (state, action: PayloadAction<User>) => {
@@ -20,6 +20,6 @@ export const credentialsSlice = createSlice({
   },
 });
 
-export const { setCredentials } = credentialsSlice.actions;
+export const { setCredentials } = meSlice.actions;
 
-export default credentialsSlice;
+export default meSlice;

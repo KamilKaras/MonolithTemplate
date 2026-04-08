@@ -1,8 +1,8 @@
-import { useUserCredentials } from "../../../features/identity/getUserCredentials/hooks/useUserConfirmEmail";
+import { useMe } from "../../../features/identity/me/hooks/useMe";
 import PageLoader from "../../molecules/PageLoader/PageLoader";
 
 const HomeTailsPage = () => {
-  const { isPending } = useUserCredentials();
+  const { isPending } = useMe();
   if (isPending) {
     return <PageLoader visible />;
   }
