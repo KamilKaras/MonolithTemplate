@@ -4,7 +4,7 @@ import { identityApi } from "../../../../api/modules/Identity/IdentityApi";
 import type { LoginRequest } from "../../../../api/modules/Identity/requests";
 import { setSession } from "../../../../store/slices/authSlice";
 import { useAppDispatch } from "../../../../store/store";
-import { USER_CREDENTIALS_QUERY_KEY } from "../../getUserCredentials/hooks/types";
+import { USER_CREDENTIALS_QUERY_KEY } from "../../me/hooks/types";
 
 export const useUserLogin = (onSuccess?: () => void) => {
   const dispatch = useAppDispatch();
