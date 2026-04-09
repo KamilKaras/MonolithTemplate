@@ -1,17 +1,14 @@
 import type { RouteObject } from "react-router-dom";
-import ProtectedRoute from "./protectedRoute";
+import HomeTailsPage from "../../components/pages/HomeTailsPage/HomeTailsPage";
+import { RequireAuth } from "./authGuards/RequireAuth";
 
 export const privateRoutes: RouteObject[] = [
   {
-    element: (
-      <ProtectedRoute>
-        <div></div>
-      </ProtectedRoute>
-    ),
+    element: <RequireAuth />,
     children: [
       {
-        path: "/dashboard",
-        element: <div></div>,
+        path: "/home",
+        element: <HomeTailsPage />,
       },
     ],
   },
