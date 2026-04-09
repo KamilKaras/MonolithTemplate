@@ -7,5 +7,6 @@ export const useMe = () => {
     queryKey: [USER_CREDENTIALS_QUERY_KEY],
     queryFn: () => identityApi.me(),
     retry: false,
+    refetchOnWindowFocus: false,
   });
 };

@@ -2,7 +2,6 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import axios from "axios";
 import qs from "qs";
 import type { ApiError, ProblemDetails } from "../shared/errors/types";
-import { getToken } from "../store/store";
 import type { RequestParams } from "./types";
 
 class ApiClient {
@@ -17,24 +16,10 @@ class ApiClient {
       timeout: 30_000,
     });
 
-    this.api.interceptors.request.use((config) => {
-      const token = getToken();
-      if (token) {
-        config.headers = config.headers ?? {};
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    });
-
     this.api.interceptors.response.use(
       (response) => response,
       (error) => {
         const mappedError = this.mapError(error);
-
-        if (mappedError.status === 401) {
-          localStorage.removeItem("access_token");
-          window.location.href = "/login";
-        }
 
         return Promise.reject(mappedError);
       },
