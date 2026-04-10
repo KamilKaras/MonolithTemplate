@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { identityApi } from "../../../../api/modules/identity/identityApi";
+import { identityApi } from "../../../../api/modules/identity/identityEndpoints";
 import type { RegisterRequest } from "../../../../api/modules/identity/requests";
 import { toastService } from "../../../../shared/toast/ToastService";
 
