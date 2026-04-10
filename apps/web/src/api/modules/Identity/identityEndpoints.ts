@@ -13,7 +13,7 @@ import type {
   RegisterResponse,
 } from "./responses";
 
-export const identityApi = {
+export const identityEndpoints = {
   me: () => apiClient.get<MeResponse>("/identity/me", undefined),
 
   register: (dto: RegisterRequest) =>
