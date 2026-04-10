@@ -4,8 +4,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import PageLoader from "../../../../../components/molecules/PageLoader/PageLoader";
 import { toastService } from "../../../../../shared/toast/ToastService";
-import { useUserConfirmEmail } from "../../hooks/useUserConfirmEmail";
 import "./confirm-page.scss";
+import { useConfirmEmail } from "../../hooks/useConfirmEmail";
 
 const ConfirmPage = () => {
   const [searchParams] = useSearchParams();
@@ -15,7 +15,7 @@ const ConfirmPage = () => {
   const userId = searchParams.get("userId");
   const token = searchParams.get("token");
 
-  const { isPending, isSuccess, mutateAsync } = useUserConfirmEmail();
+  const { isPending, isSuccess, mutateAsync } = useConfirmEmail();
 
   useEffect(() => {
     if (!token || !userId) {

@@ -2,7 +2,7 @@ import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import AppInputText from "../../../../../components/molecules/AppInputText/AppInputText";
-import { useUserForgetPassword } from "../../hooks/useUserForgetPassword";
+import { useForgetPassword } from "../../hooks/useForgetPassword";
 import {
   forgetPasswordInitialFormValues,
   type ForgerPasswordFormValues,
@@ -26,7 +26,7 @@ const ForgetPasswordForm = () => {
     },
   });
 
-  const { isPending, mutateAsync } = useUserForgetPassword(() =>
+  const { isPending, mutateAsync } = useForgetPassword(() =>
     formik.resetForm(),
   );
 

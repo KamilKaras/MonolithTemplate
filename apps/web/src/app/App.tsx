@@ -3,7 +3,7 @@ import { Suspense, useEffect, useRef } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import PageLoader from "../components/molecules/PageLoader/PageLoader";
 import MainPage from "../components/templates/MainPage/MainPage";
-import ErrorFallback from "../shared/errors/ErrorFallback/ErrorFallback";
+import ErrorFallback from "../shared/errors/error-fallback/ErrorFallback";
 import { setToastRef } from "../shared/toast/ToastService";
 import "./app.scss";
 import AppRouter from "./routes/router";

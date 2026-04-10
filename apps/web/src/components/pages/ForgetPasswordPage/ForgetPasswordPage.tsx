@@ -1,5 +1,5 @@
 import { Card } from "primereact/card";
-import ForgetPasswordForm from "../../../features/identity/userForgetPassword/components/ForgetPasswordForm/ForgetPasswordForm";
+import ForgetPasswordForm from "../../../features/identity/forgot-password/components/ForgetPasswordForm/ForgetPasswordForm";
 import "./forget-password-page.scss";
 
 const ForgetPasswordPage = () => {

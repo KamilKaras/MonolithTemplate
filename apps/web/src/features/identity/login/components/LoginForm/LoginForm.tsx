@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import AppInputText from "../../../../../components/molecules/AppInputText/AppInputText";
 import AppPasswordText from "../../../../../components/molecules/AppPasswordText/AppPasswordText";
-import { useUserLogin } from "../../hooks/useUserLogin";
+import { useLogin } from "../../hooks/useLogin";
 import { loginInitialFormValues, type LoginFormValues } from "../../types";
 import "./login-form.scss";
 
@@ -29,7 +29,7 @@ const LoginForm = () => {
     },
   });
 
-  const { isPending, mutateAsync } = useUserLogin(() => formik.resetForm());
+  const { isPending, mutateAsync } = useLogin(() => formik.resetForm());
 
   return (
     <FormikProvider value={formik}>
