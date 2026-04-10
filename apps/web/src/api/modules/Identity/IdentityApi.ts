@@ -14,6 +14,8 @@ import type {
 } from "./responses";
 
 export const identityApi = {
+  me: () => apiClient.get<MeResponse>("/identity/me", undefined),
+
   register: (dto: RegisterRequest) =>
     apiClient.post<RegisterResponse>("/identity/register", dto),
   login: (dto: LoginRequest) =>
@@ -22,5 +24,5 @@ export const identityApi = {
     apiClient.post<ForgetPasswordResponse>("/identity/forget-password", dto),
   confirmEmail: (dto: ConfirmEmailRequest) =>
     apiClient.post<ConfirmEmailResponse>("/identity/confirm-email", dto),
-  me: () => apiClient.get<MeResponse>("/identity/me", undefined),
+  logout: () => apiClient.post("/identity/logout", undefined),
 };

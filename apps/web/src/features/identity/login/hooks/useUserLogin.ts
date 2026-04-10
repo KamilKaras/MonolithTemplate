@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { identityApi } from "../../../../api/modules/Identity/IdentityApi";
-import type { LoginRequest } from "../../../../api/modules/Identity/requests";
+import { identityApi } from "../../../../api/modules/identity/identityApi";
+import type { LoginRequest } from "../../../../api/modules/identity/requests";
 import { setSession } from "../../../../store/slices/authSlice";
 import { useAppDispatch } from "../../../../store/store";
 import { USER_CREDENTIALS_QUERY_KEY } from "../../me/hooks/types";
