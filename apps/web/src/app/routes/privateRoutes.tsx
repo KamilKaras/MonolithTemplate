@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 import HomeTailsPage from "../../components/pages/HomeTailsPage/HomeTailsPage";
-import { RequireAuth } from "./authGuards/RequireAuth";
+import { RequireAuth } from "./auth-guards/RequireAuth";
 
 export const privateRoutes: RouteObject[] = [
   {
