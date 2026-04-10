@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import AppInputText from "../../../../../components/molecules/AppInputText/AppInputText";
 import AppPasswordText from "../../../../../components/molecules/AppPasswordText/AppPasswordText";
-import { useUserRegister } from "../../hooks/useUserRegister";
+import { useRegister } from "../../hooks/useRegister";
 import {
   registrationInitialFormValues,
   type RegistrationFormValues,
@@ -36,7 +36,7 @@ const RegistrationForm = () => {
     },
   });
 
-  const { isPending, mutateAsync } = useUserRegister(() => formik.resetForm());
+  const { isPending, mutateAsync } = useRegister(() => formik.resetForm());
 
   return (
     <FormikProvider value={formik}>
