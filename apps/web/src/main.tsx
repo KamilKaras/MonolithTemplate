@@ -1,3 +1,4 @@
+import "primeicons/primeicons.css";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { createRoot } from "react-dom/client";
 import App from "./app/App.tsx";
