@@ -7,4 +7,10 @@
     background: white;
     flex-shrink: 0;
     min-height: 50px;
+    padding: 8px 16px;
+
+    &__right-content {
+        display: flex;
+        margin-left: auto;
+    }
 }
