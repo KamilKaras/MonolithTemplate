@@ -1,13 +1,28 @@
 import { PrimeIcons } from "primereact/api";
+import { Button } from "primereact/button";
 import type { AppIconButtonProps } from "./types";
 
-const AppIconButton = (props: AppIconButtonProps) => {
-  const { icon, label, onClick } = props;
+export const AppIconButton = ({
+  icon,
+  label,
+  tooltip,
+  disabled,
+  onClick,
+}: AppIconButtonProps) => {
+  const tooltipId = `btn-${icon}`;
+
   return (
-    <div className={PrimeIcons[icon]} onClick={onClick}>
-      {label}
-    </div>
+    <>
+      <Button
+        icon={PrimeIcons[icon]}
+        onClick={onClick}
+        disabled={disabled}
+        className={`p-button-text ${tooltipId}`}
+        tooltip={tooltip}
+        tooltipOptions={{ position: "bottom" }}
+      >
+        {label}
+      </Button>
+    </>
   );
 };
-
-export default AppIconButton;
