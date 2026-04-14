@@ -41,7 +41,7 @@ const ForgetPasswordForm = () => {
         />
 
         <div className="login-form buttons-container">
-          <AppButton loading={isPending} type="submit" label="Zaloguj się" />
+          <AppButton loading={isPending} type="submit" label="Resetuj hasło" />
         </div>
       </Form>
     </FormikProvider>
