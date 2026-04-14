@@ -6,7 +6,9 @@ import PageLoader from "../../molecules/PageLoader/PageLoader";
 const HeaderActions = () => {
   const { isPending, mutateAsync } = useLogout();
   const { isAuthenticated, isLoading } = useAuth();
+
   const loading = isPending || isLoading;
+
   if (loading) return <PageLoader visible />;
 
   return (
