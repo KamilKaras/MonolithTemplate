@@ -1,16 +1,11 @@
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 
-namespace MonolithTemplate.Identity.Application.Features.UserConfirmEmail;
-
-public sealed class UserConfirmEmailCommand : ICommand<Result<Guid>>
+namespace MonolithTemplate.Identity.Application.Features.UserConfirmEmail
 {
-    public UserConfirmEmailCommand(string userId, string token)
+    public sealed class UserConfirmEmailCommand(string userId, string token) : ICommand<Result<Guid>>
     {
-        UserId = userId;
-        Token = token;
+        public string UserId { get; } = userId;
+        public string Token { get; } = token;
     }
-
-    public string UserId { get; }
-    public string Token { get; }
 }
