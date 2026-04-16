@@ -85,7 +85,7 @@ namespace MonolithTemplate.Identity.Api.Endpoints
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.None,
-                    Expires = DateTimeOffset.UtcNow.AddDays(-1), // 👈 przeszłość = usuwa cookie
+                    Expires = DateTimeOffset.UtcNow.AddDays(-1),
                     Path = "/"
                 });
                 return Results.Ok();
