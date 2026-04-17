@@ -1,22 +1,22 @@
 using System.Text.Json.Serialization;
 namespace MonolithTemplate.Shared.ResultPattern;
 
-public class Result
-{
-    protected Result()
-    {
+public class Result {
+    protected Result() {
         IsSuccess = true;
         Error = default;
     }
-    protected Result(Error error)
-    {
+    protected Result(Error error) {
         IsSuccess = false;
         Error = error;
     }
 
-
-    public Error? Error { get; }
-    public bool IsSuccess { get; }
+    public Error? Error {
+        get;
+    }
+    public bool IsSuccess {
+        get;
+    }
 
 
     public static implicit operator Result(Error error) =>
@@ -24,17 +24,17 @@ public class Result
 
     public static Result Failure(Error error) =>
         new(error);
+
+    public static Result Success() =>
+    new();
 }
 
-public sealed class Result<T> : Result
-{
+public sealed class Result<T> : Result {
     private readonly T? _value;
-    private Result(T value) : base()
-    {
+    private Result(T value) : base() {
         _value = value;
     }
-    private Result(Error error) : base(error)
-    {
+    private Result(Error error) : base(error) {
         _value = default;
     }
 
