@@ -60,6 +60,7 @@ obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
  MonolithTemplate.Identity.Contracts.AssemblyInfo.cs
  MonolithTemplate.Identity.Contracts.GlobalUsings.g.cs
+UserPasswordResetIntegrationEvent.cs
 UserRegisteredIntegrationEvent.cs
 
 [metadataReferences]
