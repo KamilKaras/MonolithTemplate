@@ -4,7 +4,7 @@ import type { ConfirmEmailRequest } from "../../../../api/modules/identity/reque
 
 export const useConfirmEmail = () => {
   return useMutation({
-    mutationFn: (dto: ConfirmEmailRequest) =>
-      identityEndpoints.confirmEmail(dto),
+    mutationFn: (request: ConfirmEmailRequest) =>
+      identityEndpoints.confirmEmail(request),
   });
 };

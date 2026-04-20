@@ -5,3 +5,13 @@ export type ForgerPasswordFormValues = {
 export const forgetPasswordInitialFormValues: ForgerPasswordFormValues = {
   email: null,
 };
+
+export type NewPasswordFormValues = {
+  password: string | null;
+  confirmPassword: string | null;
+};
+
+export const newPasswordInitialFormValues: NewPasswordFormValues = {
+  password: null,
+  confirmPassword: null,
+};

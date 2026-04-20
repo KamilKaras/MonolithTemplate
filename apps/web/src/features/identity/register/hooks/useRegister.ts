@@ -5,7 +5,7 @@ import { toastService } from "../../../../shared/toast/ToastService";
 
 export const useRegister = (onSuccess?: () => void) => {
   return useMutation({
-    mutationFn: (dto: RegisterRequest) => identityEndpoints.register(dto),
+    mutationFn: (request: RegisterRequest) => identityEndpoints.register(request),
     onSuccess: () => {
       toastService.success(
         "Konto zostało poprawnie utworzone, sprawdź skrzynkę email",

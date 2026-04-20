@@ -67,6 +67,7 @@ Requests/
  GetUserCredentialsRequest.cs
  LoginRequest.cs
  RegisterRequest.cs
+ ResetPasswordRequest.cs
 
 [metadataReferences]
 ../../../../../../../../Program Files/dotnet/packs/Microsoft.AspNetCore.App.Ref/10.0.2/ref/net10.0/

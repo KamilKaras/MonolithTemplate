@@ -7,9 +7,9 @@ import {
   forgetPasswordInitialFormValues,
   type ForgerPasswordFormValues,
 } from "../../types";
-import "./forget-password-form.scss";
+import "./forgot-password-form.scss";
 
-const ForgetPasswordForm = () => {
+const ForgotPasswordForm = () => {
   const loginSchema = Yup.object({
     email: Yup.string()
       .email("Niepoprawny email")
@@ -32,7 +32,7 @@ const ForgetPasswordForm = () => {
 
   return (
     <FormikProvider value={formik}>
-      <Form className="forget-password-form" noValidate>
+      <Form className="forgot-password-form" noValidate>
         <AppInputText
           placeholder="Email"
           value={formik.values.email}
@@ -48,4 +48,4 @@ const ForgetPasswordForm = () => {
   );
 };
 
-export default ForgetPasswordForm;
+export default ForgotPasswordForm;
