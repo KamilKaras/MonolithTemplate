@@ -2,7 +2,7 @@ import { Card } from "primereact/card";
 import ForgotPasswordForm from "../../../features/identity/forgot-password/components/ForgetPasswordForm/ForgotPasswordForm";
 import "./forgot-password-page.scss";
 
-const ForgetPasswordPage = () => {
+const ForgotPasswordPage = () => {
   return (
     <div className="forgot-password-page">
       <Card className="forgot-password-card">
@@ -12,4 +12,4 @@ const ForgetPasswordPage = () => {
   );
 };
 
-export default ForgetPasswordPage;
+export default ForgotPasswordPage;

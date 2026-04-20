@@ -1,5 +1,5 @@
 import type { RouteObject } from "react-router-dom";
-import ForgetPasswordPage from "../../components/pages/ForgetPasswordPage/ForgetPasswordPage";
+import ForgotPasswordPage from "../../components/pages/ForgetPasswordPage/ForgotPasswordPage";
 import LoginPage from "../../components/pages/LoginPage/LoginPage";
 import ProblemOccurredPage from "../../components/pages/ProblemOccurredPage/ProblemOccurredPage";
 import ResetPasswordPage from "../../components/pages/ResetPasswordPage/ResetPasswordPage";
@@ -20,7 +20,7 @@ export const publicRoutes: RouteObject[] = [
       },
       {
         path: "/forgot-password",
-        element: <ForgetPasswordPage />,
+        element: <ForgotPasswordPage />,
       },
       {
         path: "/reset-password",
