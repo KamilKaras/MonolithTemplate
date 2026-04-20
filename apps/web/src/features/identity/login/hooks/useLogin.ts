@@ -10,7 +10,7 @@ export const useLogin = (onSuccess?: () => void) => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: (dto: LoginRequest) => identityEndpoints.login(dto),
+    mutationFn: (request: LoginRequest) => identityEndpoints.login(request),
     onSuccess: async (data) => {
       onSuccess?.();
       dispatch(setSession(data));

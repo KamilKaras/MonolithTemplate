@@ -1,11 +1,11 @@
 import { Card } from "primereact/card";
 import ForgotPasswordForm from "../../../features/identity/forgot-password/components/ForgetPasswordForm/ForgotPasswordForm";
-import "./forgot-password-page.scss";
+import "./forget-password-page.scss";
 
 const ForgetPasswordPage = () => {
   return (
-    <div className="forgot-password-page">
-      <Card className="forgot-password-card">
+    <div className="forget-password-page">
+      <Card className="forget-password-card">
         <ForgotPasswordForm />
       </Card>
     </div>

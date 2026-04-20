@@ -19,13 +19,15 @@ public class UserPasswordResetIntegrationEventHandler : IIntegrationEventHandler
 
         try {
             var resetUrl =
-                $"http://localhost:3000/confirm?userId={Uri.EscapeDataString(@event.Id.ToString())}&token={Uri.EscapeDataString(@event.ResetToken)}";
+                $"http://localhost:3000/reset-password?userId={Uri.EscapeDataString(@event.Id.ToString())}&token={Uri.EscapeDataString(@event.ResetToken)}";
 
             var email = Email.Create(@event.Email);
+
             if (!email.IsSuccess)
                 throw new ApplicationException("Błąd przy tworzeniu email");
 
-            var subject = EmailSubject.Create("Potwierdź rejestrację w VisitMe");
+            var subject = EmailSubject.Create("Reset hasła w VisitMe");
+
             if (!email.IsSuccess)
                 throw new ApplicationException("Błąd przy tworzeniu email");
 

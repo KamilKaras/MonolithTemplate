@@ -2,9 +2,7 @@ export type RegisterResponse = { registerSuccess: boolean };
 export type LoginResponse = {
   token: string;
 };
-export type ForgetPasswordResponse = {
-  refreshPasswordSuccess: boolean;
-};
+
 export type ConfirmEmailResponse = {
   confirmed: boolean;
 };

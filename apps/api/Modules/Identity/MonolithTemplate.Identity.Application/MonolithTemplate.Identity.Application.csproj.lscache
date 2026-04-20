@@ -66,6 +66,9 @@ Features/GetUserCredentials/
  GetUserCredentialsDto.cs
  GetUserCredentialsQuery.cs
  GetUserCredentialsQueryHandler.cs
+Features/ResetPassword/
+ ResetPasswordCommand.cs
+ ResetPasswordCommandHandler.cs
 Features/UserConfirmEmail/
  UserConfirmEmailCommand.cs
  UserConfirmEmailCommandHandler.cs

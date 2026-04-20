@@ -82,8 +82,8 @@ namespace MonolithTemplate.Identity.Api.Endpoints {
                 return Results.Ok();
             });
 
-            group.MapPost("/forget-password", async (
-               [FromBody] ForgetPasswordRequest req,
+            group.MapPost("/forgot-password", async (
+               [FromBody] ForgotPasswordRequest req,
                HttpContext ctx,
                IDispatcher dispatcher) => {
                    var result = await dispatcher.Send(
@@ -95,6 +95,20 @@ namespace MonolithTemplate.Identity.Api.Endpoints {
                         onSuccess: () => Results.Ok()
                     );
                });
+
+            group.MapPost("/reset-password", async (
+            [FromBody] ResetPasswordRequest req,
+            HttpContext ctx,
+            IDispatcher dispatcher) => {
+                var result = await dispatcher.Send(
+                    new ResetPasswordCommand(req.Password, req.ConfirmPassword)
+                    );
+
+                return result.Match(
+                     httpContext: ctx,
+                     onSuccess: () => Results.Ok()
+                 );
+            });
 
             group.MapPost("/confirm-email", async (
                 [FromBody] ConfirmEmailRequest req,

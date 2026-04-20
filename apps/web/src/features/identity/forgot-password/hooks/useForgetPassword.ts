@@ -5,8 +5,8 @@ import { toastService } from "../../../../shared/toast/ToastService";
 
 export const useForgetPassword = (onSuccess?: () => void) => {
   return useMutation({
-    mutationFn: (dto: ForgetPasswordRequest) =>
-      identityEndpoints.forgetPassword(dto),
+    mutationFn: (request: ForgetPasswordRequest) =>
+      identityEndpoints.forgetPassword(request),
     onSuccess: () => {
       onSuccess?.();
       toastService.success(

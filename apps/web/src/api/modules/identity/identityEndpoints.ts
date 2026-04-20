@@ -4,10 +4,10 @@ import type {
   ForgetPasswordRequest,
   LoginRequest,
   RegisterRequest,
+  SetNewPasswordRequest,
 } from "./requests";
 import type {
   ConfirmEmailResponse,
-  ForgetPasswordResponse,
   LoginResponse,
   MeResponse,
   RegisterResponse,
@@ -16,13 +16,15 @@ import type {
 export const identityEndpoints = {
   me: () => apiClient.get<MeResponse>("/identity/me", undefined),
 
-  register: (dto: RegisterRequest) =>
-    apiClient.post<RegisterResponse>("/identity/register", dto),
-  login: (dto: LoginRequest) =>
-    apiClient.post<LoginResponse>("/identity/login", dto),
-  forgetPassword: (dto: ForgetPasswordRequest) =>
-    apiClient.post<ForgetPasswordResponse>("/identity/forget-password", dto),
-  confirmEmail: (dto: ConfirmEmailRequest) =>
-    apiClient.post<ConfirmEmailResponse>("/identity/confirm-email", dto),
+  register: (request: RegisterRequest) =>
+    apiClient.post<RegisterResponse>("/identity/register", request),
+  login: (request: LoginRequest) =>
+    apiClient.post<LoginResponse>("/identity/login", request),
+  forgetPassword: (request: ForgetPasswordRequest) =>
+    apiClient.post("/identity/forgot-password", request),
+  resetPassword: (request: SetNewPasswordRequest) =>
+    apiClient.post("/identity/reset-password", request),
+  confirmEmail: (request: ConfirmEmailRequest) =>
+    apiClient.post<ConfirmEmailResponse>("/identity/confirm-email", request),
   logout: () => apiClient.post("/identity/logout", undefined),
 };

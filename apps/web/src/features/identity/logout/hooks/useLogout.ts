@@ -11,7 +11,7 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: identityEndpoints.logout,
     onSuccess: () => {
-      navigate("/");
+      navigate("/login");
       dispatch(clearSession());
     },
     onError: () => {
