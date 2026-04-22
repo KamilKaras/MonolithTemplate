@@ -4,7 +4,7 @@ import type {
   ForgetPasswordRequest,
   LoginRequest,
   RegisterRequest,
-  SetNewPasswordRequest,
+  ResetPasswordRequest,
 } from "./requests";
 import type {
   ConfirmEmailResponse,
@@ -22,7 +22,7 @@ export const identityEndpoints = {
     apiClient.post<LoginResponse>("/identity/login", request),
   forgetPassword: (request: ForgetPasswordRequest) =>
     apiClient.post("/identity/forgot-password", request),
-  resetPassword: (request: SetNewPasswordRequest) =>
+  resetPassword: (request: ResetPasswordRequest) =>
     apiClient.post("/identity/reset-password", request),
   confirmEmail: (request: ConfirmEmailRequest) =>
     apiClient.post<ConfirmEmailResponse>("/identity/confirm-email", request),

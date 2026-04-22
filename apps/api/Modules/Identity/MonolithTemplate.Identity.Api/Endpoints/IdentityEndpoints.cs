@@ -49,27 +49,28 @@ namespace MonolithTemplate.Identity.Api.Endpoints {
                 });
 
             group.MapPost("/login", async (
-                       [FromBody] LoginRequest req,
-                       HttpContext ctx,
-                       HttpResponse response,
-                       IDispatcher dispatcher) => {
-                           var result = await dispatcher.Send(
-                               new UserLoginCommand(req.Email, req.Password)
-                           );
+                [FromBody] LoginRequest req,
+                HttpContext ctx,
+                HttpResponse response,
+                IDispatcher dispatcher) => {
+                    var result = await dispatcher.Send(
+                        new UserLoginCommand(req.Email, req.Password)
+                    );
 
-                           response.Cookies.Append("access_token", result.Value.Token, new CookieOptions {
-                               HttpOnly = true,
-                               Secure = true,
-                               SameSite = SameSiteMode.None,
-                               Expires = DateTimeOffset.UtcNow.AddMinutes(30),
-                               Path = "/"
-                           });
-
-                           return result.Match(
-                               httpContext: ctx,
-                               onSuccess: Results.Ok
-                           );
-                       });
+                    return result.Match(
+                        httpContext: ctx,
+                        onSuccess: () => {
+                            response.Cookies.Append("access_token", result.Value.Token, new CookieOptions {
+                                HttpOnly = true,
+                                Secure = true,
+                                SameSite = SameSiteMode.None,
+                                Expires = DateTimeOffset.UtcNow.AddMinutes(30),
+                                Path = "/"
+                            });
+                            return Results.Ok();
+                        }
+                    );
+                });
 
             group.MapPost("/logout", (HttpResponse response) => {
                 response.Cookies.Append("access_token", "", new CookieOptions {
@@ -101,7 +102,7 @@ namespace MonolithTemplate.Identity.Api.Endpoints {
             HttpContext ctx,
             IDispatcher dispatcher) => {
                 var result = await dispatcher.Send(
-                    new ResetPasswordCommand(req.Password, req.ConfirmPassword)
+                    new ResetPasswordCommand(req.Password, req.ConfirmPassword, req.UserId, req.Token)
                     );
 
                 return result.Match(

@@ -6,8 +6,10 @@ export type RegisterRequest = {
 };
 export type LoginRequest = { email: string; password: string };
 export type ForgetPasswordRequest = { email: string };
-export type SetNewPasswordRequest = {
+export type ResetPasswordRequest = {
   password: string;
   confirmPassword: string;
+  token: string;
+  userId: string;
 };
 export type ConfirmEmailRequest = { userId: string; token: string };
