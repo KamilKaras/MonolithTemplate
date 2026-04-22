@@ -24,12 +24,12 @@ public class UserPasswordResetIntegrationEventHandler : IIntegrationEventHandler
             var email = Email.Create(@event.Email);
 
             if (!email.IsSuccess)
-                throw new ApplicationException("Błąd przy tworzeniu email");
+                throw new ApplicationException("Błąd przy tworzeniu wiadomości email");
 
             var subject = EmailSubject.Create("Reset hasła w VisitMe");
 
             if (!email.IsSuccess)
-                throw new ApplicationException("Błąd przy tworzeniu email");
+                throw new ApplicationException("Błąd przy tworzeniu wiadomości email");
 
             var html = await _emailTemplateRenderer.RenderAsync(
                     "reset-password",
@@ -42,7 +42,7 @@ public class UserPasswordResetIntegrationEventHandler : IIntegrationEventHandler
             var htmlBody = EmailHtmlBody.Create(html);
 
             if (!htmlBody.IsSuccess)
-                throw new ApplicationException("Błąd przy tworzeniu email");
+                throw new ApplicationException("Błąd przy tworzeniu wiadomości email");
 
             var message = new EmailMessage(
                 [email.Value],

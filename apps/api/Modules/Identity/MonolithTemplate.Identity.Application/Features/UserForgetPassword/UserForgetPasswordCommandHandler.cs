@@ -15,12 +15,11 @@ public class UserForgetPasswordCommandHandler(
     public async Task<Result> Handle(UserForgetPasswordCommand request, CancellationToken ct) {
         var user = await userManager.FindByEmailAsync(request.Email);
 
-        if (user is null)
-            return Error.NotFound("UserForgetPasswordCommandHandler.Handle", "Nie znaleziono użytkownika!");
+        if (user is not null) {
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-        var token = await userManager.GeneratePasswordResetTokenAsync(user);
-
-        await eventBus.Publish(new UserPasswordResetIntegrationEvent(user.Id, request.Email, token));
+            await eventBus.Publish(new UserPasswordResetIntegrationEvent(user.Id, request.Email, token));
+        }
 
         return Result.Success();
     }

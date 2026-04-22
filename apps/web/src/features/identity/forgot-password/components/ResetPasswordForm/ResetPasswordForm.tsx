@@ -2,13 +2,16 @@ import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import AppPasswordText from "../../../../../components/molecules/AppPasswordText/AppPasswordText";
+import { useUserParams } from "../../../../../shared/hooks/useSearchParams";
 import { useResetPassword } from "../../hooks/useResetPassword";
 import {
   newPasswordInitialFormValues,
   type NewPasswordFormValues,
 } from "../../types";
 
-const ResetPassword = () => {
+const ResetPasswordForm = () => {
+  const { token, userId } = useUserParams();
+
   const loginSchema = Yup.object({
     password: Yup.string().min(8, "Min 8 znaków").required("Pole wymagane"),
     confirmPassword: Yup.string()
@@ -24,6 +27,8 @@ const ResetPassword = () => {
       mutateAsync({
         password: values.password!,
         confirmPassword: values.confirmPassword!,
+        token: token!,
+        userId: userId!,
       });
     },
   });
@@ -54,4 +59,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ResetPasswordForm;

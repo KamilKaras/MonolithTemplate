@@ -9,10 +9,7 @@ export const useForgetPassword = (onSuccess?: () => void) => {
       identityEndpoints.forgetPassword(request),
     onSuccess: () => {
       onSuccess?.();
-      toastService.success(
-        "Sprawdź skrzynkę email, aby zresetować hasło",
-        5000,
-      );
+      toastService.success("Jeśli konto istnieje, wysłaliśmy email", 5000);
     },
   });
 };
