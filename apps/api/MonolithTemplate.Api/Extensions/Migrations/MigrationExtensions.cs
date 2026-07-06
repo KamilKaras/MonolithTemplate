@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 
 namespace MonolithTemplate.Api.Extensions.Migrations;
@@ -10,15 +11,30 @@ public static class MigrationExtensions
         {
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
+            var logger = services.GetRequiredService<ILoggerFactory>()
+                .CreateLogger("DbMigration");
 
-            var dbContextTypes = services
-                .GetServices<DbContextOptions>()
-                .Select(o => o.ContextType)
+            var dbContextTypes = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(assembly =>
+                {
+                    try
+                    {
+                        return assembly.GetTypes();
+                    }
+                    catch (ReflectionTypeLoadException ex)
+                    {
+                        return ex.Types.Where(type => type is not null)!;
+                    }
+                })
+                .Where(type =>
+                    type is not null &&
+                    !type.IsAbstract &&
+                    typeof(DbContext).IsAssignableFrom(type))
+                .Cast<Type>()
+                .Where(type => services.GetService(type) is DbContext)
                 .Distinct()
                 .ToList();
-
-            var logger = services.GetRequiredService<ILoggerFactory>()
-                     .CreateLogger("DbMigration");
 
             foreach (var dbContextType in dbContextTypes)
             {

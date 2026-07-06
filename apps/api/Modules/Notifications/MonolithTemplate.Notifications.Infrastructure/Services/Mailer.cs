@@ -41,12 +41,7 @@ public sealed class Mailer : IMailer
 
             using var client = new SmtpClient();
 
-            var secure = _smtpSettings.Security switch
-            {
-                "Ssl" => SecureSocketOptions.SslOnConnect,
-                "StartTls" => SecureSocketOptions.StartTls,
-                _ => SecureSocketOptions.None
-            };
+            var secure = ParseSecurity(_smtpSettings.Security);
 
             await client.ConnectAsync(_smtpSettings.Server, _smtpSettings.Port, secure);
 
@@ -76,5 +71,22 @@ public sealed class Mailer : IMailer
             messageToSend.Cc.Add(new MailboxAddress(null, cc.Value));
         foreach (var bcc in message.Bcc ?? [])
             messageToSend.Bcc.Add(new MailboxAddress(null, bcc.Value));
+    }
+
+    public static SecureSocketOptions ParseSecurity(string? security)
+    {
+        if (string.IsNullOrWhiteSpace(security))
+        {
+            return SecureSocketOptions.None;
+        }
+
+        return security.Trim().ToUpperInvariant() switch
+        {
+            "NONE" => SecureSocketOptions.None,
+            "SSL" or "SSLONCONNECT" => SecureSocketOptions.SslOnConnect,
+            "STARTTLS" => SecureSocketOptions.StartTls,
+            "STARTTLSWHENAVAILABLE" => SecureSocketOptions.StartTlsWhenAvailable,
+            _ => throw new InvalidOperationException($"Unsupported SMTP security option: {security}")
+        };
     }
 }

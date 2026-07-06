@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
 
 builder.Services.AddGlobalExceptions();
-builder.Services.AddAppCors();
+builder.Services.AddAppCors(configuration);
 builder.Services.AddAppAuth(configuration);
 
 //AddModules
@@ -24,6 +24,8 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -35,8 +37,6 @@ app.UseAuthorization();
 app.UseHttpsRedirection();
 
 await app.RunMigrations();
-
-app.UseExceptionHandler();
 
 app.MapIdentityEndpoints();
 
