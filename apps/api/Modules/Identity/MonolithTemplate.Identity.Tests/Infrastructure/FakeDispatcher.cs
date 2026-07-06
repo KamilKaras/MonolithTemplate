@@ -7,7 +7,7 @@ using MonolithTemplate.Identity.Application.Features.UserRegistration;
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 
-namespace MonolithTemplate.Identity.Api.Tests.Infrastructure;
+namespace MonolithTemplate.Identity.Tests.Infrastructure;
 
 public sealed class FakeDispatcher : IDispatcher
 {

@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using MonolithTemplate.Identity.Api.Endpoints;
-using MonolithTemplate.Identity.Api.Tests.Infrastructure;
+using MonolithTemplate.Identity.Tests.Infrastructure;
 using MonolithTemplate.Shared.Cqrs;
 using Xunit;
 
-namespace MonolithTemplate.Identity.Api.Tests;
+namespace MonolithTemplate.Identity.Tests;
 
 public sealed class IdentityEndpointsTests
 {

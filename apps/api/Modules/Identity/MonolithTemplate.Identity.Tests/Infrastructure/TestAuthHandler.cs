@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace MonolithTemplate.Identity.Api.Tests.Infrastructure;
+namespace MonolithTemplate.Identity.Tests.Infrastructure;
 
 public sealed class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
