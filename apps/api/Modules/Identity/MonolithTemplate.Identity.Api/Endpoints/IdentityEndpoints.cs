@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-using MonolithTemplate.Identity.Api.Requests;
 using MonolithTemplate.Identity.Application.Features.GetUserCredentials;
 using MonolithTemplate.Identity.Application.Features.ResetPassword;
 using MonolithTemplate.Identity.Application.Features.UserConfirmEmail;
@@ -35,12 +34,10 @@ namespace MonolithTemplate.Identity.Api.Endpoints {
             .RequireAuthorization();
 
             group.MapPost("/register", async (
-                [FromBody] RegisterRequest req,
+                [FromBody] UserRegistrationCommand req,
                 HttpContext ctx,
                 IDispatcher dispatcher) => {
-                    var result = await dispatcher.Send(
-                        new UserRegistrationCommand(req.UserName, req.Email, req.Password, req.ConfirmPassword)
-                        );
+                    var result = await dispatcher.Send(req);
 
                     return result.Match(
                         httpContext: ctx,
@@ -54,6 +51,7 @@ namespace MonolithTemplate.Identity.Api.Endpoints {
                 HttpContext ctx,
                 HttpResponse response,
                 IDispatcher dispatcher) => {
+
                     var result = await dispatcher.Send(req);
 
                     return result.Match(
@@ -83,12 +81,10 @@ namespace MonolithTemplate.Identity.Api.Endpoints {
             });
 
             group.MapPost("/forgot-password", async (
-               [FromBody] ForgotPasswordRequest req,
+               [FromBody] UserForgetPasswordCommand req,
                HttpContext ctx,
                IDispatcher dispatcher) => {
-                   var result = await dispatcher.Send(
-                       new UserForgetPasswordCommand(req.Email)
-                       );
+                   var result = await dispatcher.Send(req);
 
                    return result.Match(
                         httpContext: ctx,
@@ -97,12 +93,10 @@ namespace MonolithTemplate.Identity.Api.Endpoints {
                });
 
             group.MapPost("/reset-password", async (
-            [FromBody] ResetPasswordRequest req,
+            [FromBody] ResetPasswordCommand req,
             HttpContext ctx,
             IDispatcher dispatcher) => {
-                var result = await dispatcher.Send(
-                    new ResetPasswordCommand(req.Password, req.ConfirmPassword, req.UserId, req.Token)
-                    );
+                var result = await dispatcher.Send(req);
 
                 return result.Match(
                      httpContext: ctx,
@@ -111,12 +105,10 @@ namespace MonolithTemplate.Identity.Api.Endpoints {
             });
 
             group.MapPost("/confirm-email", async (
-                [FromBody] ConfirmEmailRequest req,
+                [FromBody] UserConfirmEmailCommand req,
                 HttpContext ctx,
                 IDispatcher dispatcher) => {
-                    var result = await dispatcher.Send(
-                        new UserConfirmEmailCommand(req.UserId, req.Token)
-                        );
+                    var result = await dispatcher.Send(req);
 
                     return result.Match(
                          httpContext: ctx,

@@ -1,12 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Identity\MonolithTemplate.Identity.Contracts\MonolithTemplate.Identity.Contracts.csproj" />
-    <ProjectReference Include="..\MonolithTemplate.Notifications.Domain\MonolithTemplate.Notifications.Domain.csproj" />
+    <Compile Remove="EmailSender\**" />
+    <EmbeddedResource Remove="EmailSender\**" />
+    <None Remove="EmailSender\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EmailSender\" />
+    <ProjectReference Include="..\..\Identity\MonolithTemplate.Identity.Contracts\MonolithTemplate.Identity.Contracts.csproj" />
+    <ProjectReference Include="..\MonolithTemplate.Notifications.Domain\MonolithTemplate.Notifications.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

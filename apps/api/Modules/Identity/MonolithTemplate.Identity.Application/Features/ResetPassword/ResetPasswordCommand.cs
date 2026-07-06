@@ -5,6 +5,13 @@ namespace MonolithTemplate.Identity.Application.Features.ResetPassword;
 
 public sealed class ResetPasswordCommand : ICommand<Result> {
 
+    public ResetPasswordCommand() {
+        Password = string.Empty;
+        ConfirmPassword = string.Empty;
+        UserId = string.Empty;
+        Token = string.Empty;
+    }
+
     public ResetPasswordCommand(
         string password,
          string confirmPassword,
@@ -17,15 +24,15 @@ public sealed class ResetPasswordCommand : ICommand<Result> {
     }
 
     public string Password {
-        get;
+        get; init;
     }
     public string ConfirmPassword {
-        get;
+        get; init;
     }
     public string UserId {
-        get;
+        get; init;
     }
     public string Token {
-        get;
+        get; init;
     }
 }

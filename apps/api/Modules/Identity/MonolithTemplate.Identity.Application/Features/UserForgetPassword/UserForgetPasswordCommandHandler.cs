@@ -13,6 +13,10 @@ public class UserForgetPasswordCommandHandler(
     IEventBus eventBus) : IRequestHandler<UserForgetPasswordCommand, Result> {
 
     public async Task<Result> Handle(UserForgetPasswordCommand request, CancellationToken ct) {
+        var validationResult = UserForgetPasswordCommandValidator.Validate(request);
+        if (!validationResult.IsSuccess)
+            return validationResult;
+
         var user = await userManager.FindByEmailAsync(request.Email);
 
         if (user is not null) {
