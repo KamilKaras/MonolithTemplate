@@ -23,6 +23,11 @@ public class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Result<
     }
     public async Task<Result<UserLoginResponse>> Handle(UserLoginCommand request, CancellationToken ct)
     {
+        var validationResult = UserLoginCommandValidator.Validate(request);
+
+        if (!validationResult.IsSuccess)
+            return Result<UserLoginResponse>.Failure(validationResult.Error!);
+
         var user = await _userManager.FindByEmailAsync(request.Email);
 
         if (user is null)
@@ -45,5 +50,5 @@ public class UserLoginCommandHandler : IRequestHandler<UserLoginCommand, Result<
 
         return new UserLoginResponse(accessToken);
     }
-    
+
 }

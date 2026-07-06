@@ -50,13 +50,11 @@ namespace MonolithTemplate.Identity.Api.Endpoints {
                 });
 
             group.MapPost("/login", async (
-                [FromBody] LoginRequest req,
+                [FromBody] UserLoginCommand req,
                 HttpContext ctx,
                 HttpResponse response,
                 IDispatcher dispatcher) => {
-                    var result = await dispatcher.Send(
-                        new UserLoginCommand(req.Email, req.Password)
-                    );
+                    var result = await dispatcher.Send(req);
 
                     return result.Match(
                         httpContext: ctx,
