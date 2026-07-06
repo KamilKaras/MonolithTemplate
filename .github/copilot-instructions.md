@@ -1,40 +1,32 @@
-## 2. `.github/copilot-instructions.md`
-
-Utwórz folder `.github`, jeśli nie istnieje, i wklej:
-
-```md
 # GitHub Copilot instructions
 
 You are assisting with a .NET + React monorepo.
 
 Always:
 
-- Read `AGENTS.md` before making larger changes.
-- Prefer small, safe edits.
-- Follow existing code style.
-- Preserve the current architecture.
-- Ask before moving files, renaming projects, or changing public API contracts.
-- Explain the plan before modifying multiple files.
+- Read AGENTS.md before larger or cross-cutting changes.
+- Prefer small, safe edits that preserve the current architecture.
+- Follow the existing code style and naming conventions.
+- Ask before renaming major projects or folders, changing public API contracts, or changing database or auth behavior.
+- Explain the planned file changes before editing multiple files.
 
-For backend:
+Backend guidance:
 
-- Use ASP.NET Core conventions.
-- Prefer dependency injection.
-- Keep controllers thin.
-- Put business logic in existing services/handlers.
-- Use existing validation and error handling style.
+- Use the solution files as the source of truth.
+- Keep endpoints thin and transport-focused.
+- Put business logic in existing handlers, services, or module application layers.
+- Prefer dependency injection and existing shared abstractions.
+- Use the outbox for user-facing cross-module notification events.
 
-For frontend:
+Frontend guidance:
 
-- Use existing React patterns.
-- Reuse components.
-- Keep API calls in existing API/client/query layer.
-- Use existing styling approach.
+- Reuse the existing API client, React Query hooks, and route structure.
+- Treat the authenticated user query from /identity/me as the source of truth for session state.
+- Keep configuration in Vite environment variables such as VITE_API_URL.
 
-After changes, suggest relevant commands:
+Useful validation commands:
 
-- `dotnet build MonolithTemplate.sln`
-- `dotnet test`
-- `npm run lint`
-- `npm run build`
-```
+- dotnet build MonolithTemplate.sln
+- dotnet test MonolithTemplate.sln
+- npm --prefix apps/web run lint
+- npm --prefix apps/web run build

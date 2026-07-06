@@ -6,10 +6,10 @@ This is a monorepo with a .NET backend and React frontend.
 
 Main folders:
 
-- `apps/api` or `api` - ASP.NET Core backend
-- `apps/web` or `web` - React frontend
-- `infra` - infrastructure, Docker, deployment
-- `.github` - GitHub Actions and repository automation
+- apps/api - ASP.NET Core backend
+- apps/web - React frontend
+- infra - infrastructure, Docker, deployment
+- .github - GitHub Actions and repository automation
 
 ## General rules
 
@@ -26,11 +26,12 @@ Before changing code:
 ## Backend rules
 
 - Use the Visual Studio solution as the source of truth.
-- Keep business logic out of controllers.
+- Keep business logic out of endpoints and controllers.
 - Prefer dependency injection.
 - Use async/await for I/O.
 - Follow existing DTO, validation and error handling style.
 - Do not change public API contracts without explaining the impact.
+- Use the outbox for user-facing cross-module notification events unless synchronous delivery is explicitly required.
 
 Backend commands:
 
@@ -38,12 +39,14 @@ Backend commands:
 dotnet restore MonolithTemplate.sln
 dotnet build MonolithTemplate.sln
 dotnet test
+```
 
 ## Architecture review mode
 
 For every non-trivial change, act as a software architect first.
 
 Before implementation:
+
 - explain the design,
 - check module boundaries,
 - verify dependency direction,
@@ -51,5 +54,4 @@ Before implementation:
 - suggest tests,
 - wait for approval if architecture is affected.
 
-Use `docs/ARCHITECTURE.md` as the source of truth.
-```
+Use docs/ARCHITECTURE.md as the source of truth.

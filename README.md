@@ -1,61 +1,62 @@
 # MonolithTemplate
 
-Starter template for building fullstack applications using **.NET + React + Docker**.
+Starter template for building full-stack applications with .NET, React, and Docker.
 
-The goal of this project is to provide a ready-to-use foundation with:
+This repository currently contains:
 
-- backend API
-- frontend app
-- Docker setup
-- CI pipeline
+- an ASP.NET Core API host in apps/api/MonolithTemplate.Api
+- an Identity module with API, Application, Contracts, Domain, Infrastructure, and test projects
+- a Notifications module with Application, Domain, Infrastructure, and test projects
+- a shared backend foundation in apps/api/MonolithTemplate.Shared
+- a React frontend in apps/web
+- local and staging Docker Compose files under infra
+- a pull-request CI workflow in .github/workflows/ci.yaml
 
----
+## Tech stack
 
-## 🚀 Tech Stack
+- Backend: ASP.NET Core on .NET 10
+- Frontend: React, Vite, TypeScript, React Query, Redux Toolkit
+- Database: PostgreSQL
+- Containerization: Docker and Docker Compose
+- CI: GitHub Actions
 
-- **Backend:** .NET (ASP.NET Core)
-- **Frontend:** React (Vite)
-- **Database:** PostgreSQL
-- **Containerization:** Docker & Docker Compose
-- **CI:** GitHub Actions
+## Project structure
 
----
-
-## 📁 Project Structure
-
-```
-/apps
-  /api        -> .NET backend
-  /web        -> React frontend
-/infra
+```text
+apps/
+  api/
+    MonolithTemplate.Api/
+    MonolithTemplate.Shared/
+    Modules/
+      Identity/
+      Notifications/
+  web/
+infra/
   docker-compose.dev.yml
   docker-compose.staging.yml
-/.github
-  /workflows  -> CI/CD pipelines
+.github/
+  workflows/
 ```
 
----
-
-## 🛠️ Running locally
+## Running locally
 
 ### Requirements
 
 - Docker
 - Docker Compose
-- .NET SDK 10
+- .NET SDK 10.x
 - Node.js 22
 
-### Start the app
+### Docker-based local development
 
 ```bash
 cd infra
 docker compose -f docker-compose.dev.yml up --build
 ```
 
-The development compose file now provides safe local defaults for PostgreSQL, JWT, and the frontend API URL.
-You can still override them with environment variables or an `infra/.env` file when needed.
+The development compose file provides safe local defaults for PostgreSQL, JWT, SMTP, and the frontend API URL. You can still override them with environment variables or an infra/.env file.
 
-### Services
+Services exposed by the current compose setup:
 
 - Frontend: http://localhost:3000
 - API: http://localhost:8080
@@ -63,32 +64,32 @@ You can still override them with environment variables or an `infra/.env` file w
 
 ### Local configuration
 
-Backend configuration follows this rule:
+Backend configuration rules:
 
-- `appsettings.json` contains non-secret placeholders only
-- `appsettings.Development.json` contains safe local development defaults
-- environment variables or user secrets should be used for any real credentials
+- appsettings.json contains non-secret placeholders only
+- appsettings.Development.json contains safe local development defaults
+- environment variables or user secrets should be used for real credentials outside local development
 
-Important backend settings that should come from environment variables or user secrets outside local development:
+Important backend settings to override outside local development:
 
-- `ConnectionStrings__Default`
-- `Jwt__Key`
-- `SmtpSettings__Server`
-- `SmtpSettings__UserName`
-- `SmtpSettings__Password`
+- ConnectionStrings__Default
+- Jwt__Key
+- SmtpSettings__Server
+- SmtpSettings__UserName
+- SmtpSettings__Password
 
 Frontend configuration:
 
-- development API URL is in [apps/web/.env.development](apps/web/.env.development)
-- production build API URL is in [apps/web/.env.production](apps/web/.env.production)
-
-Build-time frontend API URL can also be overridden with `VITE_API_URL`.
+- apps/web/.env.development contains the local development API base URL
+- apps/web/.env.production contains the production build API base URL
+- VITE_API_URL can override the API base URL at build or dev time
 
 ### Local app without Docker
 
 Backend:
 
 ```bash
+dotnet restore MonolithTemplate.sln
 dotnet build MonolithTemplate.sln
 dotnet run --project apps/api/MonolithTemplate.Api/MonolithTemplate.Api.csproj
 ```
@@ -97,68 +98,62 @@ Frontend:
 
 ```bash
 cd apps/web
-npm install
+npm ci
 npm run dev
 ```
 
----
+### Local validation
 
-## 🐳 Docker
+```bash
+dotnet test MonolithTemplate.sln
+cd apps/web
+npm run lint
+npm run build
+```
 
-### Backend
+## Docker
 
-- Built using multi-stage Dockerfile
-- Runs on ASP.NET runtime
+Backend:
 
-### Frontend
+- built using the multi-stage Dockerfile in apps/api
+- runs on the ASP.NET runtime image
 
-- Dev mode: `Dockerfile.dev`
-- Production: built and served via nginx
+Frontend:
 
-The development compose flow uses `Dockerfile.dev`.
-The production image is built from `Dockerfile`.
+- development uses apps/web/Dockerfile.dev
+- production uses apps/web/Dockerfile and serves the bundle with nginx
 
----
+## CI pipeline
 
-## 🔄 CI Pipeline
+On every pull request to develop, CI runs:
 
-On every Pull Request to `develop`:
+- dotnet build MonolithTemplate.sln
+- dotnet test MonolithTemplate.sln
+- npm --prefix apps/web run lint
+- npm --prefix apps/web run build
+- Docker image builds for the API and web app
 
-- Backend is built (.NET)
-- Frontend is built (React)
-- Docker images are built
-
-Merge is blocked until all checks pass ✅
-
----
+The workflow stays incremental and pull-request focused while covering the highest-value existing checks.
 
 ## Staging notes
 
-The staging compose file expects the following environment values:
+The staging compose file expects these environment values:
 
-- `GHCR_OWNER`
-- `IMAGE_TAG` (optional, defaults to `develop`)
-- `POSTGRES_DB`
-- `POSTGRES_USER`
-- `POSTGRES_PASSWORD`
-- `Frontend__BaseUrl`
-- `Jwt__Key`
-- optional SMTP overrides (`SmtpSettings__*`)
+- GHCR_OWNER
+- IMAGE_TAG, optional, defaults to develop
+- POSTGRES_DB
+- POSTGRES_USER
+- POSTGRES_PASSWORD
+- Frontend__BaseUrl
+- Jwt__Key
+- optional SMTP overrides through SmtpSettings__*
 
 Do not rely on placeholder values from tracked config files for staging or production.
 
----
-
-## 📌 Purpose
+## Purpose
 
 This template is designed to:
 
 - skip repetitive setup
-- enforce good practices (CI/CD, Docker)
-- speed up development of new projects
-
----
-
-## 👨‍💻 Author
-
-Kamil
+- enforce basic quality gates through CI and containerized workflows
+- provide a modular starting point for .NET and React applications
