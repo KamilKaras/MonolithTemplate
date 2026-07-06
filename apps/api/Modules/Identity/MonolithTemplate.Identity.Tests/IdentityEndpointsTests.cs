@@ -7,12 +7,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using MonolithTemplate.Api.Extensions.Auth;
 using MonolithTemplate.Identity.Api.Endpoints;
 using MonolithTemplate.Identity.Tests.Infrastructure;
 using MonolithTemplate.Shared.Cqrs;
-using System.IdentityModel.Tokens.Jwt;
 using Xunit;
 
 namespace MonolithTemplate.Identity.Tests;
@@ -372,17 +370,17 @@ public sealed class IdentityEndpointsTests
             new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
         };
 
-        var credentials = new SigningCredentials(
-            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtKey)),
-            SecurityAlgorithms.HmacSha256);
+        var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(
+            new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtKey)),
+            Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256);
 
-        var token = new JwtSecurityToken(
+        var token = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(
             issuer: JwtIssuer,
             audience: JwtAudience,
             claims: claims,
             expires: DateTime.UtcNow.AddMinutes(30),
             signingCredentials: credentials);
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler().WriteToken(token);
     }
 }
