@@ -5,6 +5,14 @@ namespace MonolithTemplate.Identity.Application.Features.UserRegistration;
 
 public sealed class UserRegistrationCommand : ICommand<Result<Guid>>
 {
+    public UserRegistrationCommand()
+    {
+        UserName = string.Empty;
+        Email = string.Empty;
+        Password = string.Empty;
+        ConfirmPassword = string.Empty;
+    }
+
     public UserRegistrationCommand(
         string userName,
         string email,
@@ -18,8 +26,8 @@ public sealed class UserRegistrationCommand : ICommand<Result<Guid>>
         ConfirmPassword = confirmPassword;
     }
 
-    public string UserName { get; }
-    public string Email { get; }
-    public string Password { get; }
-    public string ConfirmPassword { get; }
+    public string UserName { get; init; }
+    public string Email { get; init; }
+    public string Password { get; init; }
+    public string ConfirmPassword { get; init; }
 }

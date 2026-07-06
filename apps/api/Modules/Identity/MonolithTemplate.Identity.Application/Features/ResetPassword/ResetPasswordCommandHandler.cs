@@ -12,6 +12,9 @@ public class ResetPasswordCommandHandler(
     UserManager<User> userManager) : IRequestHandler<ResetPasswordCommand, Result> {
 
     public async Task<Result> Handle(ResetPasswordCommand request, CancellationToken ct) {
+        var validationResult = ResetPasswordCommandValidator.Validate(request);
+        if (!validationResult.IsSuccess)
+            return validationResult;
 
         if (request.Password != request.ConfirmPassword)
             return Error.BadRequest("Identity.PasswordNotMatch", "Podane hasła nie są takie same!");

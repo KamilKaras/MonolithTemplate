@@ -15,6 +15,10 @@ public class UserConfirmEmailCommandHandler : IRequestHandler<UserConfirmEmailCo
     }
     public async Task<Result<Guid>> Handle(UserConfirmEmailCommand request, CancellationToken ct)
     {
+        var validationResult = UserConfirmEmailCommandValidator.Validate(request);
+        if (!validationResult.IsSuccess)
+            return Result<Guid>.Failure(validationResult.Error!);
+
         var user = await _userManager.FindByIdAsync(request.UserId);
         if (user is null)
             return Error.NotFound("UserConfirmEmail.NotFound", "Użytkownik nie istnieje!");

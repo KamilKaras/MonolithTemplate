@@ -22,6 +22,10 @@ public class UserRegistrationCommandHandler : IRequestHandler<UserRegistrationCo
     }
     public async Task<Result<Guid>> Handle(UserRegistrationCommand request, CancellationToken ct)
     {
+        var validationResult = UserRegistrationCommandValidator.Validate(request);
+        if (!validationResult.IsSuccess)
+            return Result<Guid>.Failure(validationResult.Error!);
+
         if (request.Password != request.ConfirmPassword)
             return Error.BadRequest("Identity.PasswordNotMatch", "Podane hasła nie są takie same!");
 
