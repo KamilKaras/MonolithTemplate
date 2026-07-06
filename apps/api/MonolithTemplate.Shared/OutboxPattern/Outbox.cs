@@ -1,6 +1,8 @@
 using MonolithTemplate.Shared.Events;
 using MonolithTemplate.Shared.OutboxPattern;
 
+namespace MonolithTemplate.Shared.OutboxPattern;
+
 public sealed class Outbox : IOutbox
 {
     private readonly List<IIntegrationEvent> _events = new();

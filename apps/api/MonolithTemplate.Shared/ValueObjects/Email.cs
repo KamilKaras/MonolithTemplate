@@ -1,5 +1,7 @@
 using MonolithTemplate.Shared.ResultPattern;
 
+namespace MonolithTemplate.Shared.ValueObjects;
+
 public sealed record Email
 {
     private Email(string value)

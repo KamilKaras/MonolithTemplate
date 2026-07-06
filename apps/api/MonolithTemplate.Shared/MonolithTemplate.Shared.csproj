@@ -10,7 +10,13 @@
     <Folder Include="Database\" />
     <Folder Include="Database\UnitOfWork\" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <Compile Remove="Tests\**" />
+    <EmbeddedResource Remove="Tests\**" />
+    <None Remove="Tests\**" />
+  </ItemGroup>
+
  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>

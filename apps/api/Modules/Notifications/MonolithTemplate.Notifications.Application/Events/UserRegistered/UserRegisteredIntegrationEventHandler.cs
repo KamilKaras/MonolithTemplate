@@ -3,6 +3,7 @@ using MonolithTemplate.Notifications.Application.Services;
 using MonolithTemplate.Notifications.Domain.Emails;
 using MonolithTemplate.Notifications.Domain.ValueObjects;
 using MonolithTemplate.Shared.Events;
+using MonolithTemplate.Shared.ValueObjects;
 
 namespace MonolithTemplate.Notifications.Application.Events.UserRegistered;
 

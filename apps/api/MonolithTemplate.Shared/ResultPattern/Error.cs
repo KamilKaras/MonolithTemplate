@@ -17,7 +17,7 @@ public class Error
         new(code, description, ErrorType.BadRequest);
 
     public static Error Failure(string code, string description) =>
-    new(code, description, ErrorType.BadRequest);
+    new(code, description, ErrorType.Failure);
     public static Error NotFound(string code, string description) =>
         new(code, description, ErrorType.NotFound);
     public static Error Validation(string code, string description) =>

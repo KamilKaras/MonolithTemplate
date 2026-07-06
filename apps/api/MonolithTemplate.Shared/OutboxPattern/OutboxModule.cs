@@ -1,7 +1,6 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using MonolithTemplate.Shared.Events;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MonolithTemplate.Shared.OutboxPattern;
 
@@ -31,8 +30,13 @@ public sealed class OutboxModule<TDbContext> : IOutboxModule
         {
             try
             {
-                var type = Type.GetType(message.Type, throwOnError: true);
-                var evt = JsonSerializer.Deserialize(message.Payload, type!);
+                var type = ResolveType(message.Type);
+                if (type is null)
+                    throw new InvalidOperationException($"Cannot resolve integration event type: {message.Type}");
+
+                var evt = JsonSerializer.Deserialize(message.Payload, type);
+                if (evt is null)
+                    throw new InvalidOperationException($"Cannot deserialize payload for integration event type: {message.Type}");
 
                 await _eventBus.Publish((dynamic)evt!, ct);
 
@@ -56,5 +60,21 @@ public sealed class OutboxModule<TDbContext> : IOutboxModule
             await _db.SaveChangesAsync();
 
         return messagesCount;
+    }
+
+    private static Type? ResolveType(string typeName)
+    {
+        var resolvedType = Type.GetType(typeName, throwOnError: false);
+        if (resolvedType is not null)
+            return resolvedType;
+
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            resolvedType = assembly.GetType(typeName, throwOnError: false);
+            if (resolvedType is not null)
+                return resolvedType;
+        }
+
+        return null;
     }
 }

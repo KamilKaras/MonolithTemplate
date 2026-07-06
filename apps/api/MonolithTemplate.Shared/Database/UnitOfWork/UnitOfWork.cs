@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
+namespace MonolithTemplate.Shared.Database.UnitOfWork;
+
 public class UnitOfWork<TDbContext>(TDbContext db) : IUnitOfWork
     where TDbContext : DbContext
 {
