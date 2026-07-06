@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 
 using MonolithTemplate.Identity.Api.Requests;
 using MonolithTemplate.Identity.Application.Features.GetUserCredentials;
+using MonolithTemplate.Identity.Application.Features.ResetPassword;
 using MonolithTemplate.Identity.Application.Features.UserConfirmEmail;
 using MonolithTemplate.Identity.Application.Features.UserForgetPassword;
 using MonolithTemplate.Identity.Application.Features.UserLogin;

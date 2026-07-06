@@ -6,7 +6,7 @@ using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.Events;
 using MonolithTemplate.Shared.ResultPattern;
 
-namespace MonolithTemplate.Identity.Application.Features.UserForgetPassword;
+namespace MonolithTemplate.Identity.Application.Features.ResetPassword;
 
 public class ResetPasswordCommandHandler(
     UserManager<User> userManager) : IRequestHandler<ResetPasswordCommand, Result> {
