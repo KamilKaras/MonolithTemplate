@@ -9,6 +9,10 @@ public static class AuthExtensions
     public static IServiceCollection AddAppAuth(this IServiceCollection services,
         IConfiguration configuration)
     {
+        var issuer = GetRequiredSetting(configuration, "Jwt:Issuer");
+        var audience = GetRequiredSetting(configuration, "Jwt:Audience");
+        var key = GetRequiredSetting(configuration, "Jwt:Key");
+
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
@@ -19,10 +23,10 @@ public static class AuthExtensions
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
 
-                ValidIssuer = configuration["Jwt:Issuer"],
-                ValidAudience = configuration["Jwt:Audience"],
+                ValidIssuer = issuer,
+                ValidAudience = audience,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!))
+                    Encoding.UTF8.GetBytes(key))
             };
             options.Events = new JwtBearerEvents
         {
@@ -40,5 +44,17 @@ public static class AuthExtensions
 
         services.AddAuthorization();
         return services;
+    }
+
+    private static string GetRequiredSetting(IConfiguration configuration, string key)
+    {
+        var value = configuration[key];
+
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException($"Missing required configuration value: {key}", nameof(configuration));
+        }
+
+        return value;
     }
 }
