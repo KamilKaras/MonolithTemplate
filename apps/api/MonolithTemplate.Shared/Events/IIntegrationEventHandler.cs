@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore.Diagnostics;
-
 namespace MonolithTemplate.Shared.Events;
 
 public interface IIntegrationEventHandler<in TEvent>

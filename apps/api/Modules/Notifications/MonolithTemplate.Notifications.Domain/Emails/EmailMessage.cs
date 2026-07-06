@@ -1,6 +1,6 @@
 using System;
 using MonolithTemplate.Notifications.Domain.ValueObjects;
-using MonolithTemplate.Shared.ResultPattern;
+using MonolithTemplate.Shared.ValueObjects;
 
 namespace MonolithTemplate.Notifications.Domain.Emails;
 

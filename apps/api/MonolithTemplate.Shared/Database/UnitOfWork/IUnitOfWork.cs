@@ -1,3 +1,5 @@
+namespace MonolithTemplate.Shared.Database.UnitOfWork;
+
 public interface IUnitOfWork
 {
     Task Begin(CancellationToken ct);
