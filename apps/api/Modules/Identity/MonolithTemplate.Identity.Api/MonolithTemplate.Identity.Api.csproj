@@ -6,10 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Responses\**" />
+    <EmbeddedResource Remove="Responses\**" />
+    <None Remove="Responses\**" />
+  </ItemGroup>
+
    <ItemGroup>
      <Folder Include="Endpoints\" />
      <Folder Include="Requests\" />
-     <Folder Include="Responses\" />
    </ItemGroup>
 
    <ItemGroup>

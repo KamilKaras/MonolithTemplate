@@ -11,7 +11,7 @@ public sealed class UserLoginCommand : ICommand<Result<UserLoginResponse>>
         Password = password;
     }
 
-    public string Email { get; }
-    public string Password { get; }
+    public string Email { get; init; }
+    public string Password { get; init; }
 
 }
