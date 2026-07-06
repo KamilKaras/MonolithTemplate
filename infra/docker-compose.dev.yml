@@ -4,9 +4,9 @@ services:
   db:
     image: postgres:16
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-MonolithTemplateDb}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     ports:
       - "5432:5432"
     volumes:
@@ -25,20 +25,25 @@ services:
       db:
         condition: service_healthy
     environment:
-      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
-      ConnectionStrings__Default: ${ConnectionStrings__Default}
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
+      ConnectionStrings__Default: ${ConnectionStrings__Default:-Host=db;Port=5432;Database=MonolithTemplateDb;Username=postgres;Password=postgres}
+      Frontend__BaseUrl: ${Frontend__BaseUrl:-http://localhost:3000}
+      Jwt__Key: ${Jwt__Key:-LOCAL_DOCKER_DEVELOPMENT_ONLY_CHANGE_ME_1234567890}
+      Jwt__Issuer: ${Jwt__Issuer:-MonolithTemplate.Api}
+      Jwt__Audience: ${Jwt__Audience:-MonolithTemplate.Api}
     ports:
       - "8080:8080"
 
   web:
     build:
       context: ../apps/web
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     depends_on:
       - api
     ports:
       - "3000:3000"
     environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8080}
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
     volumes:
