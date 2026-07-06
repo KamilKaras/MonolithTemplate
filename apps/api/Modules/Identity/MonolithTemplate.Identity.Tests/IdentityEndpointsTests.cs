@@ -1,6 +1,5 @@
 using System.Net;
 using System.Net.Http.Json;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication;
@@ -13,6 +12,7 @@ using MonolithTemplate.Api.Extensions.Auth;
 using MonolithTemplate.Identity.Api.Endpoints;
 using MonolithTemplate.Identity.Tests.Infrastructure;
 using MonolithTemplate.Shared.Cqrs;
+using System.IdentityModel.Tokens.Jwt;
 using Xunit;
 
 namespace MonolithTemplate.Identity.Tests;
