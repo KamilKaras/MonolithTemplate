@@ -16,9 +16,6 @@ public class ResetPasswordCommandHandler(
         if (!validationResult.IsSuccess)
             return validationResult;
 
-        if (request.Password != request.ConfirmPassword)
-            return Error.BadRequest("Identity.PasswordNotMatch", "Podane hasła nie są takie same!");
-
         var user = await userManager.FindByIdAsync(request.UserId);
 
         if (user is null)

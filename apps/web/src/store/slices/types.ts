@@ -1,11 +1,3 @@
-export type AuthState = {
-  session: SessionProps | undefined;
-};
+export type AuthState = Record<string, never>;
 
-export const initialAuthState: AuthState = {
-  session: undefined,
-};
-
-export type SessionProps = {
-  token: string;
-};
+export const initialAuthState: AuthState = {};

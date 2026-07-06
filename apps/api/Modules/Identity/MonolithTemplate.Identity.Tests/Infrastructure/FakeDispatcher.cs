@@ -29,64 +29,45 @@ public sealed class FakeDispatcher : IDispatcher
 
     private static Result<Guid> HandleRegister(UserRegistrationCommand cmd)
     {
-        if (string.IsNullOrWhiteSpace(cmd.UserName))
-            return Error.Validation("Identity.Registration.UserNameRequired", "Nazwa uzytkownika jest wymagana.");
-
-        if (string.IsNullOrWhiteSpace(cmd.Email))
-            return Error.Validation("Identity.Registration.EmailRequired", "Email jest wymagany.");
-
-        if (string.IsNullOrWhiteSpace(cmd.Password))
-            return Error.Validation("Identity.Registration.PasswordRequired", "Haslo jest wymagane.");
-
-        if (string.IsNullOrWhiteSpace(cmd.ConfirmPassword))
-            return Error.Validation("Identity.Registration.ConfirmPasswordRequired", "Potwierdzenie hasla jest wymagane.");
+        var validation = UserRegistrationCommandValidator.Validate(cmd);
+        if (!validation.IsSuccess)
+            return validation.Error!;
 
         return Result<Guid>.Success(Guid.NewGuid());
     }
 
     private static Result<UserLoginResponse> HandleLogin(UserLoginCommand cmd)
     {
-        if (string.IsNullOrWhiteSpace(cmd.Email))
-            return Error.Validation("Auth.EmailRequired", "Email jest wymagany.");
-
-        if (string.IsNullOrWhiteSpace(cmd.Password))
-            return Error.Validation("Auth.PasswordRequired", "Haslo jest wymagane.");
+        var validation = UserLoginCommandValidator.Validate(cmd);
+        if (!validation.IsSuccess)
+            return validation.Error!;
 
         return Result<UserLoginResponse>.Success(new UserLoginResponse("test-token"));
     }
 
     private static Result HandleForgotPassword(UserForgetPasswordCommand cmd)
     {
-        if (string.IsNullOrWhiteSpace(cmd.Email))
-            return Error.Validation("Identity.ForgetPassword.EmailRequired", "Email jest wymagany.");
+        var validation = UserForgetPasswordCommandValidator.Validate(cmd);
+        if (!validation.IsSuccess)
+            return validation;
 
         return Result.Success();
     }
 
     private static Result HandleResetPassword(ResetPasswordCommand cmd)
     {
-        if (string.IsNullOrWhiteSpace(cmd.Password))
-            return Error.Validation("Identity.ResetPassword.PasswordRequired", "Haslo jest wymagane.");
-
-        if (string.IsNullOrWhiteSpace(cmd.ConfirmPassword))
-            return Error.Validation("Identity.ResetPassword.ConfirmPasswordRequired", "Potwierdzenie hasla jest wymagane.");
-
-        if (string.IsNullOrWhiteSpace(cmd.UserId))
-            return Error.Validation("Identity.ResetPassword.UserIdRequired", "Id uzytkownika jest wymagane.");
-
-        if (string.IsNullOrWhiteSpace(cmd.Token))
-            return Error.Validation("Identity.ResetPassword.TokenRequired", "Token jest wymagany.");
+        var validation = ResetPasswordCommandValidator.Validate(cmd);
+        if (!validation.IsSuccess)
+            return validation;
 
         return Result.Success();
     }
 
     private static Result<Guid> HandleConfirmEmail(UserConfirmEmailCommand cmd)
     {
-        if (string.IsNullOrWhiteSpace(cmd.UserId))
-            return Error.Validation("Identity.ConfirmEmail.UserIdRequired", "Id uzytkownika jest wymagane.");
-
-        if (string.IsNullOrWhiteSpace(cmd.Token))
-            return Error.Validation("Identity.ConfirmEmail.TokenRequired", "Token jest wymagany.");
+        var validation = UserConfirmEmailCommandValidator.Validate(cmd);
+        if (!validation.IsSuccess)
+            return validation.Error!;
 
         return Result<Guid>.Success(Guid.NewGuid());
     }

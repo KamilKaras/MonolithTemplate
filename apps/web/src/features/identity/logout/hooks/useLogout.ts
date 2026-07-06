@@ -1,18 +1,20 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { identityEndpoints } from "../../../../api/modules/identity/identityEndpoints";
 import { toastService } from "../../../../shared/toast/ToastService";
-import { clearSession } from "../../../../store/slices/authSlice";
-import { useAppDispatch } from "../../../../store/store";
+import { USER_CREDENTIALS_QUERY_KEY } from "../../../identity/me/hooks/types";
 
 export const useLogout = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: identityEndpoints.logout,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.removeQueries({
+        queryKey: [USER_CREDENTIALS_QUERY_KEY],
+      });
       navigate("/login");
-      dispatch(clearSession());
     },
     onError: () => {
       toastService.error("Błąd z połączeniem do serwera!");

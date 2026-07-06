@@ -1,7 +1,5 @@
 export type RegisterResponse = { registerSuccess: boolean };
-export type LoginResponse = {
-  token: string;
-};
+export type LoginResponse = void;
 
 export type ConfirmEmailResponse = {
   confirmed: boolean;

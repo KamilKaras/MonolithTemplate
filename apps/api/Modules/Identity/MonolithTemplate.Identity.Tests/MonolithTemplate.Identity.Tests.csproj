@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\MonolithTemplate.Api\MonolithTemplate.Api.csproj" />
     <ProjectReference Include="..\MonolithTemplate.Identity.Api\MonolithTemplate.Identity.Api.csproj" />
     <ProjectReference Include="..\MonolithTemplate.Identity.Application\MonolithTemplate.Identity.Application.csproj" />
     <ProjectReference Include="..\..\..\MonolithTemplate.Shared\MonolithTemplate.Shared.csproj" />

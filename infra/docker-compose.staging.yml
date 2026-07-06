@@ -18,7 +18,7 @@ services:
       retries: 10
 
   api:
-    image: ghcr.io/TWOJ_LOGIN_GITHUB/monolithtemplate-api:develop
+    image: ghcr.io/${GHCR_OWNER}/monolithtemplate-api:${IMAGE_TAG:-develop}
     container_name: monolithtemplate-api
     restart: unless-stopped
     depends_on:
@@ -27,11 +27,22 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Staging
       ConnectionStrings__Default: Host=db;Port=5432;Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      Frontend__BaseUrl: ${Frontend__BaseUrl}
+      Jwt__Key: ${Jwt__Key}
+      Jwt__Issuer: ${Jwt__Issuer:-MonolithTemplate.Api}
+      Jwt__Audience: ${Jwt__Audience:-MonolithTemplate.Api}
+      SmtpSettings__Server: ${SmtpSettings__Server}
+      SmtpSettings__Port: ${SmtpSettings__Port:-587}
+      SmtpSettings__SenderName: ${SmtpSettings__SenderName:-MonolithTemplate}
+      SmtpSettings__SenderEmail: ${SmtpSettings__SenderEmail}
+      SmtpSettings__UserName: ${SmtpSettings__UserName}
+      SmtpSettings__Password: ${SmtpSettings__Password}
+      SmtpSettings__Security: ${SmtpSettings__Security:-StartTls}
     ports:
       - "8080:8080"
 
   web:
-    image: ghcr.io/TWOJ_LOGIN_GITHUB/monolithtemplate-web:develop
+    image: ghcr.io/${GHCR_OWNER}/monolithtemplate-web:${IMAGE_TAG:-develop}
     container_name: monolithtemplate-web
     restart: unless-stopped
     depends_on:
