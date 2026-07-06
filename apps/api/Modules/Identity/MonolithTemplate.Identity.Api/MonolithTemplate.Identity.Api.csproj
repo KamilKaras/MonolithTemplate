@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  
+
    <ItemGroup>
      <Folder Include="Endpoints\" />
      <Folder Include="Requests\" />
@@ -15,7 +15,6 @@
    <ItemGroup>
      <ProjectReference Include="..\..\..\MonolithTemplate.Shared\MonolithTemplate.Shared.csproj" />
      <ProjectReference Include="..\MonolithTemplate.Identity.Application\MonolithTemplate.Identity.Application.csproj" />
-     <ProjectReference Include="..\MonolithTemplate.Identity.Infrastructure\MonolithTemplate.Identity.Infrastructure.csproj" />
    </ItemGroup>
 
 </Project>

@@ -3,48 +3,99 @@
   "files.autoSaveDelay": 800,
 
   "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
   "editor.minimap.enabled": false,
   "editor.inlineSuggest.enabled": true,
+
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
+
   "editor.tabSize": 2,
+  "editor.insertSpaces": true,
   "editor.rulers": [100],
+
   "editor.renderWhitespace": "selection",
+
   "editor.quickSuggestions": {
     "strings": true
   },
 
-  "cSpell.language": "en,pl",
-
   "explorer.compactFolders": false,
-  "workbench.editor.enablePreview": false,
 
-  "workbench.colorTheme": "Dark Modern",
+  "workbench.editor.enablePreview": false,
 
   "terminal.integrated.defaultProfile.windows": "PowerShell",
 
-  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "git.autofetch": true,
+
+  "git.confirmSync": false,
+
+  "git.openRepositoryInParentFolders": "always",
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bin": true,
+    "**/obj": true,
+    "**/dist": true,
+    "**/.turbo": true
+  },
+
+  "files.exclude": {
+    "**/.DS_Store": true
+  },
+
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/bin/**": true,
+    "**/obj/**": true,
+    "**/dist/**": true
+  },
 
   "editor.unicodeHighlight.allowedLocales": {
     "pl": true
   },
 
+  "cSpell.language": "en,pl",
+
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  "prettier.requireConfig": true,
+
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[csharp]": {
-    "editor.formatOnSave": true
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
+  "[markdown]": {
+    "editor.wordWrap": "on"
+  }
 }

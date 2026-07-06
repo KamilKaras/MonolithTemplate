@@ -4,7 +4,7 @@ using MonolithTemplate.Notifications.Domain.Emails;
 using MonolithTemplate.Notifications.Domain.ValueObjects;
 using MonolithTemplate.Shared.Events;
 
-namespace MonolithTemplate.Notifications.Application.Events.UserRegistered;
+namespace MonolithTemplate.Notifications.Application.Events.UserPasswordReset;
 
 public class UserPasswordResetIntegrationEventHandler : IIntegrationEventHandler<UserPasswordResetIntegrationEvent> {
     private readonly IMailer _emailSender;

@@ -1,7 +1,7 @@
 using MonolithTemplate.Shared.Cqrs;
 using MonolithTemplate.Shared.ResultPattern;
 
-namespace MonolithTemplate.Identity.Application.Features.UserForgetPassword;
+namespace MonolithTemplate.Identity.Application.Features.ResetPassword;
 
 public sealed class ResetPasswordCommand : ICommand<Result> {
 
