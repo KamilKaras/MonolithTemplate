@@ -1,11 +1,22 @@
 {
   "recommendations": [
+    "github.copilot",
+    "github.copilot-chat",
+    "github.copilot-review",
+
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "streetsidesoftware.code-spell-checker",
-    "ms-dotnettools.csdevkit",
-    "editorconfig.editorconfig",
+
     "eamodio.gitlens",
-    "usernamehw.errorlens"
+    "ms-azuretools.vscode-docker",
+    "editorconfig.editorconfig",
+
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens",
+
+    "christian-kohler.path-intellisense",
+    "christian-kohler.npm-intellisense",
+
+    "vscode-icons-team.vscode-icons"
   ]
 }
