@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using MonolithTemplate.Notifications.Application;
 using MonolithTemplate.Notifications.Application.Services;
 using MonolithTemplate.Notifications.Domain.Emails;
+using MonolithTemplate.Notifications.Infrastructure.Frontend;
 using MonolithTemplate.Notifications.Infrastructure.Services;
 using MonolithTemplate.Shared;
-
 
 namespace MonolithTemplate.Notifications.Infrastructure;
 
@@ -18,8 +18,6 @@ public static class Module
         };
         services.AddModuleShared(assemblies);
 
-        var conn = configuration.GetConnectionString("default") ?? throw new ApplicationException("Connection string not found");
-
         services.AddMailer(configuration);
         return services;
     }
@@ -28,8 +26,10 @@ public static class Module
     private static IServiceCollection AddMailer(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<SmtpSettings>(configuration.GetSection("SmtpSettings"));
+        services.Configure<FrontendOptions>(configuration.GetSection("Frontend"));
         services.AddScoped<IMailer, Mailer>();
         services.AddScoped<IEmailTemplateRenderer, EmailTemplateRenderer>();
+        services.AddScoped<IFrontendUrlProvider, FrontendUrlProvider>();
         return services;
     }
 }

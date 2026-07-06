@@ -7,20 +7,27 @@ using MonolithTemplate.Shared.ValueObjects;
 
 namespace MonolithTemplate.Notifications.Application.Events.UserPasswordReset;
 
-public class UserPasswordResetIntegrationEventHandler : IIntegrationEventHandler<UserPasswordResetIntegrationEvent> {
+public class UserPasswordResetIntegrationEventHandler : IIntegrationEventHandler<UserPasswordResetIntegrationEvent>
+{
     private readonly IMailer _emailSender;
     private readonly IEmailTemplateRenderer _emailTemplateRenderer;
+    private readonly IFrontendUrlProvider _frontendUrlProvider;
 
-    public UserPasswordResetIntegrationEventHandler(IMailer emailSender, IEmailTemplateRenderer emailTemplateRenderer) {
+    public UserPasswordResetIntegrationEventHandler(
+        IMailer emailSender,
+        IEmailTemplateRenderer emailTemplateRenderer,
+        IFrontendUrlProvider frontendUrlProvider)
+    {
         _emailSender = emailSender;
         _emailTemplateRenderer = emailTemplateRenderer;
+        _frontendUrlProvider = frontendUrlProvider;
     }
-    public async Task Handle(UserPasswordResetIntegrationEvent @event, CancellationToken ct = default) {
-        var messageKey = $"identity:confirm-email:{@event.Id}";
 
-        try {
-            var resetUrl =
-                $"http://localhost:3000/reset-password?userId={Uri.EscapeDataString(@event.Id.ToString())}&token={Uri.EscapeDataString(@event.ResetToken)}";
+    public async Task Handle(UserPasswordResetIntegrationEvent @event, CancellationToken ct = default)
+    {
+        try
+        {
+            var resetUrl = _frontendUrlProvider.BuildResetPasswordUrl(@event.Id, @event.ResetToken);
 
             var email = Email.Create(@event.Email);
 
@@ -29,15 +36,16 @@ public class UserPasswordResetIntegrationEventHandler : IIntegrationEventHandler
 
             var subject = EmailSubject.Create("Reset hasła w VisitMe");
 
-            if (!email.IsSuccess)
-                throw new ApplicationException("Błąd przy tworzeniu wiadomości email");
+            if (!subject.IsSuccess)
+                throw new ApplicationException("Błąd przy tworzeniu tytułu wiadomości email");
 
             var html = await _emailTemplateRenderer.RenderAsync(
-                    "reset-password",
-                    new Dictionary<string, string> {
-                        ["UserName"] = "Użytkowniku",
-                        ["ResetUrl"] = resetUrl
-                    },
+                "reset-password",
+                new Dictionary<string, string>
+                {
+                    ["UserName"] = "Użytkowniku",
+                    ["ResetUrl"] = resetUrl
+                },
                 ct);
 
             var htmlBody = EmailHtmlBody.Create(html);
@@ -52,12 +60,9 @@ public class UserPasswordResetIntegrationEventHandler : IIntegrationEventHandler
 
             await _emailSender.SendAsync(message);
         }
-        catch (Exception ex) {
-            throw new ApplicationException("Błąd podczas wysyłki maila rejestracyjnego.", ex);
-
+        catch (Exception ex)
+        {
+            throw new ApplicationException("Błąd podczas wysyłki maila do resetu hasła.", ex);
         }
-
-
     }
-
 }

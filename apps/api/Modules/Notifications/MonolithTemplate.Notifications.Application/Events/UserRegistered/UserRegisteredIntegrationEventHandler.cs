@@ -11,29 +11,31 @@ public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<Us
 {
     private readonly IMailer _emailSender;
     private readonly IEmailTemplateRenderer _emailTemplateRenderer;
+    private readonly IFrontendUrlProvider _frontendUrlProvider;
 
-    public UserRegisteredIntegrationEventHandler(IMailer emailSender, IEmailTemplateRenderer emailTemplateRenderer)
+    public UserRegisteredIntegrationEventHandler(
+        IMailer emailSender,
+        IEmailTemplateRenderer emailTemplateRenderer,
+        IFrontendUrlProvider frontendUrlProvider)
     {
         _emailSender = emailSender;
         _emailTemplateRenderer = emailTemplateRenderer;
+        _frontendUrlProvider = frontendUrlProvider;
     }
+
     public async Task Handle(UserRegisteredIntegrationEvent @event, CancellationToken ct = default)
     {
-        var messageKey = $"identity:confirm-email:{@event.Id}";
-
         try
         {
-            var confirmationUrl =
-                $"http://localhost:3000/confirm?userId={Uri.EscapeDataString(@event.Id.ToString())}&token={Uri.EscapeDataString(@event.ConfirmationToken)}";
-
+            var confirmationUrl = _frontendUrlProvider.BuildConfirmationUrl(@event.Id, @event.ConfirmationToken);
 
             var email = Email.Create(@event.Email);
             if (!email.IsSuccess)
                 throw new ApplicationException("Błąd przy tworzeniu email");
 
             var subject = EmailSubject.Create("Potwierdź rejestrację w VisitMe");
-            if (!email.IsSuccess)
-                throw new ApplicationException("Błąd przy tworzeniu email");
+            if (!subject.IsSuccess)
+                throw new ApplicationException("Błąd przy tworzeniu tytułu email");
 
             var html = await _emailTemplateRenderer.RenderAsync(
                     "confirm-email",
@@ -59,10 +61,6 @@ public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<Us
         catch (Exception ex)
         {
             throw new ApplicationException("Błąd podczas wysyłki maila rejestracyjnego.", ex);
-
         }
-
-
     }
-
 }
