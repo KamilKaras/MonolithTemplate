@@ -1,5 +1,5 @@
 ---
-name: code-reviewer
+name: Code reviewer
 description: "Use when reviewing backend or frontend changes for correctness, maintainability, code smells, architecture violations, and regression risk in this repository."
 ---
 
