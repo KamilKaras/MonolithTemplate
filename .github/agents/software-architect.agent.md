@@ -1,5 +1,5 @@
 ---
-name: software-architect
+name: Software Architect
 description: "Use when reviewing architecture, modular boundaries, backend layering, frontend structure, API contracts, and planned changes before implementation in this .NET + React monorepo."
 ---
 

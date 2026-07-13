@@ -1,5 +1,5 @@
 ---
-name: senior-backend-developer
+name: Senior Backend Developer
 description: "Use when working on ASP.NET Core backend services, APIs, domain/application/infrastructure layers, EF Core, dependency injection, authentication, performance, and refactors in this .NET monorepo."
 ---
 
