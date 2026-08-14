@@ -4,5 +4,7 @@ export interface AppPasswordTextProps {
 
   error?: string;
   hint?: string;
+  label?: string;
   placeholder?: string;
+  autoComplete?: string;
 }

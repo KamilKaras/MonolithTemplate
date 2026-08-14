@@ -28,4 +28,22 @@ describe("AppStateCard", () => {
 
     expect(onAction).toHaveBeenCalledTimes(1);
   });
+
+  it("renders an optional secondary action and invokes it when clicked", async () => {
+    const user = userEvent.setup();
+    const onSecondaryAction = vi.fn();
+
+    render(
+      <AppStateCard
+        title="Need fallback"
+        message="Try another path."
+        secondaryActionLabel="Back"
+        onSecondaryAction={onSecondaryAction}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Back" }));
+
+    expect(onSecondaryAction).toHaveBeenCalledTimes(1);
+  });
 });

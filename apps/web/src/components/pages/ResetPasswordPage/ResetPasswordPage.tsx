@@ -1,14 +1,21 @@
-import { Card } from "primereact/card";
+import { Link } from "react-router-dom";
 import ResetPasswordForm from "../../../features/identity/forgot-password/components/ResetPasswordForm/ResetPasswordForm";
-import "./reset-password-page.scss";
+import AuthLayout from "../../templates/AuthLayout/AuthLayout";
 
 const ResetPasswordPage = () => {
   return (
-    <div className="reset-password-page">
-      <Card className="reset-password-card">
-        <ResetPasswordForm />
-      </Card>
-    </div>
+    <AuthLayout
+      title="Choose a new password"
+      description="Set a new password to regain access to the starter application."
+      footer={
+        <>
+          Need another link?{" "}
+          <Link to="/forgot-password">Request recovery email</Link>
+        </>
+      }
+    >
+      <ResetPasswordForm />
+    </AuthLayout>
   );
 };
 

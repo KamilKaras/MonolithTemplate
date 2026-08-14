@@ -1,24 +1,20 @@
-import { Card } from "primereact/card";
+import { Link } from "react-router-dom";
 import LoginForm from "../../../features/identity/login/components/LoginForm/LoginForm";
-import RegistrationForm from "../../../features/identity/register/components/RegistrationForm/RegistrationForm";
-import AppTabViewer from "../../molecules/AppTabViewer/AppTabViewer";
-import "./login-page.scss";
+import AuthLayout from "../../templates/AuthLayout/AuthLayout";
 
 const LoginPage = () => {
   return (
-    <div className="login-page">
-      <Card className="login-card">
-        <AppTabViewer
-          tabs={[
-            {
-              header: "Zaloguj się",
-              content: <LoginForm />,
-            },
-            { header: "Zarejestruj się", content: <RegistrationForm /> },
-          ]}
-        />
-      </Card>
-    </div>
+    <AuthLayout
+      title="Sign in to continue"
+      description="Use your account to enter the authenticated starter shell and continue building the next application."
+      footer={
+        <>
+          No account yet? <Link to="/register">Create one</Link>
+        </>
+      }
+    >
+      <LoginForm />
+    </AuthLayout>
   );
 };
 
