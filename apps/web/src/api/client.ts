@@ -21,7 +21,7 @@ class ApiClient {
       (response) => response,
       (error) => {
         if (axios.isAxiosError(error) && error.response?.status === 401) {
-          handleUnauthorizedResponse(error.config?.url);
+          handleUnauthorizedResponse(error.config);
         }
 
         const mappedError = this.mapError(error);

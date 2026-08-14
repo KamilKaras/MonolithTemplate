@@ -13,13 +13,14 @@ export const useLogin = (onSuccess?: () => void) => {
 
   const getPostLoginPath = () => {
     const state = location.state as
-      | { from?: { pathname?: string; search?: string } }
+      | { from?: { pathname?: string; search?: string; hash?: string } }
       | undefined;
 
     const pathname = state?.from?.pathname;
     const search = state?.from?.search ?? "";
+    const hash = state?.from?.hash ?? "";
 
-    const statePath = pathname ? `${pathname}${search}` : null;
+    const statePath = pathname ? `${pathname}${search}${hash}` : null;
     const returnUrl = searchParams.get("returnUrl");
 
     if (returnUrl) {
