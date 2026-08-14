@@ -1,4 +1,5 @@
 import { Form, FormikProvider, useFormik } from "formik";
+import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import AppInputText from "../../../../../components/molecules/AppInputText/AppInputText";
@@ -83,7 +84,7 @@ const RegistrationForm = () => {
           />
         </div>
         <p className="auth-form__supporting-copy">
-          Already registered? <a href="/login">Sign in</a>
+          Already registered? <Link to="/login">Sign in</Link>
         </p>
       </Form>
     </FormikProvider>

@@ -7,4 +7,5 @@ export type AppIconButtonProps = {
   disabled?: boolean;
   label?: string;
   tooltip?: string;
+  ariaLabel?: string;
 };

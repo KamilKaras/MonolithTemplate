@@ -5,6 +5,7 @@ import PageLoader from "../../../../../components/molecules/PageLoader/PageLoade
 import AuthLayout from "../../../../../components/templates/AuthLayout/AuthLayout";
 import { useUserParams } from "../../../../../shared/hooks/useSearchParams";
 import { useConfirmEmail } from "../../hooks/useConfirmEmail";
+import "./confirm-page.scss";
 
 const ConfirmPage = () => {
   const { token, userId } = useUserParams();

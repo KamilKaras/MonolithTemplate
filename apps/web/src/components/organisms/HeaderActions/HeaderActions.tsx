@@ -5,7 +5,7 @@ import "./header-actions.scss";
 
 const HeaderActions = () => {
   const { isPending, mutateAsync } = useLogout();
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
 
   if (isLoading) return null;
 
@@ -14,12 +14,15 @@ const HeaderActions = () => {
       <div className="header-actions__identity">
         <span className="header-actions__label">Signed in as</span>
         <strong className="header-actions__name">
-          {isAuthenticated ? "Authenticated user" : "Guest"}
+          {isAuthenticated
+            ? (user?.user.name ?? "Authenticated user")
+            : "Guest"}
         </strong>
       </div>
       <AppIconButton
         disabled={!isAuthenticated || isPending}
         tooltip="Wyloguj"
+        ariaLabel="Log out"
         icon="POWER_OFF"
         onClick={async () => mutateAsync()}
       />

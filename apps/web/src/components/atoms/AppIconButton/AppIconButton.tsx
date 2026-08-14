@@ -7,6 +7,7 @@ export const AppIconButton = ({
   label,
   tooltip,
   disabled,
+  ariaLabel,
   onClick,
 }: AppIconButtonProps) => {
   const tooltipId = `btn-${icon}`;
@@ -17,6 +18,7 @@ export const AppIconButton = ({
         icon={PrimeIcons[icon]}
         onClick={onClick}
         disabled={disabled}
+        aria-label={ariaLabel}
         className={`p-button-text ${tooltipId}`}
         tooltip={tooltip}
         tooltipOptions={{ position: "bottom" }}
