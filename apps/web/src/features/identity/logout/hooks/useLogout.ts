@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { identityEndpoints } from "../../../../api/modules/identity/identityEndpoints";
+import { isApiError } from "../../../../shared/errors/functions";
 import { toastService } from "../../../../shared/toast/ToastService";
 import { USER_CREDENTIALS_QUERY_KEY } from "../../../identity/me/hooks/types";
 
@@ -16,7 +17,12 @@ export const useLogout = () => {
       });
       navigate("/login");
     },
-    onError: () => {
+    onError: (error) => {
+      if (isApiError(error) && error.status === 401) {
+        navigate("/login", { replace: true });
+        return;
+      }
+
       toastService.error("Błąd z połączeniem do serwera!");
     },
   });

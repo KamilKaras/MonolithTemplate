@@ -1,6 +1,7 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import axios from "axios";
 import qs from "qs";
+import { handleUnauthorizedResponse } from "../shared/auth/sessionRecovery";
 import type { ApiError, ProblemDetails } from "../shared/errors/types";
 import type { RequestParams } from "./types";
 
@@ -19,6 +20,10 @@ class ApiClient {
     this.api.interceptors.response.use(
       (response) => response,
       (error) => {
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          handleUnauthorizedResponse(error.config?.url);
+        }
+
         const mappedError = this.mapError(error);
 
         return Promise.reject(mappedError);

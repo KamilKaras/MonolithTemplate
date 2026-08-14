@@ -1,5 +1,5 @@
 import type { RouteObject } from "react-router-dom";
-import HomeTailsPage from "../../components/pages/HomeTailsPage/HomeTailsPage";
+import HomePage from "../../components/pages/HomePage/HomePage";
 import { RequireAuth } from "./auth-guards/RequireAuth";
 
 export const privateRoutes: RouteObject[] = [
@@ -8,7 +8,7 @@ export const privateRoutes: RouteObject[] = [
     children: [
       {
         path: "/home",
-        element: <HomeTailsPage />,
+        element: <HomePage />,
       },
     ],
   },

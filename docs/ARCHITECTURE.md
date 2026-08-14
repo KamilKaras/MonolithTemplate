@@ -1,144 +1,246 @@
-# Architecture Rules
+# MonolithTemplate Architecture
 
-This document is the source of truth for architectural decisions.
+This document is the repository source of truth for backend and frontend architecture. It describes the verified architecture currently implemented in code and separates it from known technical debt and intentional exceptions.
 
-AI agents must read this file before suggesting larger backend, frontend, database, or API changes.
+## 1. System overview
 
-## Overview
+This repository is a .NET + React monorepo with:
 
-This repository is a .NET and React monorepo with:
+- an ASP.NET Core backend under `apps/api`
+- a Vite + React frontend under `apps/web`
+- PostgreSQL-backed persistence for the Identity module
+- Docker and deployment configuration under `infra`
 
-- an ASP.NET Core backend under apps/api
-- a React and Vite frontend under apps/web
-- Docker and deployment configuration under infra
-- repository automation under .github
+The backend is a modular monolith. The host project composes feature modules and shared infrastructure. The frontend is a standard React app using a shared API client, route guards, and TanStack Query for server state.
 
-The codebase is intended to stay modular, incremental, and safe to evolve.
+## 2. Architectural invariants
 
-## Backend structure
+The following are the repository-wide invariants that should be preserved unless a concrete requirement justifies a change:
 
-Primary backend locations:
+- The backend is a modular monolith with a composition root in `MonolithTemplate.Api`.
+- Endpoint and transport code should remain thin and delegate to handlers or application services.
+- Persistence and external I/O stay in infrastructure.
+- Cross-module communication happens through contracts and integration events, not by direct reference to another module's implementation.
+- Notification side effects are persisted through the outbox before dispatch.
+- Frontend session state is derived from `/identity/me` and is treated as the server-authoritative user state.
+- Vite `VITE_*` variables are build-time frontend configuration unless the project implements a separate runtime configuration mechanism.
 
-- apps/api/MonolithTemplate.Api: application host and startup pipeline
-- apps/api/MonolithTemplate.Shared: shared CQRS, result, outbox, unit-of-work, and event abstractions
-- apps/api/Modules: feature modules
+## 3. Backend architecture
 
-The API host is responsible for:
+### 3.1 Project graph
 
-- shared service registration
-- authentication and CORS
-- exception handling
-- module registration
-- OpenAPI
-- migration discovery and execution
+The verified project references are:
 
-### Current backend modules
+- `MonolithTemplate.Api`
+  - references `MonolithTemplate.Identity.Api`
+  - references `MonolithTemplate.Identity.Infrastructure`
+  - references `MonolithTemplate.Notifications.Infrastructure`
+- `MonolithTemplate.Shared`
+  - is shared infrastructure used by module and infrastructure projects
+- `MonolithTemplate.Identity.Api`
+  - references `MonolithTemplate.Shared`
+  - references `MonolithTemplate.Identity.Application`
+- `MonolithTemplate.Identity.Application`
+  - references `MonolithTemplate.Shared`
+  - references `MonolithTemplate.Identity.Contracts`
+  - references `MonolithTemplate.Identity.Domain`
+- `MonolithTemplate.Identity.Infrastructure`
+  - references `MonolithTemplate.Shared`
+  - references `MonolithTemplate.Identity.Application`
+  - references `MonolithTemplate.Identity.Domain`
+- `MonolithTemplate.Notifications.Infrastructure`
+  - references `MonolithTemplate.Shared`
+  - references `MonolithTemplate.Notifications.Application`
+- `MonolithTemplate.Notifications.Application`
+  - references `MonolithTemplate.Identity.Contracts`
+  - references `MonolithTemplate.Notifications.Domain`
+- `MonolithTemplate.Notifications.Domain`
+  - references `MonolithTemplate.Shared`
 
-Identity module:
+This architecture is best understood as a composition-root-based modular monolith. The host composes modules directly, and strict layered purity is not enforced at every boundary.
 
-- MonolithTemplate.Identity.Api
-- MonolithTemplate.Identity.Application
-- MonolithTemplate.Identity.Contracts
-- MonolithTemplate.Identity.Domain
-- MonolithTemplate.Identity.Infrastructure
-- MonolithTemplate.Identity.Tests
+### 3.2 Module ownership
 
-Notifications module:
+Identity module (`apps/api/Modules/Identity`):
 
-- MonolithTemplate.Notifications.Application
-- MonolithTemplate.Notifications.Domain
-- MonolithTemplate.Notifications.Infrastructure
-- MonolithTemplate.Notifications.Tests
+- `MonolithTemplate.Identity.Api`: endpoint registration and HTTP surface
+- `MonolithTemplate.Identity.Application`: commands, queries, handlers, validation
+- `MonolithTemplate.Identity.Contracts`: cross-module integration event contracts
+- `MonolithTemplate.Identity.Domain`: identity domain model and identity rules
+- `MonolithTemplate.Identity.Infrastructure`: EF Core, auth, persistence, outbox persistence, and UoW behavior
 
-Notifications currently has no dedicated API or Contracts project. It is triggered through integration events and infrastructure services.
+Notifications module (`apps/api/Modules/Notifications`):
 
-### Dependency direction
+- `MonolithTemplate.Notifications.Application`: event handlers and email composition logic
+- `MonolithTemplate.Notifications.Domain`: email/value-object domain types
+- `MonolithTemplate.Notifications.Infrastructure`: SMTP and frontend URL infrastructure
 
-Within backend modules, keep dependency direction as:
+The Notifications module intentionally has no dedicated API project or Contracts project. This is a current implementation shape, not a deficiency to be corrected by default.
 
-- API layer to Application layer
-- Application layer to Domain layer
-- Infrastructure supports Application and Domain
-- Shared abstractions may be consumed by modules and infrastructure
+### 3.3 Shared infrastructure and CQRS
 
-Keep endpoints and controllers thin. Business logic belongs in handlers, services, and the appropriate module layer.
+The shared library (`apps/api/MonolithTemplate.Shared`) contains reusable cross-cutting infrastructure:
 
-### Integration event delivery policy
+- `Dispatcher` and `IDispatcher`
+- `IRequestHandler<>` registration
+- `IIntegrationEvent` and `IIntegrationEventHandler<>`
+- `IEventBus` and in-process dispatch
+- `IOutbox`, `Outbox`, `OutboxProcessor`, `OutboxModule<TDbContext>`
+- `UnitOfWork` and `UnitOfWorkBehavior<TRequest, TResponse, TUow>`
+- EF registration helpers
 
-For backend command flows:
+This library is infrastructure concern support, not a domain layer.
 
-- enqueue user-facing cross-module integration events into the outbox when the side effect should survive process failure
-- reserve the in-process event bus for explicitly synchronous flows or for dispatching events that have already been persisted through the outbox
-- do not publish user-facing notification events directly from request or command handlers through the in-process event bus
+### 3.4 Outbox and event delivery
 
-## Frontend structure
+The repository implements outbox-driven cross-module communication:
 
-Primary frontend location:
+- command handlers enqueue integration events into `IOutbox`
+- `UnitOfWorkBehavior` persists queued events to the module `OutboxMessages` table as part of the same transaction
+- `OutboxProcessor` drains pending messages and dispatches them through the in-process `EventBus`
+- notification handlers in `Notifications.Application` are responsible for sending emails
 
-- apps/web
+The in-process event bus is used for outbox processing and internal event dispatch. User-facing notification events are not published directly from request handlers without passing through the outbox.
 
-Current frontend stack includes:
+### 3.5 Persistence and migrations
 
-- React
+Persistence is handled through EF Core and one PostgreSQL deployment for the application.
+
+- `AddIdentityModule` registers `MyIdentityDbContext` with PostgreSQL using Npgsql.
+- startup runs migrations automatically via `RunMigrations()`
+- migration discovery scans assemblies for `DbContext` implementations and calls `Database.MigrateAsync()` for each one
+
+Identity owns the `Identity` schema and the outbox storage in its database context.
+
+## 4. Frontend architecture
+
+The frontend implementation under `apps/web` currently includes:
+
+- React 19
 - Vite
 - TypeScript
 - React Router
-- React Query
-- Redux Toolkit
-- Formik and Yup
+- TanStack Query
+- Axios
 - PrimeReact
+- Formik + Yup
 
-The source tree is organized under apps/web/src with responsibility-based folders such as:
+The source tree is organized into:
 
-- app
-- components
-- features
-- shared
-- store
+- `app`: routing and app bootstrap
+- `components`: page and reusable presentation components
+- `features`: feature-specific logic, forms, and hooks
+- `shared`: API client, providers, common hooks, and error handling
 
-The frontend uses Vite environment variables for runtime configuration, including VITE_API_URL.
+The active server-state and session ownership is TanStack Query.
 
-## Authentication and request flow
+### 4.1 Frontend request flow
 
-- the frontend sends requests through the shared API client
-- login uses the Identity endpoints and the backend issues an access_token cookie
-- the frontend uses /identity/me as the source of truth for the authenticated user
-- forgot-password and reset-password remain part of the Identity module API surface
-- notification delivery is performed downstream from integration events, not by the frontend directly
+The frontend uses:
 
-## Build and development process
+- `apps/web/src/api/client.ts` with `withCredentials: true`
+- `import.meta.env.VITE_API_URL` to build the API base URL
+- `identityEndpoints` for `/identity/me`, `/identity/login`, `/identity/logout`, `/identity/register`, `/identity/forgot-password`, `/identity/reset-password`, and `/identity/confirm-email`
+- `useLogin` to invalidate current-user state after successful login
+- `RequireAuth` and `RequireGuest` to gate navigation based on `/identity/me`
 
-Backend commands:
+## 5. Authentication flow
 
-- dotnet restore MonolithTemplate.sln
-- dotnet build MonolithTemplate.sln
-- dotnet test MonolithTemplate.sln
+The actual session flow is:
 
-Frontend commands:
+1. The browser sends credentials to `POST /identity/login`.
+2. The backend validates the credentials and sets an `access_token` cookie.
+3. The cookie is read by JWT bearer authentication via `OnMessageReceived` in the host auth configuration.
+4. The frontend calls `GET /identity/me` with credentials included via the browser cookie.
+5. The response from `/identity/me` is treated as the authoritative user state.
+6. `POST /identity/logout` clears the cookie and invalidates the query cache.
+7. Protected and guest-only routes are resolved through route guards that call the authenticated-user query.
 
-- npm --prefix apps/web ci
-- npm --prefix apps/web run dev
-- npm --prefix apps/web run lint
-- npm --prefix apps/web run build
+There is no separate refresh-token or alternative frontend auth store in the current implementation.
 
-Containerized development uses:
+## 6. Configuration and deployment topology
 
-- infra/docker-compose.dev.yml
-- infra/docker-compose.staging.yml
+### 6.1 Frontend configuration
 
-Default local ports described by the current compose setup are:
+The frontend uses Vite environment variables for frontend build-time configuration:
 
-- frontend: 3000
-- API: 8080
-- database: 5432
+- `apps/web/.env.development`
+- `apps/web/.env.production`
+- `VITE_API_URL` is read in `apps/web/src/api/client.ts`
 
-## Repository guidance summary
+This is build-time frontend configuration. It is not a runtime backend configuration mechanism and not a general-purpose application configuration system.
 
-When making changes:
+### 6.2 Backend configuration
 
-- preserve the existing architecture
-- prefer small, safe edits
-- follow existing code style and naming conventions
-- avoid broad renames or new patterns without discussion
-- keep backend transport layers thin
-- reuse the frontend API and query layers instead of duplicating request logic
+The backend reads standard ASP.NET Core configuration from:
+
+- `apps/api/MonolithTemplate.Api/appsettings.json`
+- `apps/api/MonolithTemplate.Api/appsettings.Development.json`
+
+Key configuration includes:
+
+- `ConnectionStrings:Default`
+- `Frontend:BaseUrl`
+- `SmtpSettings:*`
+- `Jwt:Key`, `Jwt:Issuer`, `Jwt:Audience`
+
+### 6.3 Docker and ports
+
+The current Docker topology is:
+
+- PostgreSQL on `5432`
+- API on `8080`
+- frontend on `3000`
+
+The host CORS policy is built from `Frontend:BaseUrl` and falls back to localhost origins when not explicitly configured.
+
+## 7. Dependency Rules
+
+The dependency rules below are the current architectural guardrails for the repository.
+
+### 7.1 Allowed dependencies
+
+- `MonolithTemplate.Api` may depend on module API and infrastructure projects as the composition root.
+- `Shared` may be depended on by any backend project that requires cross-cutting infrastructure.
+- `Identity.Api` may depend on `Identity.Application` and `Shared`.
+- `Identity.Application` may depend on `Identity.Domain`, `Identity.Contracts`, and `Shared`.
+- `Identity.Infrastructure` may depend on `Identity.Application`, `Identity.Domain`, and `Shared`.
+- `Identity.Contracts` may depend on `Shared` only when needed for shared contract types.
+- `Identity.Domain` may depend on `Shared` only for shared domain primitives.
+- `Notifications.Application` may depend on `Notifications.Domain`, `Identity.Contracts`, and `Shared`.
+- `Notifications.Infrastructure` may depend on `Notifications.Application`, `Notifications.Domain`, and `Shared`.
+- `Notifications.Domain` may depend on `Shared` only for shared domain primitives.
+
+### 7.2 Forbidden dependencies
+
+- No module may directly depend on another module's Domain, Application, Infrastructure, or API implementation.
+- Cross-module communication must happen through contracts, integration events, and shared infrastructure boundaries.
+- Domain code must not depend on infrastructure or transport concerns.
+- Infrastructure must not leak into application or domain code.
+- Host code must not bypass module boundaries by reaching into a module's application logic except through that module's API or registered services.
+
+### 7.3 Cross-module communication rule
+
+Modules should communicate by contract and event boundaries only.
+
+This repository uses `Identity.Contracts` for integration event contracts and the shared outbox/event mechanisms for asynchronous cross-module delivery. Modules must not directly depend on another module's concrete domain objects, handlers, controllers, or infrastructure implementation.
+
+## 8. Known Technical Debt and Open Architectural Decisions
+
+These items are current-state notes, not planned changes. They are only relevant when a concrete requirement appears.
+
+- The Notifications module intentionally does not currently include a dedicated API project or Contracts project.
+- The host composition model is a modular monolith, but it does not enforce a strict layered project graph at every boundary.
+- The frontend uses Vite environment variables for build-time configuration and should not be described as a generic runtime configuration mechanism.
+
+## 9. Current-state summary
+
+The repository is best described as:
+
+- a modular monolith backend with a composition root and shared infrastructure
+- a module-based Identity implementation with clear API/application/domain/infrastructure ownership
+- a Notifications module built around integration events and email infrastructure
+- a React/Vite frontend using TanStack Query as the active server-state source of truth
+- cookie-based JWT authentication with `/identity/me` as the authoritative user session source
+
+This document intentionally focuses on architecture and architectural invariants rather than generic development workflow rules, which belong in AGENTS.md.
