@@ -16,7 +16,11 @@ export const RequireAuth = () => {
   }
 
   if (!isAuthenticated) {
-    const returnUrl = buildReturnUrl(location.pathname, location.search);
+    const returnUrl = buildReturnUrl(
+      location.pathname,
+      location.search,
+      location.hash,
+    );
 
     return (
       <Navigate
