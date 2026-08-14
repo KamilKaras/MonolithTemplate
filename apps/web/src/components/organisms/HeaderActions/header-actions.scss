@@ -1,0 +1,36 @@
+.header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-actions__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: right;
+}
+
+.header-actions__label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--app-text-muted);
+}
+
+.header-actions__name {
+  color: var(--app-text);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 920px) {
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .header-actions__identity {
+    text-align: left;
+  }
+}

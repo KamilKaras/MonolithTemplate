@@ -40,34 +40,51 @@ const RegistrationForm = () => {
 
   return (
     <FormikProvider value={formik}>
-      <Form className="registration-form" noValidate>
+      <Form className="registration-form auth-form" noValidate>
         <AppInputText
-          placeholder="Imię"
+          label="Full name"
+          placeholder="Alex Morgan"
           value={formik.values.userName}
           onChange={(v) => formik.setFieldValue("userName", v)}
           error={formik.errors.userName}
+          autoComplete="name"
+          required
         />
         <AppInputText
-          placeholder="Email"
+          label="Email address"
+          placeholder="you@example.com"
           value={formik.values.email}
           onChange={(v) => formik.setFieldValue("email", v)}
           error={formik.errors.email}
+          autoComplete="email"
+          required
         />
         <AppPasswordText
-          placeholder="Hasło"
+          label="Password"
+          placeholder="Create a secure password"
           value={formik.values.password}
           onChange={(v) => formik.setFieldValue("password", v)}
           error={formik.errors.password}
+          hint="Use at least 8 characters."
         />
         <AppPasswordText
-          placeholder="Potwierdź hasło"
+          label="Confirm password"
+          placeholder="Repeat the password"
           value={formik.values.confirmPassword}
           onChange={(v) => formik.setFieldValue("confirmPassword", v)}
           error={formik.errors.confirmPassword}
         />
-        <div className="registration-form buttons-container">
-          <AppButton loading={isPending} type="submit" label="Utwórz konto" />
+        <div className="registration-form__actions">
+          <AppButton
+            className="auth-form__submit"
+            loading={isPending}
+            type="submit"
+            label="Create account"
+          />
         </div>
+        <p className="auth-form__supporting-copy">
+          Already registered? <a href="/login">Sign in</a>
+        </p>
       </Form>
     </FormikProvider>
   );

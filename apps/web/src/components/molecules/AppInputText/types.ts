@@ -7,4 +7,5 @@ export interface AppInputTextProps {
   required?: boolean;
   label?: string;
   placeholder?: string;
+  autoComplete?: string;
 }

@@ -1,11 +1,10 @@
-import { Card } from "primereact/card";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import AppButton from "../../../../../components/atoms/AppButton/AppButton";
 import PageLoader from "../../../../../components/molecules/PageLoader/PageLoader";
+import AuthLayout from "../../../../../components/templates/AuthLayout/AuthLayout";
 import { useUserParams } from "../../../../../shared/hooks/useSearchParams";
 import { useConfirmEmail } from "../../hooks/useConfirmEmail";
-import "./confirm-page.scss";
 
 const ConfirmPage = () => {
   const { token, userId } = useUserParams();
@@ -34,14 +33,20 @@ const ConfirmPage = () => {
   }
 
   return (
-    <div className="confirm-page">
-      <Card title="Rejestracja potwierdzona">
+    <AuthLayout
+      title="Email confirmed"
+      description="Your account is ready. Continue to sign in and enter the starter workspace."
+    >
+      <div className="confirm-page">
+        <p className="confirm-page__message">
+          Your registration has been confirmed successfully.
+        </p>
         <AppButton
-          label="Przejdź do logowania"
+          label="Proceed to sign in"
           onClick={() => navigate("/login")}
         />
-      </Card>
-    </div>
+      </div>
+    </AuthLayout>
   );
 };
 

@@ -1,20 +1,24 @@
 import { useLogout } from "../../../features/identity/logout/hooks/useLogout";
 import { useAuth } from "../../../shared/hooks/useAuth";
 import { AppIconButton } from "../../atoms/AppIconButton/AppIconButton";
-import PageLoader from "../../molecules/PageLoader/PageLoader";
+import "./header-actions.scss";
 
 const HeaderActions = () => {
   const { isPending, mutateAsync } = useLogout();
   const { isAuthenticated, isLoading } = useAuth();
 
-  const loading = isPending || isLoading;
-
-  if (loading) return <PageLoader visible />;
+  if (isLoading) return null;
 
   return (
-    <div>
+    <div className="header-actions">
+      <div className="header-actions__identity">
+        <span className="header-actions__label">Signed in as</span>
+        <strong className="header-actions__name">
+          {isAuthenticated ? "Authenticated user" : "Guest"}
+        </strong>
+      </div>
       <AppIconButton
-        disabled={!isAuthenticated}
+        disabled={!isAuthenticated || isPending}
         tooltip="Wyloguj"
         icon="POWER_OFF"
         onClick={async () => mutateAsync()}

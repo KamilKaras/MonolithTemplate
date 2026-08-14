@@ -11,7 +11,7 @@ const AppButton = (props: AppButtonProps) => {
     loading = false,
   } = props;
 
-  const appButtonClass = className + " " + "app-button";
+  const appButtonClass = ["app-button", className].filter(Boolean).join(" ");
 
   return (
     <Button

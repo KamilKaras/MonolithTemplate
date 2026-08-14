@@ -3,16 +3,21 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: #fafafa;
+    padding: 24px;
+    background:
+        radial-gradient(circle at top left, rgba(47, 93, 124, 0.12), transparent 36%),
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.08), transparent 32%),
+        linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%);
 
     &__card {
         width: 100%;
         max-width: 420px;
         padding: 32px;
-        border-radius: 12px;
-        background: white;
-        border: 1px solid #e5e5e5;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.1);
+        backdrop-filter: blur(18px);
     }
 
     &__icon {
@@ -24,11 +29,12 @@
         font-size: 20px;
         font-weight: 600;
         margin-bottom: 8px;
+        color: var(--app-text);
     }
 
     &__description {
         font-size: 14px;
-        color: #737373;
+        color: var(--app-text-muted);
         margin-bottom: 20px;
     }
 
@@ -39,26 +45,26 @@
 
     &__button {
         padding: 8px 16px;
-        border-radius: 6px;
+        border-radius: 999px;
         font-size: 14px;
         cursor: pointer;
 
         &--primary {
-            background: black;
+            background: linear-gradient(135deg, var(--app-primary), var(--app-primary-strong));
             color: white;
             border: none;
         }
 
         &--secondary {
             background: white;
-            border: 1px solid #e5e5e5;
+            border: 1px solid var(--app-border);
         }
     }
 
     &__debug {
         margin-top: 20px;
         font-size: 12px;
-        color: #ef4444;
+        color: var(--vm-error);
         overflow: auto;
     }
 }
