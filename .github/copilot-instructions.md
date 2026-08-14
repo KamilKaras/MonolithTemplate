@@ -1,32 +1,80 @@
-# GitHub Copilot instructions
+# GitHub Copilot Instructions
 
-You are assisting with a .NET + React monorepo.
+This repository is a .NET + React monorepo.
 
-Always:
+## Repository Guidance
 
-- Read AGENTS.md before larger or cross-cutting changes.
-- Prefer small, safe edits that preserve the current architecture.
-- Follow the existing code style and naming conventions.
-- Ask before renaming major projects or folders, changing public API contracts, or changing database or auth behavior.
-- Explain the planned file changes before editing multiple files.
+For non-trivial, multi-file, architectural or cross-cutting work:
 
-Backend guidance:
+* Read and follow `AGENTS.md`.
+* Use `docs/ARCHITECTURE.md` as the source of truth for architectural decisions.
+* Inspect the existing implementation before proposing changes.
+* Follow existing naming, code-style and architectural conventions.
+* Prefer small, focused and reviewable changes.
+* Avoid unrelated refactoring.
+* Prefer existing abstractions over introducing parallel mechanisms.
 
-- Use the solution files as the source of truth.
-- Keep endpoints thin and transport-focused.
-- Put business logic in existing handlers, services, or module application layers.
-- Prefer dependency injection and existing shared abstractions.
-- Use the outbox for user-facing cross-module notification events.
+Do not silently change:
 
-Frontend guidance:
+* public API contracts
+* authentication or authorization behavior
+* database schema
+* module boundaries
+* major project/folder structure
+* shared cross-module abstractions
+* major frontend architecture
 
-- Reuse the existing API client, React Query hooks, and route structure.
-- Treat the authenticated user query from /identity/me as the source of truth for session state.
-- Keep configuration in Vite environment variables such as VITE_API_URL.
+Explain the impact and request approval first.
 
-Useful validation commands:
+## Backend
 
-- dotnet build MonolithTemplate.sln
-- dotnet test MonolithTemplate.sln
-- npm --prefix apps/web run lint
-- npm --prefix apps/web run build
+The backend is under `apps/api` and follows a modular monolith architecture.
+
+* Use the solution/project structure as the source of truth.
+* Preserve module boundaries.
+* Keep endpoints/controllers thin and transport-focused.
+* Keep business/use-case logic in the appropriate application or domain layer.
+* Keep persistence and integrations in infrastructure.
+* Prefer dependency injection and existing abstractions.
+* Use async APIs for I/O-bound operations.
+* Follow existing DTO, validation and error-handling conventions.
+* Use the outbox for user-facing cross-module notification events unless synchronous delivery is explicitly required.
+
+Do not modify public backend contracts silently.
+
+## Frontend
+
+The frontend is under `apps/web`.
+
+Primary technologies include React, Vite, TypeScript, React Router and TanStack Query.
+
+* Reuse the existing API client and frontend abstractions.
+* Use TanStack Query as the source of truth for server state when applicable.
+* Treat `/identity/me` as the source of truth for authenticated frontend session state unless repository architecture explicitly states otherwise.
+* Do not guess backend contracts; inspect the relevant backend DTOs/endpoints when needed.
+* Keep configuration in Vite environment variables such as `VITE_API_URL`.
+* Avoid unnecessary global state, Context, effects and memoization.
+* Preserve the existing styling approach unless a change is explicitly justified.
+* Do not modify backend code during frontend-only work unless explicitly requested.
+
+## Validation
+
+Use repository-defined commands.
+
+Backend:
+
+```bash
+dotnet build MonolithTemplate.sln
+dotnet test MonolithTemplate.sln
+```
+
+Frontend:
+
+```bash
+npm --prefix apps/web run lint
+npm --prefix apps/web run build
+```
+
+Also run frontend typecheck and tests when corresponding scripts exist.
+
+Never claim validation succeeded unless the command actually succeeded.

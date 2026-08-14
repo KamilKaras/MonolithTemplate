@@ -1,17 +1,30 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import PageLoader from "../../../components/molecules/PageLoader/PageLoader";
+import { buildReturnUrl } from "../../../shared/auth/safeReturnUrl";
 import { useAuth } from "../../../shared/hooks/useAuth";
 
 export const RequireAuth = () => {
-  const { isLoading, isAuthenticated } = useAuth();
+  const { isLoading, isAuthenticated, hasAuthCheckError } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
     return <PageLoader visible />;
   }
 
+  if (hasAuthCheckError) {
+    return <Navigate to="/problem" replace />;
+  }
+
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace state={{ from: location }} />;
+    const returnUrl = buildReturnUrl(location.pathname, location.search);
+
+    return (
+      <Navigate
+        to={`/login?returnUrl=${returnUrl}`}
+        replace
+        state={{ from: location }}
+      />
+    );
   }
 
   return <Outlet />;

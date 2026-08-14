@@ -1,12 +1,17 @@
-import { Card } from "primereact/card";
+import { useNavigate } from "react-router-dom";
+import AppStateCard from "../../molecules/AppStateCard/AppStateCard";
 import "./problem-occurred-page.scss";
 
 const ProblemOccurredPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="problem-occurred-page">
-      <Card
-        title="Nie udało się potwierdzić rejestracji"
-        subTitle="Skontaktuj się z helpdeskiem!"
+      <AppStateCard
+        title="Unable to process request"
+        message="Please verify the link and try again."
+        actionLabel="Back to login"
+        onAction={() => navigate("/login")}
       />
     </div>
   );
