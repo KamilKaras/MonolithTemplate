@@ -173,13 +173,31 @@ This template is designed to:
 
 ## Starting a new application
 
-When cloning MonolithTemplate for a real product, normally update these settings first:
+Use the repository as a GitHub Template Repository:
 
-- solution and project names (including namespaces)
-- frontend app identity and display copy
-- database connection settings (ConnectionStrings\_\_Default)
-- JWT settings (Jwt**Key, Jwt**Issuer, Jwt\_\_Audience)
-- SMTP settings (SmtpSettings\_\_\*)
-- frontend build-time API URL (VITE_API_URL)
-- backend frontend origin and CORS source (Frontend\_\_BaseUrl)
-- Docker image names/registry owner for staging or CI publishing
+1. Select **Use this template** on GitHub.
+2. Create and clone the new repository.
+3. Run the one-time initializer from the repository root:
+
+```powershell
+.\scripts\init-template.ps1 `
+  -Name MyBookingApp `
+  -DisplayName "My Booking App"
+```
+
+The initializer renames the solution, backend projects, namespaces, Docker identifiers, database defaults, CI references, and frontend identity while preserving the Identity, Notifications, Shared, and layered project structure. It requires a clean Git working tree and refuses to run again after successful initialization.
+
+After initialization:
+
+1. Review the generated changes.
+2. Create local environment files from the tracked examples where needed.
+3. Commit the initialized project.
+4. Begin domain development.
+
+For frontend local development, create the ignored environment file from the tracked template:
+
+```powershell
+Copy-Item apps/web/.env.example apps/web/.env.development
+```
+
+Then configure environment-specific values such as `VITE_API_URL`, `ConnectionStrings__Default`, JWT settings, SMTP settings, and `Frontend__BaseUrl`.

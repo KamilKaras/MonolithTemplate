@@ -1,6 +1,6 @@
 # Frontend application
 
-This folder contains the React and Vite frontend for MonolithTemplate.
+This folder contains the React and Vite frontend for the application generated from this template.
 
 ## Stack
 
@@ -30,6 +30,8 @@ The Vite development server runs on port 3000 and listens on the network host.
 ## Environment variables
 
 The frontend reads its API base URL from Vite build-time environment files.
+
+The repository initializer sets the visible application identity and package metadata. Environment files remain local and ignored; create them from `.env.example` after initialization.
 
 Create local development env from the committed template:
 
