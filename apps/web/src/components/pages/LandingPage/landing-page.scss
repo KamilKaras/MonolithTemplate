@@ -90,6 +90,7 @@
 
 .landing-page__hero-copy,
 .landing-page__status-card {
+  min-width: 0;
   border: 1px solid var(--app-border);
   border-radius: var(--app-radius-xl);
   background: var(--app-surface);
@@ -177,6 +178,10 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
+}
+
+.landing-page__grid > * {
+  min-width: 0;
 }
 
 .landing-page__footer {

@@ -1,4 +1,5 @@
 .app-state-card {
+  min-width: 0;
   border: 1px solid var(--app-border);
   border-radius: var(--app-radius-lg);
   background: var(--app-surface);
@@ -6,7 +7,14 @@
   backdrop-filter: blur(18px);
 }
 
+.app-state-card .p-card-body,
 .app-state-card .p-card-content {
+  min-width: 0;
+}
+
+.app-state-card .p-card-content {
+  display: flex;
+  flex-direction: column;
   padding: 22px;
 }
 
