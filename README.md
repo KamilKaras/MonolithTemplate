@@ -15,7 +15,7 @@ This repository currently contains:
 ## Tech stack
 
 - Backend: ASP.NET Core on .NET 10
-- Frontend: React, Vite, TypeScript, React Query, Redux Toolkit
+- Frontend: React, Vite, TypeScript, React Router, TanStack Query, PrimeReact
 - Database: PostgreSQL
 - Containerization: Docker and Docker Compose
 - CI: GitHub Actions
@@ -72,16 +72,27 @@ Backend configuration rules:
 
 Important backend settings to override outside local development:
 
-- ConnectionStrings__Default
-- Jwt__Key
-- SmtpSettings__Server
-- SmtpSettings__UserName
-- SmtpSettings__Password
+- ConnectionStrings\_\_Default
+- Jwt\_\_Key
+- SmtpSettings\_\_Server
+- SmtpSettings\_\_UserName
+- SmtpSettings\_\_Password
 
 Frontend configuration:
 
-- apps/web/.env.development contains the local development API base URL
-- apps/web/.env.production contains the production build API base URL
+- create a local frontend env file from the template:
+
+```bash
+cp apps/web/.env.example apps/web/.env.development
+```
+
+PowerShell equivalent:
+
+```powershell
+Copy-Item apps/web/.env.example apps/web/.env.development
+```
+
+- apps/web/.env.example documents the expected VITE_API_URL value
 - VITE_API_URL can override the API base URL at build or dev time
 
 ### Local app without Docker
@@ -108,6 +119,7 @@ npm run dev
 dotnet test MonolithTemplate.sln
 cd apps/web
 npm run lint
+npm run test
 npm run build
 ```
 
@@ -130,6 +142,7 @@ On every pull request to develop, CI runs:
 - dotnet build MonolithTemplate.sln
 - dotnet test MonolithTemplate.sln
 - npm --prefix apps/web run lint
+- npm --prefix apps/web run test
 - npm --prefix apps/web run build
 - Docker image builds for the API and web app
 
@@ -144,9 +157,9 @@ The staging compose file expects these environment values:
 - POSTGRES_DB
 - POSTGRES_USER
 - POSTGRES_PASSWORD
-- Frontend__BaseUrl
-- Jwt__Key
-- optional SMTP overrides through SmtpSettings__*
+- Frontend\_\_BaseUrl
+- Jwt\_\_Key
+- optional SMTP overrides through SmtpSettings\_\_\*
 
 Do not rely on placeholder values from tracked config files for staging or production.
 
@@ -157,3 +170,34 @@ This template is designed to:
 - skip repetitive setup
 - enforce basic quality gates through CI and containerized workflows
 - provide a modular starting point for .NET and React applications
+
+## Starting a new application
+
+Use the repository as a GitHub Template Repository:
+
+1. Select **Use this template** on GitHub.
+2. Create and clone the new repository.
+3. Run the one-time initializer from the repository root:
+
+```powershell
+.\scripts\init-template.ps1 `
+  -Name MyBookingApp `
+  -DisplayName "My Booking App"
+```
+
+The initializer renames the solution, backend projects, namespaces, Docker identifiers, database defaults, CI references, and frontend identity while preserving the Identity, Notifications, Shared, and layered project structure. It requires a clean Git working tree and refuses to run again after successful initialization.
+
+After initialization:
+
+1. Review the generated changes.
+2. Create local environment files from the tracked examples where needed.
+3. Commit the initialized project.
+4. Begin domain development.
+
+For frontend local development, create the ignored environment file from the tracked template:
+
+```powershell
+Copy-Item apps/web/.env.example apps/web/.env.development
+```
+
+Then configure environment-specific values such as `VITE_API_URL`, `ConnectionStrings__Default`, JWT settings, SMTP settings, and `Frontend__BaseUrl`.
