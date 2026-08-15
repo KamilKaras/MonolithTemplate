@@ -34,7 +34,7 @@ public class UserPasswordResetIntegrationEventHandler : IIntegrationEventHandler
             if (!email.IsSuccess)
                 throw new ApplicationException("Błąd przy tworzeniu wiadomości email");
 
-            var subject = EmailSubject.Create("Reset hasła w VisitMe");
+            var subject = EmailSubject.Create("Reset hasła w MonolithTemplate");
 
             if (!subject.IsSuccess)
                 throw new ApplicationException("Błąd przy tworzeniu tytułu wiadomości email");

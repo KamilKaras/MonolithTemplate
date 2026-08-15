@@ -33,7 +33,7 @@ public class UserRegisteredIntegrationEventHandler : IIntegrationEventHandler<Us
             if (!email.IsSuccess)
                 throw new ApplicationException("Błąd przy tworzeniu email");
 
-            var subject = EmailSubject.Create("Potwierdź rejestrację w VisitMe");
+            var subject = EmailSubject.Create("Potwierdź rejestrację w MonolithTemplate");
             if (!subject.IsSuccess)
                 throw new ApplicationException("Błąd przy tworzeniu tytułu email");
 

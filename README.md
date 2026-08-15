@@ -15,7 +15,7 @@ This repository currently contains:
 ## Tech stack
 
 - Backend: ASP.NET Core on .NET 10
-- Frontend: React, Vite, TypeScript, React Query, Redux Toolkit
+- Frontend: React, Vite, TypeScript, React Router, TanStack Query, PrimeReact
 - Database: PostgreSQL
 - Containerization: Docker and Docker Compose
 - CI: GitHub Actions
@@ -72,16 +72,27 @@ Backend configuration rules:
 
 Important backend settings to override outside local development:
 
-- ConnectionStrings__Default
-- Jwt__Key
-- SmtpSettings__Server
-- SmtpSettings__UserName
-- SmtpSettings__Password
+- ConnectionStrings\_\_Default
+- Jwt\_\_Key
+- SmtpSettings\_\_Server
+- SmtpSettings\_\_UserName
+- SmtpSettings\_\_Password
 
 Frontend configuration:
 
-- apps/web/.env.development contains the local development API base URL
-- apps/web/.env.production contains the production build API base URL
+- create a local frontend env file from the template:
+
+```bash
+cp apps/web/.env.example apps/web/.env.development
+```
+
+PowerShell equivalent:
+
+```powershell
+Copy-Item apps/web/.env.example apps/web/.env.development
+```
+
+- apps/web/.env.example documents the expected VITE_API_URL value
 - VITE_API_URL can override the API base URL at build or dev time
 
 ### Local app without Docker
@@ -108,6 +119,7 @@ npm run dev
 dotnet test MonolithTemplate.sln
 cd apps/web
 npm run lint
+npm run test
 npm run build
 ```
 
@@ -130,6 +142,7 @@ On every pull request to develop, CI runs:
 - dotnet build MonolithTemplate.sln
 - dotnet test MonolithTemplate.sln
 - npm --prefix apps/web run lint
+- npm --prefix apps/web run test
 - npm --prefix apps/web run build
 - Docker image builds for the API and web app
 
@@ -144,9 +157,9 @@ The staging compose file expects these environment values:
 - POSTGRES_DB
 - POSTGRES_USER
 - POSTGRES_PASSWORD
-- Frontend__BaseUrl
-- Jwt__Key
-- optional SMTP overrides through SmtpSettings__*
+- Frontend\_\_BaseUrl
+- Jwt\_\_Key
+- optional SMTP overrides through SmtpSettings\_\_\*
 
 Do not rely on placeholder values from tracked config files for staging or production.
 
@@ -157,3 +170,16 @@ This template is designed to:
 - skip repetitive setup
 - enforce basic quality gates through CI and containerized workflows
 - provide a modular starting point for .NET and React applications
+
+## Starting a new application
+
+When cloning MonolithTemplate for a real product, normally update these settings first:
+
+- solution and project names (including namespaces)
+- frontend app identity and display copy
+- database connection settings (ConnectionStrings\_\_Default)
+- JWT settings (Jwt**Key, Jwt**Issuer, Jwt\_\_Audience)
+- SMTP settings (SmtpSettings\_\_\*)
+- frontend build-time API URL (VITE_API_URL)
+- backend frontend origin and CORS source (Frontend\_\_BaseUrl)
+- Docker image names/registry owner for staging or CI publishing

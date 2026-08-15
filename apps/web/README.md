@@ -8,8 +8,7 @@ This folder contains the React and Vite frontend for MonolithTemplate.
 - TypeScript
 - Vite
 - React Router
-- React Query
-- Redux Toolkit
+- TanStack Query
 - PrimeReact
 - Formik and Yup
 
@@ -30,17 +29,29 @@ The Vite development server runs on port 3000 and listens on the network host.
 
 ## Environment variables
 
-The frontend reads its API base URL from Vite environment files.
+The frontend reads its API base URL from Vite build-time environment files.
+
+Create local development env from the committed template:
+
+```bash
+cp apps/web/.env.example apps/web/.env.development
+```
+
+PowerShell:
+
+```powershell
+Copy-Item apps/web/.env.example apps/web/.env.development
+```
 
 Local development:
 
 - apps/web/.env.development
-- current repository default: https://localhost:7263
+- use the value from apps/web/.env.example or override per environment
 
 Production build:
 
 - apps/web/.env.production
-- current repository default: http://localhost:8080
+- define an environment-specific value during build/deployment
 
 Supported variable:
 
@@ -63,6 +74,8 @@ Because authentication is cookie-based, make sure VITE_API_URL points to the bac
 - npm run dev: start the Vite development server
 - npm run build: type-check and create a production bundle
 - npm run lint: run ESLint
+- npm run test: run Vitest once in non-interactive mode
+- npm run test:watch: run Vitest in watch mode
 - npm run preview: preview the production bundle locally
 
 ## Useful local checks
@@ -70,5 +83,6 @@ Because authentication is cookie-based, make sure VITE_API_URL points to the bac
 ```bash
 cd apps/web
 npm run lint
+npm run test
 npm run build
 ```

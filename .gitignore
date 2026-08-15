@@ -21,6 +21,7 @@
 # =========================
 artifacts/
 TestResults/
+*.lscache
 *.trx
 *.coverage*
 logs/
